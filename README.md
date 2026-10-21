@@ -2,23 +2,143 @@
 
 Um playground local de neuroevolução: carros com cérebros aleatórios aprendem a completar uma pista. TypeScript, Vite, HTML Canvas e um Web Worker. Toda a simulação, o treino e os dados ficam no navegador.
 
-## Rodar
+![NeuroDrive: simulação, avaliação em vários cenários e controles da rede](results/preview-generalization-complete.jpg)
 
-Verificado com Node.js 22.22.2.
+Não precisa de conta, chave de API, arquivo `.env`, backend nem banco de dados. Depois de instalar as dependências, o app pode rodar sem acesso à internet. A interface está em inglês; este guia está em português.
+
+## Conteúdo
+
+- [Começar em poucos comandos](#começar-em-poucos-comandos)
+- [Comandos do Makefile](#comandos-do-makefile)
+- [Primeiro teste e controles](#primeiro-teste-e-controles)
+- [Recursos do playground](#experimentar)
+- [O que a rede recebe, decide e aprende](#como-funciona)
+- [Métricas para acompanhar a melhora](#qual-métrica-mostra-melhora)
+- [Experimentos de generalização](#comparação-reproduzível-cenário-fixo--diversidade)
+- [Verificações e experimentos em cenário fixo](#verificações-e-experimentos-anteriores-em-cenário-fixo)
+- [Dados locais e credenciais](#dados-locais-e-credenciais)
+- [Solução de problemas](#solução-de-problemas)
+- [Estrutura e limites](#estrutura-e-limites)
+
+## Começar em poucos comandos
+
+### Requisitos
+
+- **Node.js 22.12 ou superior**, com npm. Verificado neste projeto com Node.js **22.22.2** e npm **10.9.7**.
+- **Git**, para clonar o repositório.
+- **Make**, para os atalhos abaixo. Verificado com GNU Make **3.81**. Sem Make, use a alternativa com npm.
+- Um navegador com suporte a módulos JavaScript, Canvas e Web Workers. A direção manual exige teclado.
+
+### Com Make
+
+```sh
+git clone https://github.com/willianmrs/neuro-drive.git
+cd neuro-drive
+make dev
+```
+
+Na primeira execução, `make dev` instala as dependências com `npm ci`, usando o `package-lock.json`, e inicia o Vite. Nas próximas execuções, reutiliza a instalação enquanto `package.json` e `package-lock.json` não forem mais recentes que o lockfile da instalação.
+
+Abra [http://127.0.0.1:5173](http://127.0.0.1:5173). Encerre o servidor com **Ctrl+C** no terminal. Se a porta estiver ocupada, escolha outra:
+
+```sh
+make dev PORT=5174
+```
+
+Nesse caso, abra [http://127.0.0.1:5174](http://127.0.0.1:5174). Os atalhos do Make usam `--strictPort`: se a porta escolhida estiver ocupada, o comando informa o erro em vez de trocar de porta automaticamente.
+
+### Sem Make
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Abra a URL local mostrada pelo Vite. Para testar a versão de produção:
+Abra a URL local mostrada pelo Vite. Essa alternativa também funciona no Windows com Node.js e npm instalados; o Makefile usa um shell compatível com POSIX, disponível no macOS, Linux e em ambientes como WSL.
+
+### Testar a versão de produção
+
+```sh
+make preview
+```
+
+O comando verifica TypeScript, compila o app em `dist/` e serve o resultado em [http://127.0.0.1:4173](http://127.0.0.1:4173). Para trocar a porta, use `make preview PREVIEW_PORT=4174`. Com npm:
 
 ```sh
 npm run build
 npm run preview
 ```
 
-Use um servidor HTTP local; abrir `index.html` diretamente não carrega os módulos e o worker.
+O preview serve para conferir o build local. Use um servidor HTTP; abrir `index.html` diretamente não carrega os módulos e o worker. `dist/` contém os arquivos estáticos gerados, incluindo o worker.
+
+## Comandos do Makefile
+
+Execute `make` ou `make help` para listar os atalhos. Os comandos que executam o projeto instalam dependências automaticamente quando necessário.
+
+| Comando | Resultado |
+| --- | --- |
+| `make dev` ou `make run` | Inicia o servidor de desenvolvimento com recarga automática. |
+| `make install` | Reinstala exatamente as dependências do lockfile com `npm ci`. |
+| `make test` | Executa os testes do simulador, da evolução e das métricas. |
+| `make build` | Verifica TypeScript e gera o build em `dist/`. |
+| `make check` | Executa testes e build. |
+| `make preview` | Gera o build e abre um servidor local para a versão compilada. |
+| `make experiment` | Executa o treino headless no cenário fixo. |
+| `make compare` | Compara os métodos fixo e diverso com o mesmo orçamento de episódios. |
+| `make clean` | Remove somente `dist/`; mantém dependências e resultados dos experimentos. |
+
+### Personalizar os experimentos
+
+```sh
+# Uma seed, uma volta, dez gerações no Oval sem obstáculos.
+make experiment GENERATIONS=10 SEEDS=42 TRACK=oval LAYERS=12 LAPS=1 LAYOUT=clear
+
+# Switchback com duas camadas ocultas e barreiras.
+make experiment GENERATIONS=10 SEEDS=2026 TRACK=technical LAYERS=12,8 LAPS=3 LAYOUT=barriers
+
+# Comparação curta entre treino fixo e diverso.
+make compare DIVERSITY_GENERATIONS=6 SEEDS=42 POPULATION=40
+```
+
+| Variável | Padrão | Usada por |
+| --- | --- | --- |
+| `HOST` | `127.0.0.1` | `dev`, `run`, `preview`. |
+| `PORT` | `5173` | `dev`, `run`. |
+| `PREVIEW_PORT` | `4173` | `preview`. |
+| `GENERATIONS` | `40` | `experiment`. |
+| `SEEDS` | `neurodrive,42,2026` | `experiment`, `compare`; lista separada por vírgulas. |
+| `TRACK` | `oval` | `experiment`; aceita `oval` ou `technical`. |
+| `LAYERS` | `12` | `experiment`; neurônios das camadas ocultas, separados por vírgulas. |
+| `LAPS` | `3` | `experiment`; de 1 a 10 voltas. |
+| `LAYOUT` | `barriers` | `experiment`; aceita `clear` ou `barriers`. |
+| `DIVERSITY_GENERATIONS` | `24` | `compare`; o método fixo roda quatro vezes esse número de gerações. |
+| `POPULATION` | `40` | `compare`; de 20 a 300 carros. O experimento fixo usa população 100. |
+| `NPM` | `npm` | Permite indicar outro caminho para o executável npm. |
+
+Os experimentos escrevem em `results/` e podem substituir os JSON correspondentes à mesma configuração, além dos relatórios consolidados. Copie os resultados que quiser preservar antes de repetir uma execução. `make compare` usa **uma volta por episódio**, independentemente de `LAPS`, e não altera a sessão aberta no navegador. Esses comandos rodam no terminal e podem levar algum tempo.
+
+## Primeiro teste e controles
+
+1. Abra o app com `make dev`. O treino já começa em **Evolution lab**, com 100 carros, três voltas por tentativa e quatro cenários por geração.
+2. Selecione **8×** ou **32×** para avançar mais ticks de simulação. Os carros baterem nas primeiras gerações é esperado: os pesos iniciais são aleatórios.
+3. Acompanhe **More drivers making it home** e **Drive beyond one layout**. No modo diverso, espere a bateria inteira terminar antes de comparar gerações.
+4. Salve o melhor cérebro no painel **Champion** e exporte o JSON para levar o modelo para outro navegador.
+5. Importe, por exemplo, [`results/transfer-diverse-2026.json`](results/transfer-diverse-2026.json) para experimentar um campeão já treinado. O app não carrega os exemplos automaticamente. Use **Replay original** para reproduzir um cenário de origem ou **Test current environment** para testar o layout aberto com os mesmos pesos.
+6. Use **Edit obstacles** para criar, arrastar ou girar barreiras e avaliar a transferência. No treino diverso, o editor modifica o ambiente aberto para teste; a bateria de treino continua fixa.
+7. Escolha **Take the wheel**, clique na pista para dar foco ao teclado e dirija com a mesma física dos carros da rede.
+
+| Controle | Ação |
+| --- | --- |
+| W / ↑ | Acelerar no modo manual. |
+| S / ↓ | Frear; depois, engatar ré. |
+| A / ← e D / → | Esterçar à esquerda e à direita. |
+| Espaço | Pausar ou retomar quando o foco não está em um campo/controle. |
+| R | Reiniciar a tentativa manual ou o teste congelado, com foco na pista. |
+| R / Shift+R no editor | Girar o obstáculo selecionado em +15° / −15°, com foco na pista. |
+| Delete / Backspace no editor | Remover o obstáculo selecionado quando não estiver digitando em um campo. |
+| Esc no editor | Cancelar a edição. |
+
+O **carro verde-limão** é o líder da população atual. O **carro roxo** é o fantasma do campeão salvo, reproduzindo pesos congelados quando está habilitado e disponível naquele modo. Ele não participa da seleção da população atual. Os carros não colidem uns com os outros.
 
 ## Experimentar
 
@@ -35,6 +155,29 @@ Use um servidor HTTP local; abrir `index.html` diretamente não carrega os módu
 ## Como funciona
 
 Sete raycasts em um campo frontal de 180° e a velocidade normalizada alimentam a mesma rede feedforward com `tanh` e duas saídas de direção e aceleração/frenagem. A arquitetura e as oito entradas existentes foram mantidas.
+
+### Uma decisão por tick de simulação
+
+Cada carro tem sua própria cópia dos pesos. A cada **1/60 de segundo simulado**, o simulador lê os sensores, executa a rede e aplica as duas ações à física. Isso acontece uma vez por tick, sem depender da taxa de quadros da tela; a aceleração do treino executa mais ticks. As subdivisões usadas para verificar colisões mantêm a ação daquele tick.
+
+| Sinal | Valores e significado |
+| --- | --- |
+| Entradas 1–7 | Distância normalizada até a borda/obstáculo nos ângulos −90°, −60°, −30°, 0°, +30°, +60° e +90° em relação ao carro. `0` indica contato; `1`, nenhuma interseção no alcance de 215 unidades. |
+| Entrada 8 | Velocidade dividida pela velocidade máxima, limitada a `[-1, 1]`; negativa em ré. |
+| Saída 1 | Esterçamento contínuo: `−1` à esquerda, `0` reto, `+1` à direita. |
+| Saída 2 | Aceleração/frenagem contínua: `+1` acelera; valores negativos freiam o movimento para a frente e permitem ré. |
+
+A rede não recebe posição na pista, checkpoints, número de voltas, pontuação ou uma trajetória ideal. Ela não tem memória recorrente. Posição, orientação, relógios e checkpoints pertencem ao simulador e à avaliação, não às entradas do controlador.
+
+### O que muda entre gerações
+
+Os pesos ficam **fixos durante cada tentativa**. Não há ajuste por backpropagation a cada colisão nem um professor indicando a direção correta. A melhora vem da seleção dos controladores que tiveram melhores resultados e das mutações dos seus descendentes.
+
+Ao fim da avaliação, cerca de **4% da população, com mínimo de dois carros**, passa sem mutação. Os pais do restante vêm dos **25% mais bem classificados**: um torneio sorteia três posições desse grupo e escolhe a melhor. Cada descendente copia um pai e cada parâmetro pode receber ruído gaussiano conforme a probabilidade e a intensidade configuradas; pesos e vieses ficam limitados a `[-6, 6]`. Não há cruzamento de dois pais. No padrão, a mutação tem probabilidade de **14% por parâmetro** e intensidade **0,30**.
+
+Não existe recompensa explícita por ficar no centro da pista. O objetivo considera progresso válido, conclusões e tempo. Evitar bordas pode surgir como comportamento útil, mas o centro não é uma linha obrigatória nem necessariamente o trajeto mais rápido.
+
+### Cenários, classificação e generalização
 
 No modo **Diverse scenarios**, cada genoma enfrenta a bateria completa de **4–6 cenários**, sequencialmente. Todos recebem as mesmas condições em todas as gerações da execução. Posição, orientação, velocidade, relógios, sensores e checkpoints recomeçam entre tentativas; os pesos permanecem iguais. A seleção só acontece quando todos terminam toda a bateria.
 
@@ -95,7 +238,7 @@ npm run experiment -- 40 neurodrive,42,2026 oval 12 3 barriers
 node --import tsx scripts/replay-multilap.ts barriers
 ```
 
-Os argumentos de `experiment` são: gerações, seeds separadas por vírgula, pista, tamanhos das camadas ocultas meta de voltas e layout (`clear` ou `barriers`). A meta padrão é 3; os novos resultados usam o sufixo `-fastlap`, registram a política de seleção e distinguem metas e layouts (`-barriers`) para preservar os experimentos anteriores de uma volta. Os arquivos JSON em `results/` registram seeds, configurações, arquiteturas, histórico por geração, resultados e campeões exportáveis. Esses comandos legados avaliam um ambiente fixo. O treino inicia com pesos aleatórios; os campeões desses experimentos só entram no app por importação explícita.
+Os argumentos de `experiment` são: gerações, seeds separadas por vírgula, pista, tamanhos das camadas ocultas, meta de voltas e layout (`clear` ou `barriers`). A meta padrão é 3; os novos resultados usam o sufixo `-fastlap`, registram a política de seleção e distinguem metas e layouts (`-barriers`) para preservar os experimentos anteriores de uma volta. Os arquivos JSON em `results/` registram seeds, configurações, arquiteturas, histórico por geração, resultados e campeões exportáveis. Esses comandos legados avaliam um ambiente fixo. O treino inicia com pesos aleatórios; os campeões desses experimentos só entram no app por importação explícita.
 
 Configuração dos experimentos: população 100, mutação 14%, intensidade 0,30. A tabela abaixo registra os experimentos originais, **com meta de uma volta**, em tempo simulado:
 
@@ -117,11 +260,48 @@ Com as **três barreiras padrão** e bônus da volta rápida, após 40 geraçõe
 
 **43 testes automatizados** cobrem raios, colisões orientadas, movimento, checkpoints e direção, proteção contra pontuação repetida, saídas da rede, mutação, elites, determinismo, arquiteturas configuráveis, limites, continuidade entre voltas, proteção contra repetir a linha de chegada, ranking de várias voltas, tempo limite proporcional, mudanças na meta por geração, serialização/migração de campeões, bônus da melhor volta, sensores/colisões com obstáculos, posições inválidas, reconstrução da geometria após edição e preservação de cérebros ao aplicar layouts, cinco formatos girados com sensores/colisões, serialização de formatos, migração da versão 4, ordem exata dos pesos/vieses, cálculo das taxas/medianas/diversidade, denominadores antes de alterações na população, igualdade de cenários entre genomas, reinício físico, espera da bateria, seleção agregada, rejeição de comparações entre baterias, isolamento dos testes reservados/RNG, pesos congelados, preservação do layout de transferência e serialização agregada. O build passa com verificação TypeScript. No navegador foram verificados treino acelerado, pausa/retomada, mudanças pendentes, direção manual, teclado, troca de pistas, sensores, visualização do líder, armazenamento, exportação/importação, rejeição de JSON inválido, controles de camadas, meta de voltas aplicada na próxima geração e corridas contínuas com várias voltas e edição por clique/arraste, remoção, clear-all, cancelamento e retorno de posições inválidas, criação dos cinco formatos, rotação, fontes dos pesos, cálculo do neurônio e congelamento da inspeção. Também foram conferidos importação de um campeão agregado real, preservação dos oito obstáculos ao testar no ambiente aberto, replay explícito dos quatro obstáculos de um campeão antigo e avaliação reservada do campeão salvo. O layout também foi conferido a 390 px, sem rolagem horizontal da página.
 
+## Dados locais e credenciais
+
+O aplicativo não usa chaves de API nem autenticação. Treino e inferência rodam no navegador; os scripts de experimento rodam no Node.js. Não há telemetria nem envio dos modelos para um serviço remoto. A instalação inicial consulta o registro de pacotes npm; os servidores de desenvolvimento e preview atendem localmente por padrão.
+
+Campeões e layouts salvos usam `localStorage`. São separados por origem do navegador, incluindo host e porta: `localhost:5173`, `127.0.0.1:5173` e `127.0.0.1:5174` têm armazenamentos diferentes. O histórico da sessão e a população em andamento ficam em memória e são perdidos ao recarregar. Exporte o campeão como JSON antes de limpar os dados do navegador ou mudar de origem.
+
+A revisão com **Gitleaks 8.30.1**, no histórico Git e nos arquivos preparados para publicação, não encontrou credenciais. O `.gitignore` exclui `.env`, variantes locais de `.env`, `.npmrc`, arquivos de chaves/certificados privados, dependências e builds. Nenhum `.env` precisa ser criado para executar o projeto. Variáveis com prefixo `VITE_` podem ser incluídas no JavaScript entregue ao navegador; não devem conter credenciais privadas.
+
+## Solução de problemas
+
+| Problema | O que fazer |
+| --- | --- |
+| `make: command not found` | Use `npm ci` e `npm run dev`, ou disponibilize Make em um shell POSIX. |
+| Node incompatível ou npm ausente | Confira `node --version` e `npm --version`; use Node.js 22.12+ com npm. |
+| Dependências ausentes ou instalação danificada | Rode `make install` ou `npm ci`. O lockfile faz parte do repositório. |
+| A porta já está ocupada | Use `make dev PORT=5174` ou `make preview PREVIEW_PORT=4174` e abra a nova URL. |
+| Página aberta como `file://` ou worker não inicia | Inicie o servidor HTTP com `make dev`; não abra o HTML diretamente. Confira também o erro no console do navegador. |
+| As teclas não controlam o carro | Escolha **Take the wheel** e clique na pista. Campos de formulário mantêm o foco para edição. |
+| O campeão salvo desapareceu | Confira host, porta e perfil do navegador. Reimporte o JSON se mudou de origem ou limpou os dados. |
+| O treino não chega a 32× | Reduza população, camadas, neurônios ou velocidade. O ritmo depende da máquina; o passo da física continua fixo. |
+| Muitos carros ainda batem | Compare gerações completas na mesma bateria, acompanhe progresso e conclusões e teste o campeão nos cenários reservados. Um layout livre pode bloquear a pista. |
+
 ## Estrutura e limites
 
-- `src/core/`: geometria, pistas, física, rede, evolução e serialização, sem dependências de DOM.
-- `src/training.worker.ts`: agenda ticks fixos e envia snapshots para a interface.
-- `src/ui/render.ts`: desenho da pista, carros e sensores; `src/main.ts`: interação, persistência e modo manual.
-- `scripts/`, `tests/`, `results/`: experimentos reproduzíveis e evidências.
+| Caminho | Responsabilidade |
+| --- | --- |
+| `index.html`, `src/style.css` | Estrutura e aparência da interface. |
+| `src/main.ts` | Eventos, persistência, modos manual e congelado, comunicação com o worker. |
+| `src/protocol.ts` | Tipos das mensagens e snapshots entre interface e worker. |
+| `src/training.worker.ts` | Agenda ticks de treino e testes reservados e envia snapshots. |
+| `src/core/network.ts` | Arquitetura, inferência, parâmetros e mutação da rede. |
+| `src/core/simulation.ts` | Sensores, ações, física, colisões, checkpoints e pontuação de uma tentativa. |
+| `src/core/evolution.ts`, `src/core/diverse-evolution.ts` | População, classificação, seleção e novas gerações. |
+| `src/core/scenarios.ts`, `src/core/evaluation.ts` | Baterias reproduzíveis e avaliação agregada/congelada. |
+| `src/core/track.ts`, `src/core/obstacles.ts` | Geometria das pistas, sensores e formatos de obstáculos. |
+| `src/core/metrics.ts`, `src/core/serialization.ts`, `src/core/transfer.ts` | Métricas, JSON validado e transferência dos campeões. |
+| `src/ui/` | Renderização, editor de obstáculos, matrizes de pesos e painéis de métricas. |
+| `tests/` | Testes automatizados do núcleo, executados pelo test runner do Node.js. |
+| `scripts/` | Experimentos headless e reprodução dos campeões. |
+| `results/` | Campeões JSON, resultados medidos e capturas da interface. |
+| `Makefile` | Atalhos de instalação, execução, verificação e experimentos. |
+
+O núcleo em `src/core/` não depende do DOM. Isso permite usar a mesma física e as mesmas regras no navegador, no worker, nos testes e nos experimentos do terminal.
 
 A velocidade de treino é uma meta: pode ficar abaixo de 32× com populações e redes grandes, sem alterar a física. Redes maiores não garantem aprendizado melhor. O histórico visual mantém as últimas 240 gerações; a sessão de treino não é retomada após recarregar a página. Campeões são armazenados por pista e por origem do navegador (host/porta); exporte JSON para transportá-los. Pequenas diferenças numéricas entre motores JavaScript podem afetar gerações muito longas. Mais voltas selecionam controladores consistentes ao longo do circuito; isso não garante a trajetória matematicamente ótima. A física é arcade, com bordas e obstáculos de cinco formatos, fixos durante cada tentativa. O editor permite montar um bloqueio sem passagem; layouts personalizados não têm garantia automática de serem solucionáveis. A direção manual exige teclado.

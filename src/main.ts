@@ -5,6 +5,7 @@ import { MAX_OBSTACLES, validateObstacles, layoutKey, type Obstacle, type Obstac
 import { scenarioTrack, scenarioCar, DEFAULT_DIVERSITY, type Scenario, type DiversityConfig } from './core/scenarios';
 import { testCurrentEnvironment, originalScenario } from './core/transfer';
 import { GeneralizationPanel } from './ui/generalization';
+import { ParallelRuns } from './ui/parallel-runs';
 import { escapeHtml } from './ui/text';
 import { NetworkInspector } from './ui/inspector';
 import { LearningMetrics } from './ui/learning-metrics';
@@ -26,6 +27,7 @@ let player:Car|null=null,ghost:Car|null=null,ghostWait=0,previousTime=performanc
 const keys=new Set<string>();
 const renderer=new TrackRenderer(canvas,track);
 const generalizationPanel=new GeneralizationPanel($('generalization-panel'));
+const parallelRuns=new ParallelRuns($('parallel-runs'),index=>post({type:'view-scenario',epoch,index}));
 const networkInspector=new NetworkInspector($('network-inspector'));
 const learningMetrics=new LearningMetrics($('learning-metrics'));
 let detailTime=0;
@@ -50,7 +52,14 @@ function syncScene(){
   const key=scenario?JSON.stringify(scenario):JSON.stringify([trackId,track.obstacles,openScenario]);
   if(key!==sceneKey){renderer.setTrack(scenario?scenarioTrack(scenario):track);sceneKey=key;}
   $('track-label').textContent=(scenario?(scenario.track==='oval'?'THE OVAL':'SWITCHBACK'):track.name.toUpperCase());
-  $('scenario-status').textContent=obstacleEditor.active?'CURRENT TEST ENVIRONMENT · training battery is unchanged':scenario?`TRAINING SCENARIO ${snapshot!.battery!.index+1}/${snapshot!.battery!.total} · ${scenario.name}`:mode==='test'?'FROZEN WEIGHTS · CURRENT ENVIRONMENT · no training':mode==='drive'?'MANUAL DRIVE · CURRENT ENVIRONMENT':diversityEnabled&&!snapshot?'PREPARING THE TRAINING BATTERY…':'FIXED TRAINING ENVIRONMENT';
+  const b=snapshot?.battery;
+  if(scenario&&b){
+    const waiting=b.runs[b.index].finished;
+    $('stage-mode').textContent=`RUN ${String(b.index+1).padStart(2,'0')} / ${waiting?'WAITING FOR OTHER RUNS':'PARALLEL TRAINING'}`;
+    $('status-text').textContent=running?(waiting?'WAITING / OTHERS LIVE':'EVOLVING'):'PAUSED';
+  }
+  $('scenario-status').textContent=obstacleEditor.active?'CURRENT TEST ENVIRONMENT · parallel training runs are unchanged':scenario?`WATCHING RUN ${b!.index+1}/${b!.total} · ${scenario.name}${b!.runs[b!.index].finished?' · FINISHED · waiting for other runs':''}`:mode==='test'?'FROZEN WEIGHTS · CURRENT ENVIRONMENT · no training':mode==='drive'?'MANUAL DRIVE · CURRENT ENVIRONMENT':diversityEnabled&&!snapshot?'PREPARING PARALLEL TRAINING RUNS…':'FIXED TRAINING ENVIRONMENT';
+  parallelRuns.update(snapshot,mode==='train'&&diversityEnabled&&!obstacleEditor.active,running);
 }
 function activateChampion(c:Champion){
   savedChampion=c;openScenario=originalScenario(c,Number($<HTMLSelectElement>('replay-scenario').value)||0);
@@ -119,7 +128,7 @@ function seed(){return $<HTMLInputElement>('seed-input').value.trim()||'2026';}
 function initTraining(){
   epoch++;snapshot=null;
   post({type:'init',...(diversityEnabled?{diversity:diversityConfig}:{}),obstacles:track.obstacles,architecture,epoch,track:trackId,seed:seed(),settings,running:running&&mode==='train',speed});
-  updateMetrics();
+  updateMetrics();syncScene();
 }
 function updateTransport(){
   $('experiment-title').textContent=mode!=='train'?'Training on hold':'The experiment';
@@ -133,7 +142,7 @@ function updateTransport(){
   document.querySelectorAll<HTMLButtonElement>('[data-speed]').forEach(b=>b.disabled=mode!=='train');
   $('stage-mode').textContent=mode==='train'?(trackId==='oval'?'TRAINING GROUND 01':'TRAINING GROUND 02'):'MANUAL / RACE THE GHOST';
 }
-function setRunning(value:boolean){running=value;accumulator=0;post({type:'running',value:running&&mode==='train'});updateTransport();}
+function setRunning(value:boolean){running=value;accumulator=0;post({type:'running',value:running&&mode==='train'});updateTransport();syncScene();}
 function restartDrive(){player=mode==='test'&&savedChampion?testCurrentEnvironment(savedChampion,track,openScenario):openScenario?scenarioCar(openScenario,[],0,architecture,savedChampion?.targetLaps??settings.laps,track):createCar(track,[],0,architecture,savedChampion?.targetLaps??snapshot?.settings.laps??settings.laps);restartGhost();keys.clear();accumulator=0;canvas.focus({preventScroll:true});if(mode!=='train'){running=true;updateTransport();}}
 function setMode(value:'train'|'drive'|'test'){
   if(value===mode)return;
@@ -157,9 +166,10 @@ function updateMetrics(){
   const s=snapshot,best=s?.best,progress=(best?.evaluation?.training.aggregate.meanProgress??best?.score.progress??0)*100;
   $('best-progress-label').textContent=s?.battery?'Champion mean progress':'Best-ever progress';
   $('generation').textContent=String(s?.generation??1).padStart(3,'0');
+  $('alive-label').textContent=s?.battery?'Driving in this run':'Still in the race';
   $('alive').textContent=String(s?.alive??settings.population);$('population-total').textContent=` / ${s?.settings.population??settings.population}`;
   $('best-progress').innerHTML=`${progress.toFixed(1)}<span>%</span>`;$('progress-fill').style.width=`${progress}%`;
-  const currentCompletions=s?.cars.reduce((sum,c)=>sum+c.lapsCompleted,0)??0;
+  const currentCompletions=s?.battery?.currentLaps??s?.cars.reduce((sum,c)=>sum+c.lapsCompleted,0)??0;
   $('completed-laps').textContent=String((s?.completedLaps??0)+currentCompletions);
   $('best-lap').innerHTML=s?.bestLapTime!=null?`${s.bestLapTime.toFixed(2)}<small> s</small>`:'—<small> s</small>';
   $('best-run').innerHTML=!s?.battery&&best?.score.completed?`${best.score.time.toFixed(2)}<small> s</small>`:'—<small> s</small>';
@@ -316,6 +326,7 @@ window.addEventListener('keydown',e=>{
   if(mode==='drive')keys.add(key);
 });
 window.addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));
+window.addEventListener('resize',()=>parallelRuns.update(snapshot,mode==='train'&&diversityEnabled&&!obstacleEditor.active,running));
 window.addEventListener('blur',()=>keys.clear());
 canvas.onclick=()=>canvas.focus({preventScroll:true});
 function animate(now:number){

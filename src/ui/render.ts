@@ -2,8 +2,8 @@ import { obstacleCorners, OBSTACLE_LABELS, type Obstacle } from '../core/obstacl
 import type { EditorView } from './obstacle-editor';
 import type { Track } from '../core/track';
 import { PHYSICS, SENSOR_ANGLES, type Car } from '../core/simulation';
-import type { CarView } from '../protocol';
-export interface RenderState {cars:CarView[];leaderId:number;sensors:boolean;leaderOnly:boolean;manual:Car|null;ghost:Car|null;mode:'train'|'drive'|'test';generation:number;editor?:EditorView;}
+import type { RunCarView } from '../protocol';
+export interface RenderState {cars:(RunCarView&{inputs?:number[]})[];leaderId:number;sensors:boolean;leaderOnly:boolean;manual:Car|null;ghost:Car|null;mode:'train'|'drive'|'test';generation:number;editor?:EditorView;}
 const path=(ctx:CanvasRenderingContext2D,points:{x:number;y:number}[])=>{ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.closePath();};
 function car(ctx:CanvasRenderingContext2D,c:{x:number;y:number;angle:number},color:string,opacity:number,highlight=false,ghost=false) {
   ctx.save();ctx.translate(c.x,c.y);ctx.rotate(c.angle);ctx.globalAlpha=opacity;
@@ -42,7 +42,7 @@ function barrier(ctx:CanvasRenderingContext2D,o:Obstacle,selected=false,invalid=
 }
 export class TrackRenderer {
   private ctx:CanvasRenderingContext2D;private width=0;private height=0;private dpr=1;private background:HTMLCanvasElement;
-  constructor(private canvas:HTMLCanvasElement,private track:Track){this.ctx=canvas.getContext('2d')!;this.background=document.createElement('canvas');this.makeBackground();}
+  constructor(private canvas:HTMLCanvasElement,private track:Track,private backgroundScale=1.6){this.ctx=canvas.getContext('2d')!;this.background=document.createElement('canvas');this.makeBackground();}
   setTrack(track:Track){this.track=track;this.makeBackground();}
   resize(){
     const rect=this.canvas.getBoundingClientRect();this.width=rect.width;this.height=rect.height;this.dpr=Math.min(devicePixelRatio||1,2);
@@ -51,7 +51,7 @@ export class TrackRenderer {
     }
   }
   private makeBackground(){
-    this.background.width=1600;this.background.height=1120;const ctx=this.background.getContext('2d')!;ctx.scale(1.6,1.6);
+    this.background.width=1000*this.backgroundScale;this.background.height=700*this.backgroundScale;const ctx=this.background.getContext('2d')!;ctx.scale(this.backgroundScale,this.backgroundScale);
     const t=this.track;
     ctx.fillStyle='#131e1a';ctx.fillRect(0,0,1000,700);
     const grad=ctx.createRadialGradient(480,345,60,480,345,570);grad.addColorStop(0,'#1d3025');grad.addColorStop(1,'#111b17');ctx.fillStyle=grad;ctx.fillRect(0,0,1000,700);
@@ -102,7 +102,7 @@ export class TrackRenderer {
     if(leader&&state.sensors){
       ctx.lineWidth=1;
       SENSOR_ANGLES.forEach((a,i)=>{
-        const angle=leader.angle+a,ratio=leader.inputs[i]??1,length=ratio*PHYSICS.sensorRange;
+        const angle=leader.angle+a,ratio=leader.inputs?.[i]??1,length=ratio*PHYSICS.sensorRange;
         ctx.strokeStyle='#d4f57735';ctx.beginPath();ctx.moveTo(leader.x,leader.y);ctx.lineTo(leader.x+Math.cos(angle)*PHYSICS.sensorRange,leader.y+Math.sin(angle)*PHYSICS.sensorRange);ctx.stroke();
         ctx.strokeStyle='#ddf88b88';ctx.beginPath();ctx.moveTo(leader.x,leader.y);ctx.lineTo(leader.x+Math.cos(angle)*length,leader.y+Math.sin(angle)*length);ctx.stroke();
         ctx.fillStyle='#e0fa9c';ctx.beginPath();ctx.arc(leader.x+Math.cos(angle)*length,leader.y+Math.sin(angle)*length,2,0,Math.PI*2);ctx.fill();

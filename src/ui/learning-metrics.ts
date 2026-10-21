@@ -10,7 +10,7 @@ export class LearningMetrics {
     const metrics=useCurrent?snapshot?.metrics:last?.metrics;
     const generation=useCurrent?snapshot?.generation:last?.generation;
     const signature=JSON.stringify([metrics,generation,useCurrent,history]);if(signature===this.signature)return;this.signature=signature;
-    this.el('metrics-context').textContent=metrics?`GEN ${String(generation).padStart(3,'0')} · ${metrics.population} ${snapshot?.battery&&!useCurrent?'driver × scenario episodes':'drivers in current scenario'} · ${useCurrent?`IN PROGRESS · ${metrics.active} still driving`:'FINAL RESULTS'}`:'Waiting for the first snapshot.';
+    this.el('metrics-context').textContent=metrics?`GEN ${String(generation).padStart(3,'0')} · ${metrics.population} ${snapshot?.battery?'driver × scenario episodes across all parallel runs':'drivers'} · ${useCurrent?`IN PROGRESS · ${metrics.active} still driving`:'FINAL RESULTS'}`:'Waiting for the first snapshot.';
     this.el('conversion-rate').textContent=metrics?`${pct(metrics.completed,metrics.population).toFixed(1)}%`:'—';
     this.el('conversion-detail').textContent=metrics?`${metrics.completed} / ${metrics.population} finished ${snapshot?.settings.laps??3} laps ${snapshot?.battery?'per scenario':''}`:'All drivers are included';
     this.el('median-run').textContent=metrics?.medianTime!=null?`${metrics.medianTime.toFixed(2)}s`:'—';

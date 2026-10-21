@@ -16,18 +16,21 @@ function startValidation(c:Champion){
 }
 function send() {
   if(!evolution)return;
-  const e=evolution,d=e instanceof DiverseEvolution?e:null,leader=e.leader();
+  const e=evolution,d=e instanceof DiverseEvolution?e:null;
   if(d?.champion&&!manualValidation&&(!validation||validation.evaluator.done&&validation.genomeKey!==genomeKey(d.champion)))startValidation(d.champion);
   const v=validation,validationView=v?{source:manualValidation?'saved' as const:'training' as const,training:v.training?.training??null,targetLaps:v.evaluator.laps,generation:v.generation,done:v.evaluator.index,total:v.evaluator.scenarios.length,result:v.evaluator.done?v.evaluator.result():null,genomeKey:v.genomeKey}:undefined;
   let best=e.champion;
   if(best?.evaluation&&validationView?.result&&validationView.genomeKey===genomeKey(best))best={...best,evaluation:{...best.evaluation,holdout:validationView.result}};
   const ranked=d?d.ranked():[...e.cars].sort((a,b)=>compareScores(scoreCar(b,e.track),scoreCar(a,e.track)));
+  const leader=ranked[0],runMetrics=d?.runs.map(run=>populationMetrics(run.cars,run.track));
   const snapshot:Snapshot={type:'snapshot',architecture:e.architecture,epoch,running,generation:e.generation,alive:e.cars.filter(c=>c.alive).length,
     cars:e.cars.map(c=>({id:c.id,x:c.x,y:c.y,angle:c.angle,speed:c.speed,alive:c.alive,elapsed:c.elapsed,reason:c.reason,progress:c.furthest/(e.track.length*c.targetLaps),lapsCompleted:c.lapsCompleted,targetLaps:c.targetLaps,inputs:c.inputs,action:c.action})),
     topBrains:ranked.slice(0,3).map(c=>({id:c.id,genome:c.genome,inputs:c.inputs,score:scoreCar(c,e.track),...(d?{aggregate:d.aggregate(c)}:{})})),
-    metrics:populationMetrics(e.cars,e.track),
+    metrics:d?d.cohortMetrics(runMetrics):populationMetrics(e.cars,e.track),
     leaderId:leader.id,leaderGenome:leader.genome,best,history:e.history,completedLaps:e.completedLaps,settings:e.settings,pending:e.pending,bestLapTime:e.bestLapTime(),lapElite:e.lapElite,simTime:Math.max(...e.cars.map(c=>c.elapsed)),
-    ...(d?{battery:{id:batteryId(d.scenarios,e.settings.laps),index:d.scenarioIndex,total:d.scenarios.length,scenario:d.scenarios[d.scenarioIndex],leaderAggregate:d.aggregate(leader)}}:{}),
+    ...(d?{battery:{id:batteryId(d.scenarios,e.settings.laps),index:d.scenarioIndex,total:d.scenarios.length,scenario:d.scenarios[d.scenarioIndex],leaderAggregate:d.aggregate(leader),
+      runs:d.runs.map((run,i)=>({scenario:run.scenario,cars:run.cars.map(({id,x,y,angle,alive})=>({id,x,y,angle,alive})),alive:runMetrics![i].active,completed:runMetrics![i].completed,meanProgress:runMetrics![i].meanProgress,simTime:Math.max(...run.cars.map(c=>c.elapsed)),finished:run.finished})),
+      finished:d.runs.filter(run=>run.finished).length,alive:runMetrics!.reduce((sum,m)=>sum+m.active,0),currentLaps:d.runs.reduce((sum,run)=>sum+run.cars.reduce((n,c)=>n+c.lapsCompleted,0),0)}}:{}),
     ...(validationView?{validation:validationView}:{})};
   scope.postMessage(snapshot);
 }
@@ -40,6 +43,7 @@ scope.onmessage=(event:MessageEvent<WorkerMessage>)=>{
     if(m.type==='speed')speed=Math.max(1,Math.min(32,m.value));
     if(m.type==='settings'){evolution?.queueSettings(m.value);send();}
     if(m.type==='validate'){manualValidation=true;startValidation(m.champion);send();}
+    if(m.type==='view-scenario'&&m.epoch===epoch&&evolution instanceof DiverseEvolution){evolution.selectScenario(m.index);send();}
   }catch(error){throw error;}
 };
 function pump() {

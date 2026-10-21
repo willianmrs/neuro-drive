@@ -4,11 +4,12 @@ import { makeBattery, batteryKey, scenarioCar, scenarioTrack, validateDiversity,
 import { ARCHITECTURE, mutate, type Architecture, type Genome } from './network';
 import { scoreCar, stepCar, type Car } from './simulation';
 import { populationMetrics, type PopulationMetrics } from './metrics';
-import type { TrackId } from './track';
+import type { Track } from './track';
+export interface ScenarioRun {scenario:Scenario;track:Track;cars:Car[];finished:boolean}
 /** Fixed batteries make scores comparable across generations. Scenario RNG never touches evolution RNG. */
 export class DiverseEvolution extends Evolution {
   readonly scenarios:Scenario[];readonly heldout:Scenario[];readonly config:DiversityConfig;
-  scenarioIndex=0;results:Outcome[][]=[];private cohort:PopulationMetrics[]=[];
+  scenarioIndex=0;results:Outcome[][]=[];runs:ScenarioRun[]=[];
   private key='';
   constructor(seed='neurodrive',settings=DEFAULT_SETTINGS,architecture:Architecture=ARCHITECTURE,config:DiversityConfig={count:4,difficulty:'moderate'},scenarios?:Scenario[]){
     super('oval',seed,settings,architecture);
@@ -17,32 +18,38 @@ export class DiverseEvolution extends Evolution {
     this.heldout=makeBattery(seed,'holdout',config);this.resetBattery(this.cars.map(c=>c.genome));
   }
   private resetBattery(genomes:Genome[]){
-    this.key=batteryKey(this.scenarios,this.settings.laps);this.scenarioIndex=0;this.results=genomes.map(()=>[]);this.cohort=[];this.startScenario(genomes);
+    this.key=batteryKey(this.scenarios,this.settings.laps);this.results=genomes.map(()=>[]);
+    this.runs=this.scenarios.map(scenario=>{
+      const track=scenarioTrack(scenario);
+      return {scenario,track,cars:genomes.map((g,id)=>scenarioCar(scenario,[...g],id,this.architecture,this.settings.laps,track)),finished:false};
+    });
+    this.selectScenario(this.scenarioIndex);
   }
-  private startScenario(genomes:Genome[]){
-    const s=this.scenarios[this.scenarioIndex];this.track=scenarioTrack(s);
-    this.cars=genomes.map((g,id)=>scenarioCar(s,[...g],id,this.architecture,this.settings.laps,this.track));
+  selectScenario(index:number){
+    if(!Number.isInteger(index)||index<0||index>=this.runs.length)throw new Error('Unknown training scenario.');
+    this.scenarioIndex=index;this.track=this.runs[index].track;this.cars=this.runs[index].cars;
   }
   override setObstacles(){/* The editor is a separate transfer environment. The fixed training battery stays unchanged. */}
   aggregate(car:Car,includeCurrent=true):Aggregate {
-    const outcomes=this.results[car.id];
-    const current:Outcome={scenarioId:this.scenarios[this.scenarioIndex].id,length:this.track.length,score:scoreCar(car,this.track),reason:car.reason};
-    return aggregateResults(this.scenarios,includeCurrent&&outcomes.length===this.scenarioIndex?[...outcomes,current]:outcomes,this.settings.laps,this.key);
+    const outcomes=includeCurrent?this.runs.map(run=>this.outcome(run,car.id)):this.results[car.id];
+    return aggregateResults(this.scenarios,outcomes,this.settings.laps,this.key);
   }
+  private outcome(run:ScenarioRun,id:number):Outcome {const car=run.cars[id];return {scenarioId:run.scenario.id,length:run.track.length,score:scoreCar(car,run.track),reason:car.reason};}
   ranked(){return this.cars.map(car=>({car,aggregate:this.aggregate(car)})).sort((a,b)=>compareAggregate(b.aggregate,a.aggregate)).map(x=>x.car);}
   override leader(){return this.ranked()[0];}
   override tick(){
-    for(const car of this.cars)stepCar(car,this.track);
-    if(this.cars.some(c=>c.alive))return;
-    for(const car of this.cars)this.results[car.id].push({scenarioId:this.scenarios[this.scenarioIndex].id,length:this.track.length,score:scoreCar(car,this.track),reason:car.reason});
-    this.cohort.push(populationMetrics(this.cars,this.track));
-    this.completedLaps+=this.cars.reduce((sum,c)=>sum+c.lapsCompleted,0);
-    if(this.scenarioIndex+1<this.scenarios.length){this.scenarioIndex++;this.startScenario(this.cars.map(c=>c.genome));return;}
-    this.nextGeneration();
+    let finished=false;
+    for(const run of this.runs){
+      if(run.finished)continue;
+      for(const car of run.cars)stepCar(car,run.track);
+      if(run.cars.every(c=>!c.alive)){run.finished=true;finished=true;}
+    }
+    if(finished)this.results=this.cars.map(car=>this.runs.filter(run=>run.finished).map(run=>this.outcome(run,car.id)));
+    if(this.runs.every(run=>run.finished))this.nextGeneration();
   }
   override bestLapTime(){return null;}
   override nextGeneration(){
-    if(this.scenarioIndex!==this.scenarios.length-1||this.results.some(r=>r.length!==this.scenarios.length)||this.cars.some(c=>c.alive))throw new Error('Selection must wait for every scenario and every driver.');
+    if(this.runs.some(run=>!run.finished||run.cars.some(c=>c.alive))||this.results.some(r=>r.length!==this.scenarios.length))throw new Error('Selection must wait for every scenario and every driver.');
     const ranked=this.ranked(),best=ranked[0],evaluation=this.aggregate(best,false);
     if(!this.champion||compareAggregate(evaluation,this.champion.evaluation!.training.aggregate)>1e-9){
       const s=this.scenarios[0];
@@ -50,7 +57,8 @@ export class DiverseEvolution extends Evolution {
         evaluation:{version:1,training:{version:1,scenarios:structuredClone(this.scenarios),outcomes:structuredClone(this.results[best.id]),aggregate:evaluation}}};
     }
     const metrics=this.cohortMetrics();
-    this.history.push({generation:this.generation,best:evaluation.meanProgress,average:metrics.meanProgress,completed:metrics.completed,completedLaps:this.cohort.reduce((s,m)=>s+m.lapCounts.reduce((a,b)=>a+b,0),0),bestTime:null,bestLapTime:null,metrics,scenarioCount:this.scenarios.length,consistentFinishers:ranked.filter(c=>this.aggregate(c,false).completed===this.scenarios.length).length});
+    const completedLaps=metrics.lapCounts.reduce((a,b)=>a+b,0);this.completedLaps+=completedLaps;
+    this.history.push({generation:this.generation,best:evaluation.meanProgress,average:metrics.meanProgress,completed:metrics.completed,completedLaps,bestTime:null,bestLapTime:null,metrics,scenarioCount:this.scenarios.length,consistentFinishers:ranked.filter(c=>this.aggregate(c,false).completed===this.scenarios.length).length});
     if(this.history.length>240)this.history.shift();
     if(this.pending){
       const changed=this.pending.laps!==this.settings.laps;this.settings=sanitizeSettings(this.pending);this.pending=null;
@@ -65,10 +73,10 @@ export class DiverseEvolution extends Evolution {
     });
     this.generation++;this.resetBattery(genomes);
   }
-  private cohortMetrics():PopulationMetrics {
-    const rows=this.cohort,n=rows.reduce((s,m)=>s+m.population,0),mean=rows.reduce((s,m)=>s+m.meanProgress*m.population,0)/n;
-    const sum=(key:'launched'|'completed'|'collisions'|'stalled'|'timeouts')=>rows.reduce((s,m)=>s+m[key],0);
-    return {population:n,launched:sum('launched'),completed:sum('completed'),collisions:sum('collisions'),stalled:sum('stalled'),timeouts:sum('timeouts'),active:0,
+  cohortMetrics(rows=this.runs.map(run=>populationMetrics(run.cars,run.track))):PopulationMetrics {
+    const n=rows.reduce((s,m)=>s+m.population,0),mean=rows.reduce((s,m)=>s+m.meanProgress*m.population,0)/n;
+    const sum=(key:'launched'|'completed'|'collisions'|'stalled'|'timeouts'|'active')=>rows.reduce((s,m)=>s+m[key],0);
+    return {population:n,launched:sum('launched'),completed:sum('completed'),collisions:sum('collisions'),stalled:sum('stalled'),timeouts:sum('timeouts'),active:sum('active'),
       lapCounts:Array.from({length:this.settings.laps},(_,i)=>rows.reduce((s,m)=>s+m.lapCounts[i],0)),meanProgress:mean,
       progressStd:Math.sqrt(rows.reduce((s,m)=>s+(m.progressStd**2+(m.meanProgress-mean)**2)*m.population,0)/n),diversity:rows[0].diversity,medianTime:null};
   }

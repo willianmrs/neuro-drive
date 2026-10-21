@@ -7,7 +7,7 @@ import { Evolution } from '../src/core/evolution';
 import { aggregateResults, compareAggregate, FrozenEvaluator } from '../src/core/evaluation';
 import { serializeChampion, deserializeChampion } from '../src/core/serialization';
 import { testCurrentEnvironment, originalScenario } from '../src/core/transfer';
-import { stepCar } from '../src/core/simulation';
+import { DT, stepCar } from '../src/core/simulation';
 const settings={population:20,mutationRate:.14,mutationStrength:.3,laps:1};
 const train=makeBattery('test-transfer','train'),reserved=makeBattery('test-transfer','holdout');
 test('expanded 5–6-scenario batteries remain reproducible, passable and bounded',()=>{
@@ -18,8 +18,9 @@ test('expanded 5–6-scenario batteries remain reproducible, passable and bounde
   }
   for(const count of [0,3,7,100])assert.throws(()=>makeBattery('bounds','train',{count,difficulty:'moderate'}));
 });
-function endScenario(e:DiverseEvolution,progress:(id:number)=>number=()=>0){
-  for(const car of e.cars){const p=progress(car.id);Object.assign(car,{alive:false,completed:p===1,furthest:p*e.track.length,elapsed:5+car.id*.1,lapsCompleted:p===1?1:0,bestLapTime:p===1?5+car.id*.1:null,reason:p===1?'completed':'collision'});}
+function endScenario(e:DiverseEvolution,progress:(id:number)=>number=()=>0,index=e.runs.findIndex(run=>!run.finished)){
+  const run=e.runs[index];
+  for(const car of run.cars){const p=progress(car.id);Object.assign(car,{alive:false,completed:p===1,furthest:p*run.track.length*car.targetLaps,elapsed:5+car.id*.1,lapsCompleted:p===1?car.targetLaps:0,bestLapTime:p===1?5+car.id*.1:null,reason:p===1?'completed':'collision'});}
   e.tick();
 }
 test('batteries are reproducible, split by RNG, cover both tracks/directions and validate joint passage',()=>{
@@ -34,16 +35,48 @@ test('batteries are reproducible, split by RNG, cover both tracks/directions and
   assert.ok(fence.every(o=>canPlaceObstacle(base,o)),'Each fence piece fits on asphalt');
   assert.equal(hasPassage(createTrack('oval',fence)),false,'Together they block car-width passage');
 });
-test('all drivers receive the same battery and fresh physical states; selection waits for all trials',()=>{
+test('all runs start together with independent physical states and shared genome values',()=>{
   const e=new DiverseEvolution('test-transfer',settings,[8,12,2],{count:4,difficulty:'moderate'},train),genomes=e.cars.map(c=>[...c.genome]);
   assert.throws(()=>e.nextGeneration(),/wait/);
-  for(let i=0;i<3;i++){
-    endScenario(e);assert.equal(e.generation,1);assert.equal(e.scenarioIndex,i+1);assert.equal(e.champion,null);
-    const expected=scenarioCar(train[i+1],genomes[0],0,e.architecture,1,e.track);
-    assert.deepEqual(e.cars[0],expected);assert.deepEqual(e.cars.map(c=>c.genome),genomes);
-    assert.ok(e.results.every(rows=>rows.map(r=>r.scenarioId).join(',')===train.slice(0,i+1).map(s=>s.id).join(',')));
+  for(const [i,run] of e.runs.entries()){
+    assert.deepEqual(run.cars[0],scenarioCar(train[i],genomes[0],0,e.architecture,1,run.track));
+    assert.deepEqual(run.cars.map(c=>c.genome),genomes);
+    assert.notEqual(run.cars[0].genome,e.runs[(i+1)%4].cars[0].genome);
   }
-  endScenario(e);assert.equal(e.generation,2);assert.equal(e.scenarioIndex,0);assert.ok(e.champion?.evaluation);assert.equal(e.history[0].metrics.population,80);
+  e.tick();
+  assert.ok(e.runs.every(run=>run.cars.every(car=>car.elapsed===DT)));
+  assert.equal(e.cohortMetrics().population,80);assert.equal(e.cohortMetrics().active,80);
+});
+test('finished runs wait without switching cameras; all scenarios gate breeding even when they finish out of order',()=>{
+  const e=new DiverseEvolution('parallel-wait',settings,[8,12,2],{count:4,difficulty:'moderate'},train);
+  e.selectScenario(2);const geometry=e.track;
+  for(const index of [2,0,3]){
+    endScenario(e,()=>.2,index);assert.equal(e.generation,1);assert.equal(e.scenarioIndex,2);assert.equal(e.champion,null);
+    assert.equal(e.track,geometry);assert.throws(()=>e.nextGeneration(),/wait/);
+  }
+  const frozen=structuredClone(e.runs[2].cars);e.tick();assert.deepEqual(e.runs[2].cars,frozen);
+  assert.ok(e.results.every(rows=>rows.map(r=>r.scenarioId).join(',')===[train[0],train[2],train[3]].map(s=>s.id).join(',')));
+  endScenario(e,()=>.2,1);
+  assert.equal(e.generation,2);assert.equal(e.scenarioIndex,2);assert.ok(e.champion?.evaluation);
+  assert.deepEqual(e.champion.evaluation.training.outcomes.map(o=>o.scenarioId),train.map(s=>s.id));
+  assert.equal(e.history[0].metrics.population,80);assert.equal(e.history[0].metrics.active,0);
+  assert.ok(e.runs.every(run=>run.cars.every(car=>car.elapsed===0&&car.nextGate===1)));
+  assert.equal(e.track,e.runs[2].track);assert.equal(e.cars,e.runs[2].cars);
+  assert.throws(()=>e.selectScenario(-1));assert.throws(()=>e.selectScenario(4));assert.throws(()=>e.selectScenario(NaN));
+});
+test('camera selection cannot change evolution, clocks, aggregates or randomness across generations',()=>{
+  const a=new DiverseEvolution('camera-isolation',settings),b=new DiverseEvolution('camera-isolation',settings);
+  let tick=0;
+  while(a.generation<3){a.selectScenario(tick++%4);a.tick();b.tick();}
+  assert.deepEqual(a.runs,b.runs);assert.deepEqual(a.champion,b.champion);assert.deepEqual(a.history,b.history);
+  assert.equal(a.rng.next(),b.rng.next());
+});
+test('population changes apply to every run together and retain the previous aggregate denominator',()=>{
+  const e=new DiverseEvolution('parallel-population',settings);
+  e.selectScenario(3);e.queueSettings({...settings,population:30});
+  for(let i=0;i<4;i++)endScenario(e,()=>1);
+  assert.equal(e.scenarioIndex,3);assert.equal(e.history[0].metrics.population,80);assert.equal(e.history[0].metrics.completed,80);
+  assert.equal(e.completedLaps,80);assert.ok(e.runs.every(run=>run.cars.length===30));assert.equal(e.cohortMetrics().population,120);
 });
 test('champion, unchanged elites and parents use aggregate consistency; no single-lap specialist bonus',()=>{
   const e=new DiverseEvolution('aggregate-selection',settings,[8,12,2],{count:4,difficulty:'moderate'},train),genomes=e.cars.map(c=>[...c.genome]);

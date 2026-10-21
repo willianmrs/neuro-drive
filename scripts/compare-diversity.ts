@@ -13,7 +13,7 @@ for(const seed of seeds){
   for(const method of ['fixed','diverse'] as const){
     const start=performance.now(),e=method==='fixed'?new Evolution('oval',seed,settings):new DiverseEvolution(seed,settings,[8,12,2],config);
     const budget=method==='fixed'?generations*config.count:generations;let carSteps=0;
-    while(e.generation<=budget){carSteps+=e.cars.filter(c=>c.alive).length;const before=e.generation;e.tick();if(before!==e.generation&&(before===1||before%12===0))console.log(JSON.stringify({seed,method,generation:before,progress:e.history.at(-1)?.average}));}
+    while(e.generation<=budget){carSteps+=e instanceof DiverseEvolution?e.runs.reduce((sum,run)=>sum+run.cars.filter(c=>c.alive).length,0):e.cars.filter(c=>c.alive).length;const before=e.generation;e.tick();if(before!==e.generation&&(before===1||before%12===0))console.log(JSON.stringify({seed,method,generation:before,progress:e.history.at(-1)?.average}));}
     const seconds=(performance.now()-start)/1000,c=e.champion!;
     const probe=(scenarios:typeof holdout)=>{const test=new FrozenEvaluator(scenarios,c.genome,c.architecture,c.targetLaps);while(!test.done)test.tick();return test.result();};
     const held=probe(holdout),shared=probe(sharedTrain),training=e instanceof DiverseEvolution?c.evaluation!.training:undefined;

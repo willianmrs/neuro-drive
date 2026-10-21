@@ -1,0 +1,2851 @@
+{
+  "recordedAt": "2026-10-21T00:25:49.304Z",
+  "config": {
+    "count": 4,
+    "difficulty": "moderate"
+  },
+  "settings": {
+    "population": 40,
+    "mutationRate": 0.14,
+    "mutationStrength": 0.3,
+    "laps": 1
+  },
+  "generations": 24,
+  "results": [
+    {
+      "seed": "neurodrive",
+      "arms": [
+        {
+          "method": "fixed",
+          "episodes": 3840,
+          "generations": 96,
+          "carSteps": 1185479,
+          "seconds": 8.754120417,
+          "sourceGeneration": 23,
+          "nativeTrain": {
+            "progress": 1,
+            "completed": true,
+            "time": 7.999999999999977,
+            "completedLaps": 1,
+            "bestLapTime": 7.999999999999977
+          },
+          "sharedTrain": {
+            "version": 1,
+            "scenarios": [
+              {
+                "id": "train-1",
+                "name": "Oval CCW · train 1",
+                "split": "train",
+                "track": "oval",
+                "reverse": false,
+                "startNode": 0,
+                "lateral": -2.778011734597385,
+                "headingOffset": -0.0008000139147043228,
+                "scaleX": 1,
+                "scaleY": 1,
+                "obstacles": []
+              },
+              {
+                "id": "train-2",
+                "name": "Switchback CCW · train 2",
+                "split": "train",
+                "track": "technical",
+                "reverse": false,
+                "startNode": 18,
+                "lateral": -0.8239597636274993,
+                "headingOffset": -0.024428876154124736,
+                "scaleX": 1,
+                "scaleY": 1,
+                "obstacles": []
+              },
+              {
+                "id": "train-3",
+                "name": "Oval CW · train 3",
+                "split": "train",
+                "track": "oval",
+                "reverse": true,
+                "startNode": 84,
+                "lateral": 1.600819309707731,
+                "headingOffset": -0.001421331074088812,
+                "scaleX": 1,
+                "scaleY": 1,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "triangle",
+                    "x": 433.84289095486736,
+                    "y": 190.4615900197329,
+                    "angle": 3.2171919726358147
+                  },
+                  {
+                    "id": 1,
+                    "kind": "block",
+                    "x": 207.1273589596766,
+                    "y": 327.2556430766461,
+                    "angle": 2.025574809375989
+                  }
+                ]
+              },
+              {
+                "id": "train-4",
+                "name": "Switchback CW · train 4",
+                "split": "train",
+                "track": "technical",
+                "reverse": true,
+                "startNode": 12,
+                "lateral": 2.804246877785772,
+                "headingOffset": 0.02576435970142484,
+                "scaleX": 1,
+                "scaleY": 1,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "triangle",
+                    "x": 534.9647272335254,
+                    "y": 298.02711035853235,
+                    "angle": -2.852647340955484
+                  },
+                  {
+                    "id": 1,
+                    "kind": "triangle",
+                    "x": 404.02177880131387,
+                    "y": 597.579264966745,
+                    "angle": 0.2647886426170999
+                  }
+                ]
+              }
+            ],
+            "outcomes": [
+              {
+                "scenarioId": "train-1",
+                "length": 1684.3054875858809,
+                "score": {
+                  "progress": 0.0766641571602795,
+                  "completed": false,
+                  "time": 1.5833333333333326,
+                  "completedLaps": 0,
+                  "bestLapTime": null
+                },
+                "reason": "collision"
+              },
+              {
+                "scenarioId": "train-2",
+                "length": 2117.8940618344736,
+                "score": {
+                  "progress": 0.09949363944002214,
+                  "completed": false,
+                  "time": 1.949999999999998,
+                  "completedLaps": 0,
+                  "bestLapTime": null
+                },
+                "reason": "collision"
+              },
+              {
+                "scenarioId": "train-3",
+                "length": 1684.3054875858813,
+                "score": {
+                  "progress": 0.047101154548992864,
+                  "completed": false,
+                  "time": 1.3666666666666667,
+                  "completedLaps": 0,
+                  "bestLapTime": null
+                },
+                "reason": "collision"
+              },
+              {
+                "scenarioId": "train-4",
+                "length": 2117.8940618344723,
+                "score": {
+                  "progress": 0.036724998845252495,
+                  "completed": false,
+                  "time": 1.2500000000000004,
+                  "completedLaps": 0,
+                  "bestLapTime": null
+                },
+                "reason": "collision"
+              }
+            ],
+            "aggregate": {
+              "batteryKey": "{\"version\":1,\"laps\":1,\"scenarios\":[[\"train-1\",\"train\",\"oval\",false,0,-2.778011734597385,-0.0008000139147043228,1,1,[]],[\"train-2\",\"train\",\"technical\",false,18,-0.8239597636274993,-0.024428876154124736,1,1,[]],[\"train-3\",\"train\",\"oval\",true,84,1.600819309707731,-0.001421331074088812,1,1,[[207.1273589596766,327.2556430766461,2.025574809375989,\"block\"],[433.84289095486736,190.4615900197329,3.2171919726358147,\"triangle\"]]],[\"train-4\",\"train\",\"technical\",true,12,2.804246877785772,0.02576435970142484,1,1,[[404.02177880131387,597.579264966745,0.2647886426170999,\"triangle\"],[534.9647272335254,298.02711035853235,-2.852647340955484,\"triangle\"]]]]}",
+              "completed": 0,
+              "total": 4,
+              "completionRate": 0,
+              "meanProgress": 0.06499598749863675,
+              "worstProgress": 0.036724998845252495,
+              "normalizedTime": null
+            }
+          },
+          "holdout": {
+            "version": 1,
+            "scenarios": [
+              {
+                "id": "holdout-1",
+                "name": "Oval CCW · holdout 1",
+                "split": "holdout",
+                "track": "oval",
+                "reverse": false,
+                "startNode": 84,
+                "lateral": 2.4615434766747057,
+                "headingOffset": -0.01551953935995698,
+                "scaleX": 0.9554444990912452,
+                "scaleY": 0.9801420651562511,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "triangle",
+                    "x": 777.1712589904959,
+                    "y": 376.3222586507142,
+                    "angle": 1.693932353711308
+                  },
+                  {
+                    "id": 1,
+                    "kind": "block",
+                    "x": 317.6868894605895,
+                    "y": 470.6722040367345,
+                    "angle": -2.607081420647238
+                  }
+                ]
+              },
+              {
+                "id": "holdout-2",
+                "name": "Switchback CCW · holdout 2",
+                "split": "holdout",
+                "track": "technical",
+                "reverse": false,
+                "startNode": 36,
+                "lateral": -0.9718105201609433,
+                "headingOffset": -0.03662917336449027,
+                "scaleX": 1.0014536963170393,
+                "scaleY": 0.9793453186005353,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "barrier",
+                    "x": 296.7383407249418,
+                    "y": 538.0837292494637,
+                    "angle": -3.17454045995785
+                  },
+                  {
+                    "id": 1,
+                    "kind": "triangle",
+                    "x": 384.11495991164736,
+                    "y": 175.02855859448292,
+                    "angle": 0.11868005768002159
+                  }
+                ]
+              },
+              {
+                "id": "holdout-3",
+                "name": "Oval CW · holdout 3",
+                "split": "holdout",
+                "track": "oval",
+                "reverse": true,
+                "startNode": 78,
+                "lateral": -1.8047049273736775,
+                "headingOffset": 0.009295153524726629,
+                "scaleX": 1.0234490738110615,
+                "scaleY": 0.9794309633970261,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "block",
+                    "x": 277.42657961497264,
+                    "y": 242.9219773457218,
+                    "angle": 2.698867369051401
+                  },
+                  {
+                    "id": 1,
+                    "kind": "block",
+                    "x": 241.36267424119842,
+                    "y": 431.78337211714256,
+                    "angle": 0.9993103217648229
+                  }
+                ]
+              },
+              {
+                "id": "holdout-4",
+                "name": "Switchback CW · holdout 4",
+                "split": "holdout",
+                "track": "technical",
+                "reverse": true,
+                "startNode": 12,
+                "lateral": -0.167204471770674,
+                "headingOffset": -0.01718454184010625,
+                "scaleX": 0.9920664787851273,
+                "scaleY": 0.9687677570804953,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "triangle",
+                    "x": 894.7677701294818,
+                    "y": 360.08070947140243,
+                    "angle": -1.673363397607059
+                  },
+                  {
+                    "id": 1,
+                    "kind": "barrier",
+                    "x": 754.8691963778084,
+                    "y": 224.315629006193,
+                    "angle": -2.8381577779494576
+                  }
+                ]
+              },
+              {
+                "id": "holdout-5",
+                "name": "Oval CCW · holdout 5",
+                "split": "holdout",
+                "track": "oval",
+                "reverse": false,
+                "startNode": 84,
+                "lateral": -2.1027663024142385,
+                "headingOffset": 0.004620483703911305,
+                "scaleX": 1.0244665569718927,
+                "scaleY": 1.0059312291629612,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "barrier",
+                    "x": 129.99722540452134,
+                    "y": 375.3970682132389,
+                    "angle": -1.9330083748194324
+                  },
+                  {
+                    "id": 1,
+                    "kind": "triangle",
+                    "x": 483.7360392919039,
+                    "y": 185.23410679311698,
+                    "angle": -0.3545982998905727
+                  }
+                ]
+              },
+              {
+                "id": "holdout-6",
+                "name": "Switchback CCW · holdout 6",
+                "split": "holdout",
+                "track": "technical",
+                "reverse": false,
+                "startNode": 90,
+                "lateral": -2.260854387190193,
+                "headingOffset": 0.032374262008816004,
+                "scaleX": 0.9811034546792506,
+                "scaleY": 0.9650073708221316,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "triangle",
+                    "x": 458.9062814346409,
+                    "y": 194.0033906190959,
+                    "angle": 0.41830826808852084
+                  },
+                  {
+                    "id": 1,
+                    "kind": "block",
+                    "x": 320.54962594278936,
+                    "y": 536.6778469301312,
+                    "angle": -2.77366513634348
+                  }
+                ]
+              }
+            ],
+            "outcomes": [
+              {
+                "scenarioId": "holdout-1",
+                "length": 1622.52140082616,
+                "score": {
+                  "progress": 0.1584848084744041,
+                  "completed": false,
+                  "time": 2.2166666666666637,
+                  "completedLaps": 0,
+                  "bestLapTime": null
+                },
+                "reason": "collision"
+              },
+              {
+                "scenarioId": "holdout-2",
+                "length": 2101.522265634451,
+                "score": {
+                  "progress": 0.03620444624768732,
+                  "completed": false,
+                  "time": 1.183333333333334,
+                  "completedLaps": 0,
+                  "bestLapTime": null
+                },
+                "reason": "collision"
+              },
+              {
+                "scenarioId": "holdout-3",
+                "length": 1700.4623225496546,
+                "score": {
+                  "progress": 0.037011671586381883,
+                  "completed": false,
+                  "time": 1.3000000000000003,
+                  "completedLaps": 0,
+                  "bestLapTime": null
+                },
+                "reason": "collision"
+              },
+              {
+                "scenarioId": "holdout-4",
+                "length": 2080.595294709442,
+                "score": {
+                  "progress": 0.052527760275212436,
+                  "completed": false,
+                  "time": 1.4666666666666663,
+                  "completedLaps": 0,
+                  "bestLapTime": null
+                },
+                "reason": "collision"
+              },
+              {
+                "scenarioId": "holdout-5",
+                "length": 1715.636213258068,
+                "score": {
+                  "progress": 0.07563583060512934,
+                  "completed": false,
+                  "time": 1.5833333333333326,
+                  "completedLaps": 0,
+                  "bestLapTime": null
+                },
+                "reason": "collision"
+              },
+              {
+                "scenarioId": "holdout-6",
+                "length": 2063.7023207548914,
+                "score": {
+                  "progress": 0.05891053955279466,
+                  "completed": false,
+                  "time": 1.5333333333333328,
+                  "completedLaps": 0,
+                  "bestLapTime": null
+                },
+                "reason": "collision"
+              }
+            ],
+            "aggregate": {
+              "batteryKey": "{\"version\":1,\"laps\":1,\"scenarios\":[[\"holdout-1\",\"holdout\",\"oval\",false,84,2.4615434766747057,-0.01551953935995698,0.9554444990912452,0.9801420651562511,[[317.6868894605895,470.6722040367345,-2.607081420647238,\"block\"],[777.1712589904959,376.3222586507142,1.693932353711308,\"triangle\"]]],[\"holdout-2\",\"holdout\",\"technical\",false,36,-0.9718105201609433,-0.03662917336449027,1.0014536963170393,0.9793453186005353,[[296.7383407249418,538.0837292494637,-3.17454045995785,\"barrier\"],[384.11495991164736,175.02855859448292,0.11868005768002159,\"triangle\"]]],[\"holdout-3\",\"holdout\",\"oval\",true,78,-1.8047049273736775,0.009295153524726629,1.0234490738110615,0.9794309633970261,[[241.36267424119842,431.78337211714256,0.9993103217648229,\"block\"],[277.42657961497264,242.9219773457218,2.698867369051401,\"block\"]]],[\"holdout-4\",\"holdout\",\"technical\",true,12,-0.167204471770674,-0.01718454184010625,0.9920664787851273,0.9687677570804953,[[754.8691963778084,224.315629006193,-2.8381577779494576,\"barrier\"],[894.7677701294818,360.08070947140243,-1.673363397607059,\"triangle\"]]],[\"holdout-5\",\"holdout\",\"oval\",false,84,-2.1027663024142385,0.004620483703911305,1.0244665569718927,1.0059312291629612,[[129.99722540452134,375.3970682132389,-1.9330083748194324,\"barrier\"],[483.7360392919039,185.23410679311698,-0.3545982998905727,\"triangle\"]]],[\"holdout-6\",\"holdout\",\"technical\",false,90,-2.260854387190193,0.032374262008816004,0.9811034546792506,0.9650073708221316,[[320.54962594278936,536.6778469301312,-2.77366513634348,\"block\"],[458.9062814346409,194.0033906190959,0.41830826808852084,\"triangle\"]]]]}",
+              "completed": 0,
+              "total": 6,
+              "completionRate": 0,
+              "meanProgress": 0.06979584279026829,
+              "worstProgress": 0.03620444624768732,
+              "normalizedTime": null
+            }
+          },
+          "firstGeneration": {
+            "generation": 1,
+            "best": 1,
+            "average": 0.11683609792808783,
+            "completed": 2,
+            "completedLaps": 2,
+            "bestLapTime": 9.450000000000049,
+            "bestTime": 9.450000000000049,
+            "metrics": {
+              "population": 40,
+              "launched": 18,
+              "lapCounts": [
+                2
+              ],
+              "completed": 2,
+              "collisions": 24,
+              "stalled": 13,
+              "timeouts": 1,
+              "active": 0,
+              "meanProgress": 0.1168360979280878,
+              "progressStd": 0.2364378752953572,
+              "diversity": 0.4242728741382235,
+              "medianTime": 18.52499999999988
+            }
+          },
+          "lastGeneration": {
+            "generation": 96,
+            "best": 1,
+            "average": 0.4477845220144112,
+            "completed": 16,
+            "completedLaps": 16,
+            "bestLapTime": 7.999999999999977,
+            "bestTime": 7.999999999999977,
+            "metrics": {
+              "population": 40,
+              "launched": 40,
+              "lapCounts": [
+                16
+              ],
+              "completed": 16,
+              "collisions": 24,
+              "stalled": 0,
+              "timeouts": 0,
+              "active": 0,
+              "meanProgress": 0.4477845220144113,
+              "progressStd": 0.4515768340505302,
+              "diversity": 0.17892174832884805,
+              "medianTime": 8.083333333333314
+            }
+          }
+        },
+        {
+          "method": "diverse",
+          "episodes": 3840,
+          "generations": 24,
+          "carSteps": 1686500,
+          "seconds": 12.552866958000003,
+          "sourceGeneration": 24,
+          "nativeTrain": {
+            "batteryKey": "{\"version\":1,\"laps\":1,\"scenarios\":[[\"train-1\",\"train\",\"oval\",false,0,-2.778011734597385,-0.0008000139147043228,1,1,[]],[\"train-2\",\"train\",\"technical\",false,18,-0.8239597636274993,-0.024428876154124736,1,1,[]],[\"train-3\",\"train\",\"oval\",true,84,1.600819309707731,-0.001421331074088812,1,1,[[207.1273589596766,327.2556430766461,2.025574809375989,\"block\"],[433.84289095486736,190.4615900197329,3.2171919726358147,\"triangle\"]]],[\"train-4\",\"train\",\"technical\",true,12,2.804246877785772,0.02576435970142484,1,1,[[404.02177880131387,597.579264966745,0.2647886426170999,\"triangle\"],[534.9647272335254,298.02711035853235,-2.852647340955484,\"triangle\"]]]]}",
+            "completed": 3,
+            "total": 4,
+            "completionRate": 0.75,
+            "meanProgress": 0.8982112711375909,
+            "worstProgress": 0.5928450845503636,
+            "normalizedTime": 0.005364637602001483
+          },
+          "sharedTrain": {
+            "version": 1,
+            "scenarios": [
+              {
+                "id": "train-1",
+                "name": "Oval CCW · train 1",
+                "split": "train",
+                "track": "oval",
+                "reverse": false,
+                "startNode": 0,
+                "lateral": -2.778011734597385,
+                "headingOffset": -0.0008000139147043228,
+                "scaleX": 1,
+                "scaleY": 1,
+                "obstacles": []
+              },
+              {
+                "id": "train-2",
+                "name": "Switchback CCW · train 2",
+                "split": "train",
+                "track": "technical",
+                "reverse": false,
+                "startNode": 18,
+                "lateral": -0.8239597636274993,
+                "headingOffset": -0.024428876154124736,
+                "scaleX": 1,
+                "scaleY": 1,
+                "obstacles": []
+              },
+              {
+                "id": "train-3",
+                "name": "Oval CW · train 3",
+                "split": "train",
+                "track": "oval",
+                "reverse": true,
+                "startNode": 84,
+                "lateral": 1.600819309707731,
+                "headingOffset": -0.001421331074088812,
+                "scaleX": 1,
+                "scaleY": 1,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "triangle",
+                    "x": 433.84289095486736,
+                    "y": 190.4615900197329,
+                    "angle": 3.2171919726358147
+                  },
+                  {
+                    "id": 1,
+                    "kind": "block",
+                    "x": 207.1273589596766,
+                    "y": 327.2556430766461,
+                    "angle": 2.025574809375989
+                  }
+                ]
+              },
+              {
+                "id": "train-4",
+                "name": "Switchback CW · train 4",
+                "split": "train",
+                "track": "technical",
+                "reverse": true,
+                "startNode": 12,
+                "lateral": 2.804246877785772,
+                "headingOffset": 0.02576435970142484,
+                "scaleX": 1,
+                "scaleY": 1,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "triangle",
+                    "x": 534.9647272335254,
+                    "y": 298.02711035853235,
+                    "angle": -2.852647340955484
+                  },
+                  {
+                    "id": 1,
+                    "kind": "triangle",
+                    "x": 404.02177880131387,
+                    "y": 597.579264966745,
+                    "angle": 0.2647886426170999
+                  }
+                ]
+              }
+            ],
+            "outcomes": [
+              {
+                "scenarioId": "train-1",
+                "length": 1684.3054875858809,
+                "score": {
+                  "progress": 1,
+                  "completed": true,
+                  "time": 9.016666666666694,
+                  "completedLaps": 1,
+                  "bestLapTime": 9.016666666666694
+                },
+                "reason": "completed"
+              },
+              {
+                "scenarioId": "train-2",
+                "length": 2117.8940618344736,
+                "score": {
+                  "progress": 1,
+                  "completed": true,
+                  "time": 11.200000000000136,
+                  "completedLaps": 1,
+                  "bestLapTime": 11.200000000000136
+                },
+                "reason": "completed"
+              },
+              {
+                "scenarioId": "train-3",
+                "length": 1684.3054875858813,
+                "score": {
+                  "progress": 1,
+                  "completed": true,
+                  "time": 9.183333333333369,
+                  "completedLaps": 1,
+                  "bestLapTime": 9.183333333333369
+                },
+                "reason": "completed"
+              },
+              {
+                "scenarioId": "train-4",
+                "length": 2117.8940618344723,
+                "score": {
+                  "progress": 0.5928450845503636,
+                  "completed": false,
+                  "time": 7.4666666666666455,
+                  "completedLaps": 0,
+                  "bestLapTime": null
+                },
+                "reason": "collision"
+              }
+            ],
+            "aggregate": {
+              "batteryKey": "{\"version\":1,\"laps\":1,\"scenarios\":[[\"train-1\",\"train\",\"oval\",false,0,-2.778011734597385,-0.0008000139147043228,1,1,[]],[\"train-2\",\"train\",\"technical\",false,18,-0.8239597636274993,-0.024428876154124736,1,1,[]],[\"train-3\",\"train\",\"oval\",true,84,1.600819309707731,-0.001421331074088812,1,1,[[207.1273589596766,327.2556430766461,2.025574809375989,\"block\"],[433.84289095486736,190.4615900197329,3.2171919726358147,\"triangle\"]]],[\"train-4\",\"train\",\"technical\",true,12,2.804246877785772,0.02576435970142484,1,1,[[404.02177880131387,597.579264966745,0.2647886426170999,\"triangle\"],[534.9647272335254,298.02711035853235,-2.852647340955484,\"triangle\"]]]]}",
+              "completed": 3,
+              "total": 4,
+              "completionRate": 0.75,
+              "meanProgress": 0.8982112711375909,
+              "worstProgress": 0.5928450845503636,
+              "normalizedTime": 0.005364637602001483
+            }
+          },
+          "holdout": {
+            "version": 1,
+            "scenarios": [
+              {
+                "id": "holdout-1",
+                "name": "Oval CCW · holdout 1",
+                "split": "holdout",
+                "track": "oval",
+                "reverse": false,
+                "startNode": 84,
+                "lateral": 2.4615434766747057,
+                "headingOffset": -0.01551953935995698,
+                "scaleX": 0.9554444990912452,
+                "scaleY": 0.9801420651562511,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "triangle",
+                    "x": 777.1712589904959,
+                    "y": 376.3222586507142,
+                    "angle": 1.693932353711308
+                  },
+                  {
+                    "id": 1,
+                    "kind": "block",
+                    "x": 317.6868894605895,
+                    "y": 470.6722040367345,
+                    "angle": -2.607081420647238
+                  }
+                ]
+              },
+              {
+                "id": "holdout-2",
+                "name": "Switchback CCW · holdout 2",
+                "split": "holdout",
+                "track": "technical",
+                "reverse": false,
+                "startNode": 36,
+                "lateral": -0.9718105201609433,
+                "headingOffset": -0.03662917336449027,
+                "scaleX": 1.0014536963170393,
+                "scaleY": 0.9793453186005353,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "barrier",
+                    "x": 296.7383407249418,
+                    "y": 538.0837292494637,
+                    "angle": -3.17454045995785
+                  },
+                  {
+                    "id": 1,
+                    "kind": "triangle",
+                    "x": 384.11495991164736,
+                    "y": 175.02855859448292,
+                    "angle": 0.11868005768002159
+                  }
+                ]
+              },
+              {
+                "id": "holdout-3",
+                "name": "Oval CW · holdout 3",
+                "split": "holdout",
+                "track": "oval",
+                "reverse": true,
+                "startNode": 78,
+                "lateral": -1.8047049273736775,
+                "headingOffset": 0.009295153524726629,
+                "scaleX": 1.0234490738110615,
+                "scaleY": 0.9794309633970261,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "block",
+                    "x": 277.42657961497264,
+                    "y": 242.9219773457218,
+                    "angle": 2.698867369051401
+                  },
+                  {
+                    "id": 1,
+                    "kind": "block",
+                    "x": 241.36267424119842,
+                    "y": 431.78337211714256,
+                    "angle": 0.9993103217648229
+                  }
+                ]
+              },
+              {
+                "id": "holdout-4",
+                "name": "Switchback CW · holdout 4",
+                "split": "holdout",
+                "track": "technical",
+                "reverse": true,
+                "startNode": 12,
+                "lateral": -0.167204471770674,
+                "headingOffset": -0.01718454184010625,
+                "scaleX": 0.9920664787851273,
+                "scaleY": 0.9687677570804953,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "triangle",
+                    "x": 894.7677701294818,
+                    "y": 360.08070947140243,
+                    "angle": -1.673363397607059
+                  },
+                  {
+                    "id": 1,
+                    "kind": "barrier",
+                    "x": 754.8691963778084,
+                    "y": 224.315629006193,
+                    "angle": -2.8381577779494576
+                  }
+                ]
+              },
+              {
+                "id": "holdout-5",
+                "name": "Oval CCW · holdout 5",
+                "split": "holdout",
+                "track": "oval",
+                "reverse": false,
+                "startNode": 84,
+                "lateral": -2.1027663024142385,
+                "headingOffset": 0.004620483703911305,
+                "scaleX": 1.0244665569718927,
+                "scaleY": 1.0059312291629612,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "barrier",
+                    "x": 129.99722540452134,
+                    "y": 375.3970682132389,
+                    "angle": -1.9330083748194324
+                  },
+                  {
+                    "id": 1,
+                    "kind": "triangle",
+                    "x": 483.7360392919039,
+                    "y": 185.23410679311698,
+                    "angle": -0.3545982998905727
+                  }
+                ]
+              },
+              {
+                "id": "holdout-6",
+                "name": "Switchback CCW · holdout 6",
+                "split": "holdout",
+                "track": "technical",
+                "reverse": false,
+                "startNode": 90,
+                "lateral": -2.260854387190193,
+                "headingOffset": 0.032374262008816004,
+                "scaleX": 0.9811034546792506,
+                "scaleY": 0.9650073708221316,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "triangle",
+                    "x": 458.9062814346409,
+                    "y": 194.0033906190959,
+                    "angle": 0.41830826808852084
+                  },
+                  {
+                    "id": 1,
+                    "kind": "block",
+                    "x": 320.54962594278936,
+                    "y": 536.6778469301312,
+                    "angle": -2.77366513634348
+                  }
+                ]
+              }
+            ],
+            "outcomes": [
+              {
+                "scenarioId": "holdout-1",
+                "length": 1622.52140082616,
+                "score": {
+                  "progress": 1,
+                  "completed": true,
+                  "time": 8.98333333333336,
+                  "completedLaps": 1,
+                  "bestLapTime": 8.98333333333336
+                },
+                "reason": "completed"
+              },
+              {
+                "scenarioId": "holdout-2",
+                "length": 2101.522265634451,
+                "score": {
+                  "progress": 1,
+                  "completed": true,
+                  "time": 11.266666666666806,
+                  "completedLaps": 1,
+                  "bestLapTime": 11.266666666666806
+                },
+                "reason": "completed"
+              },
+              {
+                "scenarioId": "holdout-3",
+                "length": 1700.4623225496546,
+                "score": {
+                  "progress": 1,
+                  "completed": true,
+                  "time": 9.183333333333369,
+                  "completedLaps": 1,
+                  "bestLapTime": 9.183333333333369
+                },
+                "reason": "completed"
+              },
+              {
+                "scenarioId": "holdout-4",
+                "length": 2080.595294709442,
+                "score": {
+                  "progress": 0.5894707473320315,
+                  "completed": false,
+                  "time": 7.383333333333312,
+                  "completedLaps": 0,
+                  "bestLapTime": null
+                },
+                "reason": "collision"
+              },
+              {
+                "scenarioId": "holdout-5",
+                "length": 1715.636213258068,
+                "score": {
+                  "progress": 1,
+                  "completed": true,
+                  "time": 9.233333333333372,
+                  "completedLaps": 1,
+                  "bestLapTime": 9.233333333333372
+                },
+                "reason": "completed"
+              },
+              {
+                "scenarioId": "holdout-6",
+                "length": 2063.7023207548914,
+                "score": {
+                  "progress": 1,
+                  "completed": true,
+                  "time": 11.000000000000126,
+                  "completedLaps": 1,
+                  "bestLapTime": 11.000000000000126
+                },
+                "reason": "completed"
+              }
+            ],
+            "aggregate": {
+              "batteryKey": "{\"version\":1,\"laps\":1,\"scenarios\":[[\"holdout-1\",\"holdout\",\"oval\",false,84,2.4615434766747057,-0.01551953935995698,0.9554444990912452,0.9801420651562511,[[317.6868894605895,470.6722040367345,-2.607081420647238,\"block\"],[777.1712589904959,376.3222586507142,1.693932353711308,\"triangle\"]]],[\"holdout-2\",\"holdout\",\"technical\",false,36,-0.9718105201609433,-0.03662917336449027,1.0014536963170393,0.9793453186005353,[[296.7383407249418,538.0837292494637,-3.17454045995785,\"barrier\"],[384.11495991164736,175.02855859448292,0.11868005768002159,\"triangle\"]]],[\"holdout-3\",\"holdout\",\"oval\",true,78,-1.8047049273736775,0.009295153524726629,1.0234490738110615,0.9794309633970261,[[241.36267424119842,431.78337211714256,0.9993103217648229,\"block\"],[277.42657961497264,242.9219773457218,2.698867369051401,\"block\"]]],[\"holdout-4\",\"holdout\",\"technical\",true,12,-0.167204471770674,-0.01718454184010625,0.9920664787851273,0.9687677570804953,[[754.8691963778084,224.315629006193,-2.8381577779494576,\"barrier\"],[894.7677701294818,360.08070947140243,-1.673363397607059,\"triangle\"]]],[\"holdout-5\",\"holdout\",\"oval\",false,84,-2.1027663024142385,0.004620483703911305,1.0244665569718927,1.0059312291629612,[[129.99722540452134,375.3970682132389,-1.9330083748194324,\"barrier\"],[483.7360392919039,185.23410679311698,-0.3545982998905727,\"triangle\"]]],[\"holdout-6\",\"holdout\",\"technical\",false,90,-2.260854387190193,0.032374262008816004,0.9811034546792506,0.9650073708221316,[[320.54962594278936,536.6778469301312,-2.77366513634348,\"block\"],[458.9062814346409,194.0033906190959,0.41830826808852084,\"triangle\"]]]]}",
+              "completed": 5,
+              "total": 6,
+              "completionRate": 0.8333333333333334,
+              "meanProgress": 0.9315784578886719,
+              "worstProgress": 0.5894707473320315,
+              "normalizedTime": 0.0054020865528685
+            }
+          },
+          "firstGeneration": {
+            "generation": 1,
+            "best": 0.377642746232802,
+            "average": 0.06831083152924297,
+            "completed": 2,
+            "completedLaps": 2,
+            "bestTime": null,
+            "bestLapTime": null,
+            "metrics": {
+              "population": 160,
+              "launched": 56,
+              "completed": 2,
+              "collisions": 115,
+              "stalled": 41,
+              "timeouts": 2,
+              "active": 0,
+              "lapCounts": [
+                2
+              ],
+              "meanProgress": 0.06831083152924297,
+              "progressStd": 0.13721230245391214,
+              "diversity": 0.4242728741382235,
+              "medianTime": null
+            },
+            "scenarioCount": 4,
+            "consistentFinishers": 0
+          },
+          "lastGeneration": {
+            "generation": 24,
+            "best": 0.8982112711375909,
+            "average": 0.8680804631819147,
+            "completed": 113,
+            "completedLaps": 113,
+            "bestTime": null,
+            "bestLapTime": null,
+            "metrics": {
+              "population": 160,
+              "launched": 160,
+              "completed": 113,
+              "collisions": 46,
+              "stalled": 1,
+              "timeouts": 0,
+              "active": 0,
+              "lapCounts": [
+                113
+              ],
+              "meanProgress": 0.8680804631819147,
+              "progressStd": 0.2104513183604929,
+              "diversity": 0.15628861839127356,
+              "medianTime": null
+            },
+            "scenarioCount": 4,
+            "consistentFinishers": 0
+          }
+        }
+      ]
+    },
+    {
+      "seed": "42",
+      "arms": [
+        {
+          "method": "fixed",
+          "episodes": 3840,
+          "generations": 96,
+          "carSteps": 1251643,
+          "seconds": 9.11816575,
+          "sourceGeneration": 56,
+          "nativeTrain": {
+            "progress": 1,
+            "completed": true,
+            "time": 7.98333333333331,
+            "completedLaps": 1,
+            "bestLapTime": 7.98333333333331
+          },
+          "sharedTrain": {
+            "version": 1,
+            "scenarios": [
+              {
+                "id": "train-1",
+                "name": "Oval CCW · train 1",
+                "split": "train",
+                "track": "oval",
+                "reverse": false,
+                "startNode": 0,
+                "lateral": 1.1874015564098954,
+                "headingOffset": 0.010963712949305773,
+                "scaleX": 1,
+                "scaleY": 1,
+                "obstacles": []
+              },
+              {
+                "id": "train-2",
+                "name": "Switchback CCW · train 2",
+                "split": "train",
+                "track": "technical",
+                "reverse": false,
+                "startNode": 48,
+                "lateral": 1.8285718099214137,
+                "headingOffset": -0.003647006377577782,
+                "scaleX": 1,
+                "scaleY": 1,
+                "obstacles": []
+              },
+              {
+                "id": "train-3",
+                "name": "Oval CW · train 3",
+                "split": "train",
+                "track": "oval",
+                "reverse": true,
+                "startNode": 30,
+                "lateral": -1.4406592547893524,
+                "headingOffset": 0.008410363160073757,
+                "scaleX": 1,
+                "scaleY": 1,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "triangle",
+                    "x": 388.0441237909687,
+                    "y": 571.14159901697,
+                    "angle": 0.38395799083659266
+                  },
+                  {
+                    "id": 1,
+                    "kind": "barrier",
+                    "x": 770.5841247540639,
+                    "y": 193.49162171486438,
+                    "angle": -2.3184079989368827
+                  }
+                ]
+              },
+              {
+                "id": "train-4",
+                "name": "Switchback CW · train 4",
+                "split": "train",
+                "track": "technical",
+                "reverse": true,
+                "startNode": 84,
+                "lateral": -2.354495127685368,
+                "headingOffset": 0.003034660238772631,
+                "scaleX": 1,
+                "scaleY": 1,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "triangle",
+                    "x": 277.8683991709062,
+                    "y": 539.5997578668728,
+                    "angle": 0.2353544132487733
+                  },
+                  {
+                    "id": 1,
+                    "kind": "block",
+                    "x": 116.68855009191654,
+                    "y": 432.58943839220535,
+                    "angle": 1.4948319803917494
+                  }
+                ]
+              }
+            ],
+            "outcomes": [
+              {
+                "scenarioId": "train-1",
+                "length": 1684.3054875858809,
+                "score": {
+                  "progress": 1,
+                  "completed": true,
+                  "time": 7.98333333333331,
+                  "completedLaps": 1,
+                  "bestLapTime": 7.98333333333331
+                },
+                "reason": "completed"
+              },
+              {
+                "scenarioId": "train-2",
+                "length": 2117.894061834473,
+                "score": {
+                  "progress": 0.041703626404480734,
+                  "completed": false,
+                  "time": 1.3166666666666669,
+                  "completedLaps": 0,
+                  "bestLapTime": null
+                },
+                "reason": "collision"
+              },
+              {
+                "scenarioId": "train-3",
+                "length": 1684.3054875858809,
+                "score": {
+                  "progress": 0.04686634602230497,
+                  "completed": false,
+                  "time": 1.35,
+                  "completedLaps": 0,
+                  "bestLapTime": null
+                },
+                "reason": "collision"
+              },
+              {
+                "scenarioId": "train-4",
+                "length": 2117.894061834473,
+                "score": {
+                  "progress": 0.029727438363236776,
+                  "completed": false,
+                  "time": 1.1666666666666674,
+                  "completedLaps": 0,
+                  "bestLapTime": null
+                },
+                "reason": "collision"
+              }
+            ],
+            "aggregate": {
+              "batteryKey": "{\"version\":1,\"laps\":1,\"scenarios\":[[\"train-1\",\"train\",\"oval\",false,0,1.1874015564098954,0.010963712949305773,1,1,[]],[\"train-2\",\"train\",\"technical\",false,48,1.8285718099214137,-0.003647006377577782,1,1,[]],[\"train-3\",\"train\",\"oval\",true,30,-1.4406592547893524,0.008410363160073757,1,1,[[388.0441237909687,571.14159901697,0.38395799083659266,\"triangle\"],[770.5841247540639,193.49162171486438,-2.3184079989368827,\"barrier\"]]],[\"train-4\",\"train\",\"technical\",true,84,-2.354495127685368,0.003034660238772631,1,1,[[116.68855009191654,432.58943839220535,1.4948319803917494,\"block\"],[277.8683991709062,539.5997578668728,0.2353544132487733,\"triangle\"]]]]}",
+              "completed": 1,
+              "total": 4,
+              "completionRate": 0.25,
+              "meanProgress": 0.27957435269750563,
+              "worstProgress": 0.029727438363236776,
+              "normalizedTime": 0.004739836919237164
+            }
+          },
+          "holdout": {
+            "version": 1,
+            "scenarios": [
+              {
+                "id": "holdout-1",
+                "name": "Oval CCW · holdout 1",
+                "split": "holdout",
+                "track": "oval",
+                "reverse": false,
+                "startNode": 6,
+                "lateral": -2.998416975606233,
+                "headingOffset": -0.00797100057825446,
+                "scaleX": 1.035132545218803,
+                "scaleY": 0.9833400846645236,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "circle",
+                    "x": 873.3486598030564,
+                    "y": 324.18155753033295,
+                    "angle": 1.3860484427063118
+                  },
+                  {
+                    "id": 1,
+                    "kind": "barrier",
+                    "x": 723.6854975744598,
+                    "y": 534.8426508523244,
+                    "angle": 2.649889092036555
+                  }
+                ]
+              },
+              {
+                "id": "holdout-2",
+                "name": "Switchback CCW · holdout 2",
+                "split": "holdout",
+                "track": "technical",
+                "reverse": false,
+                "startNode": 30,
+                "lateral": -1.7794067859649658,
+                "headingOffset": -0.01081781817600131,
+                "scaleX": 0.9932890103757381,
+                "scaleY": 1.0168931737914682,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "block",
+                    "x": 285.279212364065,
+                    "y": 177.64476882996723,
+                    "angle": -0.08568574707987325
+                  },
+                  {
+                    "id": 1,
+                    "kind": "circle",
+                    "x": 715.4632948469854,
+                    "y": 579.26307649099,
+                    "angle": 3.3158062016742273
+                  }
+                ]
+              },
+              {
+                "id": "holdout-3",
+                "name": "Oval CW · holdout 3",
+                "split": "holdout",
+                "track": "oval",
+                "reverse": true,
+                "startNode": 66,
+                "lateral": -2.177043508272618,
+                "headingOffset": -0.039726753924041985,
+                "scaleX": 0.9441857870994135,
+                "scaleY": 0.9992224440723657,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "triangle",
+                    "x": 249.8196456587649,
+                    "y": 280.53328612742587,
+                    "angle": 2.2929228106035286
+                  },
+                  {
+                    "id": 1,
+                    "kind": "triangle",
+                    "x": 651.7681636830798,
+                    "y": 213.67619756186014,
+                    "angle": -2.585912025003607
+                  }
+                ]
+              },
+              {
+                "id": "holdout-4",
+                "name": "Switchback CW · holdout 4",
+                "split": "holdout",
+                "track": "technical",
+                "reverse": true,
+                "startNode": 12,
+                "lateral": 1.1868468686006963,
+                "headingOffset": 0.022390252016484737,
+                "scaleX": 0.9784483721340075,
+                "scaleY": 1.0098386119119822,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "triangle",
+                    "x": 717.5416265178303,
+                    "y": 225.77964986710225,
+                    "angle": 2.571679063733383
+                  },
+                  {
+                    "id": 1,
+                    "kind": "circle",
+                    "x": 472.6995953154085,
+                    "y": 227.16590669496864,
+                    "angle": -1.726691197188254
+                  }
+                ]
+              },
+              {
+                "id": "holdout-5",
+                "name": "Oval CCW · holdout 5",
+                "split": "holdout",
+                "track": "oval",
+                "reverse": false,
+                "startNode": 36,
+                "lateral": -0.36110123293474317,
+                "headingOffset": 0.020078585091978313,
+                "scaleX": 0.9908208733517676,
+                "scaleY": 0.9839764424972236,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "triangle",
+                    "x": 574.1341003069865,
+                    "y": 574.2032159225349,
+                    "angle": 3.130781591331695
+                  },
+                  {
+                    "id": 1,
+                    "kind": "triangle",
+                    "x": 858.9961319375302,
+                    "y": 325.2661590729077,
+                    "angle": 1.0518939954697566
+                  }
+                ]
+              },
+              {
+                "id": "holdout-6",
+                "name": "Switchback CCW · holdout 6",
+                "split": "holdout",
+                "track": "technical",
+                "reverse": false,
+                "startNode": 30,
+                "lateral": -2.096589114982635,
+                "headingOffset": 0.010419743824750185,
+                "scaleX": 0.9925438997428864,
+                "scaleY": 0.9667821639589965,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "block",
+                    "x": 403.3582961161672,
+                    "y": 536.4897637356612,
+                    "angle": 2.848196143107313
+                  },
+                  {
+                    "id": 1,
+                    "kind": "triangle",
+                    "x": 116.32298188980344,
+                    "y": 337.7357644165437,
+                    "angle": -1.767568093806303
+                  }
+                ]
+              }
+            ],
+            "outcomes": [
+              {
+                "scenarioId": "holdout-1",
+                "length": 1716.0583117154574,
+                "score": {
+                  "progress": 0.08726595376270396,
+                  "completed": false,
+                  "time": 1.6666666666666656,
+                  "completedLaps": 0,
+                  "bestLapTime": null
+                },
+                "reason": "collision"
+              },
+              {
+                "scenarioId": "holdout-2",
+                "length": 2124.595273174389,
+                "score": {
+                  "progress": 0.04674612510666737,
+                  "completed": false,
+                  "time": 1.3000000000000003,
+                  "completedLaps": 0,
+                  "bestLapTime": null
+                },
+                "reason": "collision"
+              },
+              {
+                "scenarioId": "holdout-3",
+                "length": 1619.9735652238812,
+                "score": {
+                  "progress": 0.05653006777558173,
+                  "completed": false,
+                  "time": 1.4,
+                  "completedLaps": 0,
+                  "bestLapTime": null
+                },
+                "reason": "collision"
+              },
+              {
+                "scenarioId": "holdout-4",
+                "length": 2100.098955295618,
+                "score": {
+                  "progress": 0.0602048862715494,
+                  "completed": false,
+                  "time": 1.566666666666666,
+                  "completedLaps": 0,
+                  "bestLapTime": null
+                },
+                "reason": "collision"
+              },
+              {
+                "scenarioId": "holdout-5",
+                "length": 1665.1904211613976,
+                "score": {
+                  "progress": 0.3169016278493789,
+                  "completed": false,
+                  "time": 3.383333333333326,
+                  "completedLaps": 0,
+                  "bestLapTime": null
+                },
+                "reason": "collision"
+              },
+              {
+                "scenarioId": "holdout-6",
+                "length": 2079.444002470781,
+                "score": {
+                  "progress": 0.06404952711252679,
+                  "completed": false,
+                  "time": 1.4999999999999996,
+                  "completedLaps": 0,
+                  "bestLapTime": null
+                },
+                "reason": "collision"
+              }
+            ],
+            "aggregate": {
+              "batteryKey": "{\"version\":1,\"laps\":1,\"scenarios\":[[\"holdout-1\",\"holdout\",\"oval\",false,6,-2.998416975606233,-0.00797100057825446,1.035132545218803,0.9833400846645236,[[723.6854975744598,534.8426508523244,2.649889092036555,\"barrier\"],[873.3486598030564,324.18155753033295,1.3860484427063118,\"circle\"]]],[\"holdout-2\",\"holdout\",\"technical\",false,30,-1.7794067859649658,-0.01081781817600131,0.9932890103757381,1.0168931737914682,[[285.279212364065,177.64476882996723,-0.08568574707987325,\"block\"],[715.4632948469854,579.26307649099,3.3158062016742273,\"circle\"]]],[\"holdout-3\",\"holdout\",\"oval\",true,66,-2.177043508272618,-0.039726753924041985,0.9441857870994135,0.9992224440723657,[[249.8196456587649,280.53328612742587,2.2929228106035286,\"triangle\"],[651.7681636830798,213.67619756186014,-2.585912025003607,\"triangle\"]]],[\"holdout-4\",\"holdout\",\"technical\",true,12,1.1868468686006963,0.022390252016484737,0.9784483721340075,1.0098386119119822,[[472.6995953154085,227.16590669496864,-1.726691197188254,\"circle\"],[717.5416265178303,225.77964986710225,2.571679063733383,\"triangle\"]]],[\"holdout-5\",\"holdout\",\"oval\",false,36,-0.36110123293474317,0.020078585091978313,0.9908208733517676,0.9839764424972236,[[574.1341003069865,574.2032159225349,3.130781591331695,\"triangle\"],[858.9961319375302,325.2661590729077,1.0518939954697566,\"triangle\"]]],[\"holdout-6\",\"holdout\",\"technical\",false,30,-2.096589114982635,0.010419743824750185,0.9925438997428864,0.9667821639589965,[[116.32298188980344,337.7357644165437,-1.767568093806303,\"triangle\"],[403.3582961161672,536.4897637356612,2.848196143107313,\"block\"]]]]}",
+              "completed": 0,
+              "total": 6,
+              "completionRate": 0,
+              "meanProgress": 0.10528303131306803,
+              "worstProgress": 0.04674612510666737,
+              "normalizedTime": null
+            }
+          },
+          "firstGeneration": {
+            "generation": 1,
+            "best": 0.2955216795314152,
+            "average": 0.03743120673311467,
+            "completed": 0,
+            "completedLaps": 0,
+            "bestLapTime": null,
+            "bestTime": null,
+            "metrics": {
+              "population": 40,
+              "launched": 14,
+              "lapCounts": [
+                0
+              ],
+              "completed": 0,
+              "collisions": 25,
+              "stalled": 15,
+              "timeouts": 0,
+              "active": 0,
+              "meanProgress": 0.037431206733114675,
+              "progressStd": 0.05883280509541028,
+              "diversity": 0.4218126133399432,
+              "medianTime": null
+            }
+          },
+          "lastGeneration": {
+            "generation": 96,
+            "best": 1,
+            "average": 0.650787098255073,
+            "completed": 25,
+            "completedLaps": 25,
+            "bestLapTime": 7.98333333333331,
+            "bestTime": 7.98333333333331,
+            "metrics": {
+              "population": 40,
+              "launched": 37,
+              "lapCounts": [
+                25
+              ],
+              "completed": 25,
+              "collisions": 15,
+              "stalled": 0,
+              "timeouts": 0,
+              "active": 0,
+              "meanProgress": 0.650787098255073,
+              "progressStd": 0.45103435176857254,
+              "diversity": 0.1363368523002096,
+              "medianTime": 8.066666666666647
+            }
+          }
+        },
+        {
+          "method": "diverse",
+          "episodes": 3840,
+          "generations": 24,
+          "carSteps": 1742508,
+          "seconds": 13.164272999999998,
+          "sourceGeneration": 23,
+          "nativeTrain": {
+            "batteryKey": "{\"version\":1,\"laps\":1,\"scenarios\":[[\"train-1\",\"train\",\"oval\",false,0,1.1874015564098954,0.010963712949305773,1,1,[]],[\"train-2\",\"train\",\"technical\",false,48,1.8285718099214137,-0.003647006377577782,1,1,[]],[\"train-3\",\"train\",\"oval\",true,30,-1.4406592547893524,0.008410363160073757,1,1,[[388.0441237909687,571.14159901697,0.38395799083659266,\"triangle\"],[770.5841247540639,193.49162171486438,-2.3184079989368827,\"barrier\"]]],[\"train-4\",\"train\",\"technical\",true,84,-2.354495127685368,0.003034660238772631,1,1,[[116.68855009191654,432.58943839220535,1.4948319803917494,\"block\"],[277.8683991709062,539.5997578668728,0.2353544132487733,\"triangle\"]]]]}",
+            "completed": 4,
+            "total": 4,
+            "completionRate": 1,
+            "meanProgress": 1,
+            "worstProgress": 1,
+            "normalizedTime": 0.005009029299035047
+          },
+          "sharedTrain": {
+            "version": 1,
+            "scenarios": [
+              {
+                "id": "train-1",
+                "name": "Oval CCW · train 1",
+                "split": "train",
+                "track": "oval",
+                "reverse": false,
+                "startNode": 0,
+                "lateral": 1.1874015564098954,
+                "headingOffset": 0.010963712949305773,
+                "scaleX": 1,
+                "scaleY": 1,
+                "obstacles": []
+              },
+              {
+                "id": "train-2",
+                "name": "Switchback CCW · train 2",
+                "split": "train",
+                "track": "technical",
+                "reverse": false,
+                "startNode": 48,
+                "lateral": 1.8285718099214137,
+                "headingOffset": -0.003647006377577782,
+                "scaleX": 1,
+                "scaleY": 1,
+                "obstacles": []
+              },
+              {
+                "id": "train-3",
+                "name": "Oval CW · train 3",
+                "split": "train",
+                "track": "oval",
+                "reverse": true,
+                "startNode": 30,
+                "lateral": -1.4406592547893524,
+                "headingOffset": 0.008410363160073757,
+                "scaleX": 1,
+                "scaleY": 1,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "triangle",
+                    "x": 388.0441237909687,
+                    "y": 571.14159901697,
+                    "angle": 0.38395799083659266
+                  },
+                  {
+                    "id": 1,
+                    "kind": "barrier",
+                    "x": 770.5841247540639,
+                    "y": 193.49162171486438,
+                    "angle": -2.3184079989368827
+                  }
+                ]
+              },
+              {
+                "id": "train-4",
+                "name": "Switchback CW · train 4",
+                "split": "train",
+                "track": "technical",
+                "reverse": true,
+                "startNode": 84,
+                "lateral": -2.354495127685368,
+                "headingOffset": 0.003034660238772631,
+                "scaleX": 1,
+                "scaleY": 1,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "triangle",
+                    "x": 277.8683991709062,
+                    "y": 539.5997578668728,
+                    "angle": 0.2353544132487733
+                  },
+                  {
+                    "id": 1,
+                    "kind": "block",
+                    "x": 116.68855009191654,
+                    "y": 432.58943839220535,
+                    "angle": 1.4948319803917494
+                  }
+                ]
+              }
+            ],
+            "outcomes": [
+              {
+                "scenarioId": "train-1",
+                "length": 1684.3054875858809,
+                "score": {
+                  "progress": 1,
+                  "completed": true,
+                  "time": 8.149999999999984,
+                  "completedLaps": 1,
+                  "bestLapTime": 8.149999999999984
+                },
+                "reason": "completed"
+              },
+              {
+                "scenarioId": "train-2",
+                "length": 2117.894061834473,
+                "score": {
+                  "progress": 1,
+                  "completed": true,
+                  "time": 10.166666666666751,
+                  "completedLaps": 1,
+                  "bestLapTime": 10.166666666666751
+                },
+                "reason": "completed"
+              },
+              {
+                "scenarioId": "train-3",
+                "length": 1684.3054875858809,
+                "score": {
+                  "progress": 1,
+                  "completed": true,
+                  "time": 8.816666666666684,
+                  "completedLaps": 1,
+                  "bestLapTime": 8.816666666666684
+                },
+                "reason": "completed"
+              },
+              {
+                "scenarioId": "train-4",
+                "length": 2117.894061834473,
+                "score": {
+                  "progress": 1,
+                  "completed": true,
+                  "time": 10.933333333333456,
+                  "completedLaps": 1,
+                  "bestLapTime": 10.933333333333456
+                },
+                "reason": "completed"
+              }
+            ],
+            "aggregate": {
+              "batteryKey": "{\"version\":1,\"laps\":1,\"scenarios\":[[\"train-1\",\"train\",\"oval\",false,0,1.1874015564098954,0.010963712949305773,1,1,[]],[\"train-2\",\"train\",\"technical\",false,48,1.8285718099214137,-0.003647006377577782,1,1,[]],[\"train-3\",\"train\",\"oval\",true,30,-1.4406592547893524,0.008410363160073757,1,1,[[388.0441237909687,571.14159901697,0.38395799083659266,\"triangle\"],[770.5841247540639,193.49162171486438,-2.3184079989368827,\"barrier\"]]],[\"train-4\",\"train\",\"technical\",true,84,-2.354495127685368,0.003034660238772631,1,1,[[116.68855009191654,432.58943839220535,1.4948319803917494,\"block\"],[277.8683991709062,539.5997578668728,0.2353544132487733,\"triangle\"]]]]}",
+              "completed": 4,
+              "total": 4,
+              "completionRate": 1,
+              "meanProgress": 1,
+              "worstProgress": 1,
+              "normalizedTime": 0.005009029299035047
+            }
+          },
+          "holdout": {
+            "version": 1,
+            "scenarios": [
+              {
+                "id": "holdout-1",
+                "name": "Oval CCW · holdout 1",
+                "split": "holdout",
+                "track": "oval",
+                "reverse": false,
+                "startNode": 6,
+                "lateral": -2.998416975606233,
+                "headingOffset": -0.00797100057825446,
+                "scaleX": 1.035132545218803,
+                "scaleY": 0.9833400846645236,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "circle",
+                    "x": 873.3486598030564,
+                    "y": 324.18155753033295,
+                    "angle": 1.3860484427063118
+                  },
+                  {
+                    "id": 1,
+                    "kind": "barrier",
+                    "x": 723.6854975744598,
+                    "y": 534.8426508523244,
+                    "angle": 2.649889092036555
+                  }
+                ]
+              },
+              {
+                "id": "holdout-2",
+                "name": "Switchback CCW · holdout 2",
+                "split": "holdout",
+                "track": "technical",
+                "reverse": false,
+                "startNode": 30,
+                "lateral": -1.7794067859649658,
+                "headingOffset": -0.01081781817600131,
+                "scaleX": 0.9932890103757381,
+                "scaleY": 1.0168931737914682,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "block",
+                    "x": 285.279212364065,
+                    "y": 177.64476882996723,
+                    "angle": -0.08568574707987325
+                  },
+                  {
+                    "id": 1,
+                    "kind": "circle",
+                    "x": 715.4632948469854,
+                    "y": 579.26307649099,
+                    "angle": 3.3158062016742273
+                  }
+                ]
+              },
+              {
+                "id": "holdout-3",
+                "name": "Oval CW · holdout 3",
+                "split": "holdout",
+                "track": "oval",
+                "reverse": true,
+                "startNode": 66,
+                "lateral": -2.177043508272618,
+                "headingOffset": -0.039726753924041985,
+                "scaleX": 0.9441857870994135,
+                "scaleY": 0.9992224440723657,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "triangle",
+                    "x": 249.8196456587649,
+                    "y": 280.53328612742587,
+                    "angle": 2.2929228106035286
+                  },
+                  {
+                    "id": 1,
+                    "kind": "triangle",
+                    "x": 651.7681636830798,
+                    "y": 213.67619756186014,
+                    "angle": -2.585912025003607
+                  }
+                ]
+              },
+              {
+                "id": "holdout-4",
+                "name": "Switchback CW · holdout 4",
+                "split": "holdout",
+                "track": "technical",
+                "reverse": true,
+                "startNode": 12,
+                "lateral": 1.1868468686006963,
+                "headingOffset": 0.022390252016484737,
+                "scaleX": 0.9784483721340075,
+                "scaleY": 1.0098386119119822,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "triangle",
+                    "x": 717.5416265178303,
+                    "y": 225.77964986710225,
+                    "angle": 2.571679063733383
+                  },
+                  {
+                    "id": 1,
+                    "kind": "circle",
+                    "x": 472.6995953154085,
+                    "y": 227.16590669496864,
+                    "angle": -1.726691197188254
+                  }
+                ]
+              },
+              {
+                "id": "holdout-5",
+                "name": "Oval CCW · holdout 5",
+                "split": "holdout",
+                "track": "oval",
+                "reverse": false,
+                "startNode": 36,
+                "lateral": -0.36110123293474317,
+                "headingOffset": 0.020078585091978313,
+                "scaleX": 0.9908208733517676,
+                "scaleY": 0.9839764424972236,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "triangle",
+                    "x": 574.1341003069865,
+                    "y": 574.2032159225349,
+                    "angle": 3.130781591331695
+                  },
+                  {
+                    "id": 1,
+                    "kind": "triangle",
+                    "x": 858.9961319375302,
+                    "y": 325.2661590729077,
+                    "angle": 1.0518939954697566
+                  }
+                ]
+              },
+              {
+                "id": "holdout-6",
+                "name": "Switchback CCW · holdout 6",
+                "split": "holdout",
+                "track": "technical",
+                "reverse": false,
+                "startNode": 30,
+                "lateral": -2.096589114982635,
+                "headingOffset": 0.010419743824750185,
+                "scaleX": 0.9925438997428864,
+                "scaleY": 0.9667821639589965,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "block",
+                    "x": 403.3582961161672,
+                    "y": 536.4897637356612,
+                    "angle": 2.848196143107313
+                  },
+                  {
+                    "id": 1,
+                    "kind": "triangle",
+                    "x": 116.32298188980344,
+                    "y": 337.7357644165437,
+                    "angle": -1.767568093806303
+                  }
+                ]
+              }
+            ],
+            "outcomes": [
+              {
+                "scenarioId": "holdout-1",
+                "length": 1716.0583117154574,
+                "score": {
+                  "progress": 1,
+                  "completed": true,
+                  "time": 8.38333333333333,
+                  "completedLaps": 1,
+                  "bestLapTime": 8.38333333333333
+                },
+                "reason": "completed"
+              },
+              {
+                "scenarioId": "holdout-2",
+                "length": 2124.595273174389,
+                "score": {
+                  "progress": 1,
+                  "completed": true,
+                  "time": 10.716666666666779,
+                  "completedLaps": 1,
+                  "bestLapTime": 10.716666666666779
+                },
+                "reason": "completed"
+              },
+              {
+                "scenarioId": "holdout-3",
+                "length": 1619.9735652238812,
+                "score": {
+                  "progress": 1,
+                  "completed": true,
+                  "time": 8.58333333333334,
+                  "completedLaps": 1,
+                  "bestLapTime": 8.58333333333334
+                },
+                "reason": "completed"
+              },
+              {
+                "scenarioId": "holdout-4",
+                "length": 2100.098955295618,
+                "score": {
+                  "progress": 0.5767719051958139,
+                  "completed": false,
+                  "time": 7.09999999999998,
+                  "completedLaps": 0,
+                  "bestLapTime": null
+                },
+                "reason": "collision"
+              },
+              {
+                "scenarioId": "holdout-5",
+                "length": 1665.1904211613976,
+                "score": {
+                  "progress": 1,
+                  "completed": true,
+                  "time": 8.066666666666647,
+                  "completedLaps": 1,
+                  "bestLapTime": 8.066666666666647
+                },
+                "reason": "completed"
+              },
+              {
+                "scenarioId": "holdout-6",
+                "length": 2079.444002470781,
+                "score": {
+                  "progress": 0.7348610250015641,
+                  "completed": false,
+                  "time": 7.9333333333333105,
+                  "completedLaps": 0,
+                  "bestLapTime": null
+                },
+                "reason": "collision"
+              }
+            ],
+            "aggregate": {
+              "batteryKey": "{\"version\":1,\"laps\":1,\"scenarios\":[[\"holdout-1\",\"holdout\",\"oval\",false,6,-2.998416975606233,-0.00797100057825446,1.035132545218803,0.9833400846645236,[[723.6854975744598,534.8426508523244,2.649889092036555,\"barrier\"],[873.3486598030564,324.18155753033295,1.3860484427063118,\"circle\"]]],[\"holdout-2\",\"holdout\",\"technical\",false,30,-1.7794067859649658,-0.01081781817600131,0.9932890103757381,1.0168931737914682,[[285.279212364065,177.64476882996723,-0.08568574707987325,\"block\"],[715.4632948469854,579.26307649099,3.3158062016742273,\"circle\"]]],[\"holdout-3\",\"holdout\",\"oval\",true,66,-2.177043508272618,-0.039726753924041985,0.9441857870994135,0.9992224440723657,[[249.8196456587649,280.53328612742587,2.2929228106035286,\"triangle\"],[651.7681636830798,213.67619756186014,-2.585912025003607,\"triangle\"]]],[\"holdout-4\",\"holdout\",\"technical\",true,12,1.1868468686006963,0.022390252016484737,0.9784483721340075,1.0098386119119822,[[472.6995953154085,227.16590669496864,-1.726691197188254,\"circle\"],[717.5416265178303,225.77964986710225,2.571679063733383,\"triangle\"]]],[\"holdout-5\",\"holdout\",\"oval\",false,36,-0.36110123293474317,0.020078585091978313,0.9908208733517676,0.9839764424972236,[[574.1341003069865,574.2032159225349,3.130781591331695,\"triangle\"],[858.9961319375302,325.2661590729077,1.0518939954697566,\"triangle\"]]],[\"holdout-6\",\"holdout\",\"technical\",false,30,-2.096589114982635,0.010419743824750185,0.9925438997428864,0.9667821639589965,[[116.32298188980344,337.7357644165437,-1.767568093806303,\"triangle\"],[403.3582961161672,536.4897637356612,2.848196143107313,\"block\"]]]]}",
+              "completed": 4,
+              "total": 6,
+              "completionRate": 0.6666666666666666,
+              "meanProgress": 0.8852721550328964,
+              "worstProgress": 0.5767719051958139,
+              "normalizedTime": 0.005018013879372319
+            }
+          },
+          "firstGeneration": {
+            "generation": 1,
+            "best": 0.13046156864788933,
+            "average": 0.02502128033252632,
+            "completed": 0,
+            "completedLaps": 0,
+            "bestTime": null,
+            "bestLapTime": null,
+            "metrics": {
+              "population": 160,
+              "launched": 32,
+              "completed": 0,
+              "collisions": 90,
+              "stalled": 69,
+              "timeouts": 1,
+              "active": 0,
+              "lapCounts": [
+                0
+              ],
+              "meanProgress": 0.02502128033252632,
+              "progressStd": 0.046635053094449715,
+              "diversity": 0.4218126133399432,
+              "medianTime": null
+            },
+            "scenarioCount": 4,
+            "consistentFinishers": 0
+          },
+          "lastGeneration": {
+            "generation": 24,
+            "best": 1,
+            "average": 0.7577476838685288,
+            "completed": 104,
+            "completedLaps": 104,
+            "bestTime": null,
+            "bestLapTime": null,
+            "metrics": {
+              "population": 160,
+              "launched": 160,
+              "completed": 104,
+              "collisions": 56,
+              "stalled": 0,
+              "timeouts": 0,
+              "active": 0,
+              "lapCounts": [
+                104
+              ],
+              "meanProgress": 0.7577476838685288,
+              "progressStd": 0.34972876690203974,
+              "diversity": 0.14801015690932273,
+              "medianTime": null
+            },
+            "scenarioCount": 4,
+            "consistentFinishers": 18
+          }
+        }
+      ]
+    },
+    {
+      "seed": "2026",
+      "arms": [
+        {
+          "method": "fixed",
+          "episodes": 3840,
+          "generations": 96,
+          "carSteps": 1248174,
+          "seconds": 8.930855374999998,
+          "sourceGeneration": 29,
+          "nativeTrain": {
+            "progress": 1,
+            "completed": true,
+            "time": 7.98333333333331,
+            "completedLaps": 1,
+            "bestLapTime": 7.98333333333331
+          },
+          "sharedTrain": {
+            "version": 1,
+            "scenarios": [
+              {
+                "id": "train-1",
+                "name": "Oval CCW · train 1",
+                "split": "train",
+                "track": "oval",
+                "reverse": false,
+                "startNode": 0,
+                "lateral": -2.980982373934239,
+                "headingOffset": 0.02225846763700247,
+                "scaleX": 1,
+                "scaleY": 1,
+                "obstacles": []
+              },
+              {
+                "id": "train-2",
+                "name": "Switchback CCW · train 2",
+                "split": "train",
+                "track": "technical",
+                "reverse": false,
+                "startNode": 48,
+                "lateral": -2.1003647167235613,
+                "headingOffset": 0.0058135737106204035,
+                "scaleX": 1,
+                "scaleY": 1,
+                "obstacles": []
+              },
+              {
+                "id": "train-3",
+                "name": "Oval CW · train 3",
+                "split": "train",
+                "track": "oval",
+                "reverse": true,
+                "startNode": 42,
+                "lateral": -2.7786278394050896,
+                "headingOffset": 0.019428068399429323,
+                "scaleX": 1,
+                "scaleY": 1,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "block",
+                    "x": 258.1561609973368,
+                    "y": 442.79524446334256,
+                    "angle": 0.7667603667851616
+                  },
+                  {
+                    "id": 1,
+                    "kind": "block",
+                    "x": 753.1587275039345,
+                    "y": 266.8411233128549,
+                    "angle": -2.1133315323849113
+                  }
+                ]
+              },
+              {
+                "id": "train-4",
+                "name": "Switchback CW · train 4",
+                "split": "train",
+                "track": "technical",
+                "reverse": true,
+                "startNode": 90,
+                "lateral": 2.4310814263299108,
+                "headingOffset": -0.030223341770470143,
+                "scaleX": 1,
+                "scaleY": 1,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "triangle",
+                    "x": 157.7093512478511,
+                    "y": 522.0807576362109,
+                    "angle": 1.3260711857951735
+                  },
+                  {
+                    "id": 1,
+                    "kind": "barrier",
+                    "x": 659.7067890546865,
+                    "y": 279.885539879927,
+                    "angle": 2.3911610850191303
+                  }
+                ]
+              }
+            ],
+            "outcomes": [
+              {
+                "scenarioId": "train-1",
+                "length": 1684.3054875858809,
+                "score": {
+                  "progress": 1,
+                  "completed": true,
+                  "time": 7.999999999999977,
+                  "completedLaps": 1,
+                  "bestLapTime": 7.999999999999977
+                },
+                "reason": "completed"
+              },
+              {
+                "scenarioId": "train-2",
+                "length": 2117.894061834473,
+                "score": {
+                  "progress": 0.04003823537764586,
+                  "completed": false,
+                  "time": 1.3000000000000003,
+                  "completedLaps": 0,
+                  "bestLapTime": null
+                },
+                "reason": "collision"
+              },
+              {
+                "scenarioId": "train-3",
+                "length": 1684.3054875858804,
+                "score": {
+                  "progress": 0.07975092597149312,
+                  "completed": false,
+                  "time": 1.6666666666666656,
+                  "completedLaps": 0,
+                  "bestLapTime": null
+                },
+                "reason": "collision"
+              },
+              {
+                "scenarioId": "train-4",
+                "length": 2117.8940618344736,
+                "score": {
+                  "progress": 0.05268106836801048,
+                  "completed": false,
+                  "time": 1.483333333333333,
+                  "completedLaps": 0,
+                  "bestLapTime": null
+                },
+                "reason": "collision"
+              }
+            ],
+            "aggregate": {
+              "batteryKey": "{\"version\":1,\"laps\":1,\"scenarios\":[[\"train-1\",\"train\",\"oval\",false,0,-2.980982373934239,0.02225846763700247,1,1,[]],[\"train-2\",\"train\",\"technical\",false,48,-2.1003647167235613,0.0058135737106204035,1,1,[]],[\"train-3\",\"train\",\"oval\",true,42,-2.7786278394050896,0.019428068399429323,1,1,[[258.1561609973368,442.79524446334256,0.7667603667851616,\"block\"],[753.1587275039345,266.8411233128549,-2.1133315323849113,\"block\"]]],[\"train-4\",\"train\",\"technical\",true,90,2.4310814263299108,-0.030223341770470143,1,1,[[157.7093512478511,522.0807576362109,1.3260711857951735,\"triangle\"],[659.7067890546865,279.885539879927,2.3911610850191303,\"barrier\"]]]]}",
+              "completed": 1,
+              "total": 4,
+              "completionRate": 0.25,
+              "meanProgress": 0.29311755742928736,
+              "worstProgress": 0.04003823537764586,
+              "normalizedTime": 0.004749732194642669
+            }
+          },
+          "holdout": {
+            "version": 1,
+            "scenarios": [
+              {
+                "id": "holdout-1",
+                "name": "Oval CCW · holdout 1",
+                "split": "holdout",
+                "track": "oval",
+                "reverse": false,
+                "startNode": 36,
+                "lateral": -1.4969572951085865,
+                "headingOffset": -0.003735771756619215,
+                "scaleX": 1.0359381877211853,
+                "scaleY": 0.9701285884156823,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "triangle",
+                    "x": 617.0771403930281,
+                    "y": 204.4499221330135,
+                    "angle": 0.1067525414510125
+                  },
+                  {
+                    "id": 1,
+                    "kind": "block",
+                    "x": 260.92057897408114,
+                    "y": 525.7332181357699,
+                    "angle": -3.0071445361945655
+                  }
+                ]
+              },
+              {
+                "id": "holdout-2",
+                "name": "Switchback CCW · holdout 2",
+                "split": "holdout",
+                "track": "technical",
+                "reverse": false,
+                "startNode": 30,
+                "lateral": 0.6811103951185942,
+                "headingOffset": 0.022163318153470755,
+                "scaleX": 1.0030177014740183,
+                "scaleY": 0.9706163216941058,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "block",
+                    "x": 342.77035900868833,
+                    "y": 177.5144769810532,
+                    "angle": -0.36180656212747775
+                  },
+                  {
+                    "id": 1,
+                    "kind": "barrier",
+                    "x": 124.67263249874993,
+                    "y": 459.4296901403029,
+                    "angle": -2.278824938047716
+                  }
+                ]
+              },
+              {
+                "id": "holdout-3",
+                "name": "Oval CW · holdout 3",
+                "split": "holdout",
+                "track": "oval",
+                "reverse": true,
+                "startNode": 36,
+                "lateral": 0.037519446574151516,
+                "headingOffset": -0.03215666875243187,
+                "scaleX": 0.984651039596647,
+                "scaleY": 1.007096720431,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "block",
+                    "x": 761.4235192589061,
+                    "y": 420.8963146931078,
+                    "angle": -1.1047140793207644
+                  },
+                  {
+                    "id": 1,
+                    "kind": "circle",
+                    "x": 445.04833061941815,
+                    "y": 119.1494510039567,
+                    "angle": 2.9817677760871057
+                  }
+                ]
+              },
+              {
+                "id": "holdout-4",
+                "name": "Switchback CW · holdout 4",
+                "split": "holdout",
+                "track": "technical",
+                "reverse": true,
+                "startNode": 84,
+                "lateral": -2.7053162804804742,
+                "headingOffset": -0.017121040280908346,
+                "scaleX": 0.988428515670821,
+                "scaleY": 0.9941729319095611,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "block",
+                    "x": 129.3868501321409,
+                    "y": 288.52738836301717,
+                    "angle": 1.8421318703701068
+                  },
+                  {
+                    "id": 1,
+                    "kind": "circle",
+                    "x": 303.8263174691723,
+                    "y": 178.08766248933898,
+                    "angle": 2.8504946182975353
+                  }
+                ]
+              },
+              {
+                "id": "holdout-5",
+                "name": "Oval CCW · holdout 5",
+                "split": "holdout",
+                "track": "oval",
+                "reverse": false,
+                "startNode": 30,
+                "lateral": -2.348791228607297,
+                "headingOffset": 0.03940548546612263,
+                "scaleX": 1.0201000574138015,
+                "scaleY": 1.0218410540185867,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "barrier",
+                    "x": 433.52841482044175,
+                    "y": 186.09335497920162,
+                    "angle": -0.03840217853673719
+                  },
+                  {
+                    "id": 1,
+                    "kind": "block",
+                    "x": 242.7336780137356,
+                    "y": 521.3214621498695,
+                    "angle": -2.481888002644711
+                  }
+                ]
+              },
+              {
+                "id": "holdout-6",
+                "name": "Switchback CCW · holdout 6",
+                "split": "holdout",
+                "track": "technical",
+                "reverse": false,
+                "startNode": 48,
+                "lateral": 2.796753727365285,
+                "headingOffset": 0.026460771393030883,
+                "scaleX": 0.9425455307448283,
+                "scaleY": 0.9990019300766289,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "circle",
+                    "x": 211.60743974464782,
+                    "y": 166.8508139570853,
+                    "angle": -0.9914003638512532
+                  },
+                  {
+                    "id": 1,
+                    "kind": "circle",
+                    "x": 193.19600693405852,
+                    "y": 434.4668507812509,
+                    "angle": -2.194571128277679
+                  }
+                ]
+              }
+            ],
+            "outcomes": [
+              {
+                "scenarioId": "holdout-1",
+                "length": 1710.0873744348842,
+                "score": {
+                  "progress": 0.174535077727939,
+                  "completed": false,
+                  "time": 2.416666666666663,
+                  "completedLaps": 0,
+                  "bestLapTime": null
+                },
+                "reason": "collision"
+              },
+              {
+                "scenarioId": "holdout-2",
+                "length": 2095.8102421594435,
+                "score": {
+                  "progress": 0.0684006735947941,
+                  "completed": false,
+                  "time": 1.5499999999999994,
+                  "completedLaps": 0,
+                  "bestLapTime": null
+                },
+                "reason": "collision"
+              },
+              {
+                "scenarioId": "holdout-3",
+                "length": 1670.4985770569604,
+                "score": {
+                  "progress": 0.07257310306407333,
+                  "completed": false,
+                  "time": 1.5999999999999992,
+                  "completedLaps": 0,
+                  "bestLapTime": null
+                },
+                "reason": "collision"
+              },
+              {
+                "scenarioId": "holdout-4",
+                "length": 2098.464385532829,
+                "score": {
+                  "progress": 0.03315100770686086,
+                  "completed": false,
+                  "time": 1.2333333333333338,
+                  "completedLaps": 0,
+                  "bestLapTime": null
+                },
+                "reason": "collision"
+              },
+              {
+                "scenarioId": "holdout-5",
+                "length": 1719.0903383268362,
+                "score": {
+                  "progress": 0.11346489302671871,
+                  "completed": false,
+                  "time": 1.8999999999999981,
+                  "completedLaps": 0,
+                  "bestLapTime": null
+                },
+                "reason": "collision"
+              },
+              {
+                "scenarioId": "holdout-6",
+                "length": 2046.4067057375814,
+                "score": {
+                  "progress": 0.04029075743823751,
+                  "completed": false,
+                  "time": 1.266666666666667,
+                  "completedLaps": 0,
+                  "bestLapTime": null
+                },
+                "reason": "collision"
+              }
+            ],
+            "aggregate": {
+              "batteryKey": "{\"version\":1,\"laps\":1,\"scenarios\":[[\"holdout-1\",\"holdout\",\"oval\",false,36,-1.4969572951085865,-0.003735771756619215,1.0359381877211853,0.9701285884156823,[[260.92057897408114,525.7332181357699,-3.0071445361945655,\"block\"],[617.0771403930281,204.4499221330135,0.1067525414510125,\"triangle\"]]],[\"holdout-2\",\"holdout\",\"technical\",false,30,0.6811103951185942,0.022163318153470755,1.0030177014740183,0.9706163216941058,[[124.67263249874993,459.4296901403029,-2.278824938047716,\"barrier\"],[342.77035900868833,177.5144769810532,-0.36180656212747775,\"block\"]]],[\"holdout-3\",\"holdout\",\"oval\",true,36,0.037519446574151516,-0.03215666875243187,0.984651039596647,1.007096720431,[[445.04833061941815,119.1494510039567,2.9817677760871057,\"circle\"],[761.4235192589061,420.8963146931078,-1.1047140793207644,\"block\"]]],[\"holdout-4\",\"holdout\",\"technical\",true,84,-2.7053162804804742,-0.017121040280908346,0.988428515670821,0.9941729319095611,[[129.3868501321409,288.52738836301717,1.8421318703701068,\"block\"],[303.8263174691723,178.08766248933898,2.8504946182975353,\"circle\"]]],[\"holdout-5\",\"holdout\",\"oval\",false,30,-2.348791228607297,0.03940548546612263,1.0201000574138015,1.0218410540185867,[[242.7336780137356,521.3214621498695,-2.481888002644711,\"block\"],[433.52841482044175,186.09335497920162,-0.03840217853673719,\"barrier\"]]],[\"holdout-6\",\"holdout\",\"technical\",false,48,2.796753727365285,0.026460771393030883,0.9425455307448283,0.9990019300766289,[[193.19600693405852,434.4668507812509,-2.194571128277679,\"circle\"],[211.60743974464782,166.8508139570853,-0.9914003638512532,\"circle\"]]]]}",
+              "completed": 0,
+              "total": 6,
+              "completionRate": 0,
+              "meanProgress": 0.08373591875977059,
+              "worstProgress": 0.03315100770686086,
+              "normalizedTime": null
+            }
+          },
+          "firstGeneration": {
+            "generation": 1,
+            "best": 0.12972852739296173,
+            "average": 0.026186934932014315,
+            "completed": 0,
+            "completedLaps": 0,
+            "bestLapTime": null,
+            "bestTime": null,
+            "metrics": {
+              "population": 40,
+              "launched": 11,
+              "lapCounts": [
+                0
+              ],
+              "completed": 0,
+              "collisions": 26,
+              "stalled": 14,
+              "timeouts": 0,
+              "active": 0,
+              "meanProgress": 0.026186934932014315,
+              "progressStd": 0.03364164770199801,
+              "diversity": 0.4215039114993053,
+              "medianTime": null
+            }
+          },
+          "lastGeneration": {
+            "generation": 96,
+            "best": 1,
+            "average": 0.61345346232175,
+            "completed": 23,
+            "completedLaps": 23,
+            "bestLapTime": 7.98333333333331,
+            "bestTime": 7.98333333333331,
+            "metrics": {
+              "population": 40,
+              "launched": 40,
+              "lapCounts": [
+                23
+              ],
+              "completed": 23,
+              "collisions": 17,
+              "stalled": 0,
+              "timeouts": 0,
+              "active": 0,
+              "meanProgress": 0.6134534623217499,
+              "progressStd": 0.4499492092777918,
+              "diversity": 0.1414042873924183,
+              "medianTime": 8.099999999999982
+            }
+          }
+        },
+        {
+          "method": "diverse",
+          "episodes": 3840,
+          "generations": 24,
+          "carSteps": 2521140,
+          "seconds": 16.138998959,
+          "sourceGeneration": 23,
+          "nativeTrain": {
+            "batteryKey": "{\"version\":1,\"laps\":1,\"scenarios\":[[\"train-1\",\"train\",\"oval\",false,0,-2.980982373934239,0.02225846763700247,1,1,[]],[\"train-2\",\"train\",\"technical\",false,48,-2.1003647167235613,0.0058135737106204035,1,1,[]],[\"train-3\",\"train\",\"oval\",true,42,-2.7786278394050896,0.019428068399429323,1,1,[[258.1561609973368,442.79524446334256,0.7667603667851616,\"block\"],[753.1587275039345,266.8411233128549,-2.1133315323849113,\"block\"]]],[\"train-4\",\"train\",\"technical\",true,90,2.4310814263299108,-0.030223341770470143,1,1,[[157.7093512478511,522.0807576362109,1.3260711857951735,\"triangle\"],[659.7067890546865,279.885539879927,2.3911610850191303,\"barrier\"]]]]}",
+            "completed": 4,
+            "total": 4,
+            "completionRate": 1,
+            "meanProgress": 1,
+            "worstProgress": 1,
+            "normalizedTime": 0.00955763540474714
+          },
+          "sharedTrain": {
+            "version": 1,
+            "scenarios": [
+              {
+                "id": "train-1",
+                "name": "Oval CCW · train 1",
+                "split": "train",
+                "track": "oval",
+                "reverse": false,
+                "startNode": 0,
+                "lateral": -2.980982373934239,
+                "headingOffset": 0.02225846763700247,
+                "scaleX": 1,
+                "scaleY": 1,
+                "obstacles": []
+              },
+              {
+                "id": "train-2",
+                "name": "Switchback CCW · train 2",
+                "split": "train",
+                "track": "technical",
+                "reverse": false,
+                "startNode": 48,
+                "lateral": -2.1003647167235613,
+                "headingOffset": 0.0058135737106204035,
+                "scaleX": 1,
+                "scaleY": 1,
+                "obstacles": []
+              },
+              {
+                "id": "train-3",
+                "name": "Oval CW · train 3",
+                "split": "train",
+                "track": "oval",
+                "reverse": true,
+                "startNode": 42,
+                "lateral": -2.7786278394050896,
+                "headingOffset": 0.019428068399429323,
+                "scaleX": 1,
+                "scaleY": 1,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "block",
+                    "x": 258.1561609973368,
+                    "y": 442.79524446334256,
+                    "angle": 0.7667603667851616
+                  },
+                  {
+                    "id": 1,
+                    "kind": "block",
+                    "x": 753.1587275039345,
+                    "y": 266.8411233128549,
+                    "angle": -2.1133315323849113
+                  }
+                ]
+              },
+              {
+                "id": "train-4",
+                "name": "Switchback CW · train 4",
+                "split": "train",
+                "track": "technical",
+                "reverse": true,
+                "startNode": 90,
+                "lateral": 2.4310814263299108,
+                "headingOffset": -0.030223341770470143,
+                "scaleX": 1,
+                "scaleY": 1,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "triangle",
+                    "x": 157.7093512478511,
+                    "y": 522.0807576362109,
+                    "angle": 1.3260711857951735
+                  },
+                  {
+                    "id": 1,
+                    "kind": "barrier",
+                    "x": 659.7067890546865,
+                    "y": 279.885539879927,
+                    "angle": 2.3911610850191303
+                  }
+                ]
+              }
+            ],
+            "outcomes": [
+              {
+                "scenarioId": "train-1",
+                "length": 1684.3054875858809,
+                "score": {
+                  "progress": 1,
+                  "completed": true,
+                  "time": 15.116666666666998,
+                  "completedLaps": 1,
+                  "bestLapTime": 15.116666666666998
+                },
+                "reason": "completed"
+              },
+              {
+                "scenarioId": "train-2",
+                "length": 2117.894061834473,
+                "score": {
+                  "progress": 1,
+                  "completed": true,
+                  "time": 23.33333333333329,
+                  "completedLaps": 1,
+                  "bestLapTime": 23.33333333333329
+                },
+                "reason": "completed"
+              },
+              {
+                "scenarioId": "train-3",
+                "length": 1684.3054875858804,
+                "score": {
+                  "progress": 1,
+                  "completed": true,
+                  "time": 13.70000000000026,
+                  "completedLaps": 1,
+                  "bestLapTime": 13.70000000000026
+                },
+                "reason": "completed"
+              },
+              {
+                "scenarioId": "train-4",
+                "length": 2117.8940618344736,
+                "score": {
+                  "progress": 1,
+                  "completed": true,
+                  "time": 21.400000000000066,
+                  "completedLaps": 1,
+                  "bestLapTime": 21.400000000000066
+                },
+                "reason": "completed"
+              }
+            ],
+            "aggregate": {
+              "batteryKey": "{\"version\":1,\"laps\":1,\"scenarios\":[[\"train-1\",\"train\",\"oval\",false,0,-2.980982373934239,0.02225846763700247,1,1,[]],[\"train-2\",\"train\",\"technical\",false,48,-2.1003647167235613,0.0058135737106204035,1,1,[]],[\"train-3\",\"train\",\"oval\",true,42,-2.7786278394050896,0.019428068399429323,1,1,[[258.1561609973368,442.79524446334256,0.7667603667851616,\"block\"],[753.1587275039345,266.8411233128549,-2.1133315323849113,\"block\"]]],[\"train-4\",\"train\",\"technical\",true,90,2.4310814263299108,-0.030223341770470143,1,1,[[157.7093512478511,522.0807576362109,1.3260711857951735,\"triangle\"],[659.7067890546865,279.885539879927,2.3911610850191303,\"barrier\"]]]]}",
+              "completed": 4,
+              "total": 4,
+              "completionRate": 1,
+              "meanProgress": 1,
+              "worstProgress": 1,
+              "normalizedTime": 0.00955763540474714
+            }
+          },
+          "holdout": {
+            "version": 1,
+            "scenarios": [
+              {
+                "id": "holdout-1",
+                "name": "Oval CCW · holdout 1",
+                "split": "holdout",
+                "track": "oval",
+                "reverse": false,
+                "startNode": 36,
+                "lateral": -1.4969572951085865,
+                "headingOffset": -0.003735771756619215,
+                "scaleX": 1.0359381877211853,
+                "scaleY": 0.9701285884156823,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "triangle",
+                    "x": 617.0771403930281,
+                    "y": 204.4499221330135,
+                    "angle": 0.1067525414510125
+                  },
+                  {
+                    "id": 1,
+                    "kind": "block",
+                    "x": 260.92057897408114,
+                    "y": 525.7332181357699,
+                    "angle": -3.0071445361945655
+                  }
+                ]
+              },
+              {
+                "id": "holdout-2",
+                "name": "Switchback CCW · holdout 2",
+                "split": "holdout",
+                "track": "technical",
+                "reverse": false,
+                "startNode": 30,
+                "lateral": 0.6811103951185942,
+                "headingOffset": 0.022163318153470755,
+                "scaleX": 1.0030177014740183,
+                "scaleY": 0.9706163216941058,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "block",
+                    "x": 342.77035900868833,
+                    "y": 177.5144769810532,
+                    "angle": -0.36180656212747775
+                  },
+                  {
+                    "id": 1,
+                    "kind": "barrier",
+                    "x": 124.67263249874993,
+                    "y": 459.4296901403029,
+                    "angle": -2.278824938047716
+                  }
+                ]
+              },
+              {
+                "id": "holdout-3",
+                "name": "Oval CW · holdout 3",
+                "split": "holdout",
+                "track": "oval",
+                "reverse": true,
+                "startNode": 36,
+                "lateral": 0.037519446574151516,
+                "headingOffset": -0.03215666875243187,
+                "scaleX": 0.984651039596647,
+                "scaleY": 1.007096720431,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "block",
+                    "x": 761.4235192589061,
+                    "y": 420.8963146931078,
+                    "angle": -1.1047140793207644
+                  },
+                  {
+                    "id": 1,
+                    "kind": "circle",
+                    "x": 445.04833061941815,
+                    "y": 119.1494510039567,
+                    "angle": 2.9817677760871057
+                  }
+                ]
+              },
+              {
+                "id": "holdout-4",
+                "name": "Switchback CW · holdout 4",
+                "split": "holdout",
+                "track": "technical",
+                "reverse": true,
+                "startNode": 84,
+                "lateral": -2.7053162804804742,
+                "headingOffset": -0.017121040280908346,
+                "scaleX": 0.988428515670821,
+                "scaleY": 0.9941729319095611,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "block",
+                    "x": 129.3868501321409,
+                    "y": 288.52738836301717,
+                    "angle": 1.8421318703701068
+                  },
+                  {
+                    "id": 1,
+                    "kind": "circle",
+                    "x": 303.8263174691723,
+                    "y": 178.08766248933898,
+                    "angle": 2.8504946182975353
+                  }
+                ]
+              },
+              {
+                "id": "holdout-5",
+                "name": "Oval CCW · holdout 5",
+                "split": "holdout",
+                "track": "oval",
+                "reverse": false,
+                "startNode": 30,
+                "lateral": -2.348791228607297,
+                "headingOffset": 0.03940548546612263,
+                "scaleX": 1.0201000574138015,
+                "scaleY": 1.0218410540185867,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "barrier",
+                    "x": 433.52841482044175,
+                    "y": 186.09335497920162,
+                    "angle": -0.03840217853673719
+                  },
+                  {
+                    "id": 1,
+                    "kind": "block",
+                    "x": 242.7336780137356,
+                    "y": 521.3214621498695,
+                    "angle": -2.481888002644711
+                  }
+                ]
+              },
+              {
+                "id": "holdout-6",
+                "name": "Switchback CCW · holdout 6",
+                "split": "holdout",
+                "track": "technical",
+                "reverse": false,
+                "startNode": 48,
+                "lateral": 2.796753727365285,
+                "headingOffset": 0.026460771393030883,
+                "scaleX": 0.9425455307448283,
+                "scaleY": 0.9990019300766289,
+                "obstacles": [
+                  {
+                    "id": 0,
+                    "kind": "circle",
+                    "x": 211.60743974464782,
+                    "y": 166.8508139570853,
+                    "angle": -0.9914003638512532
+                  },
+                  {
+                    "id": 1,
+                    "kind": "circle",
+                    "x": 193.19600693405852,
+                    "y": 434.4668507812509,
+                    "angle": -2.194571128277679
+                  }
+                ]
+              }
+            ],
+            "outcomes": [
+              {
+                "scenarioId": "holdout-1",
+                "length": 1710.0873744348842,
+                "score": {
+                  "progress": 1,
+                  "completed": true,
+                  "time": 15.816666666667032,
+                  "completedLaps": 1,
+                  "bestLapTime": 15.816666666667032
+                },
+                "reason": "completed"
+              },
+              {
+                "scenarioId": "holdout-2",
+                "length": 2095.8102421594435,
+                "score": {
+                  "progress": 1,
+                  "completed": true,
+                  "time": 24.016666666666584,
+                  "completedLaps": 1,
+                  "bestLapTime": 24.016666666666584
+                },
+                "reason": "completed"
+              },
+              {
+                "scenarioId": "holdout-3",
+                "length": 1670.4985770569604,
+                "score": {
+                  "progress": 0.546026854699297,
+                  "completed": false,
+                  "time": 7.233333333333313,
+                  "completedLaps": 0,
+                  "bestLapTime": null
+                },
+                "reason": "collision"
+              },
+              {
+                "scenarioId": "holdout-4",
+                "length": 2098.464385532829,
+                "score": {
+                  "progress": 1,
+                  "completed": true,
+                  "time": 19.95000000000015,
+                  "completedLaps": 1,
+                  "bestLapTime": 19.95000000000015
+                },
+                "reason": "completed"
+              },
+              {
+                "scenarioId": "holdout-5",
+                "length": 1719.0903383268362,
+                "score": {
+                  "progress": 1,
+                  "completed": true,
+                  "time": 15.950000000000372,
+                  "completedLaps": 1,
+                  "bestLapTime": 15.950000000000372
+                },
+                "reason": "completed"
+              },
+              {
+                "scenarioId": "holdout-6",
+                "length": 2046.4067057375814,
+                "score": {
+                  "progress": 1,
+                  "completed": true,
+                  "time": 24.3499999999999,
+                  "completedLaps": 1,
+                  "bestLapTime": 24.3499999999999
+                },
+                "reason": "completed"
+              }
+            ],
+            "aggregate": {
+              "batteryKey": "{\"version\":1,\"laps\":1,\"scenarios\":[[\"holdout-1\",\"holdout\",\"oval\",false,36,-1.4969572951085865,-0.003735771756619215,1.0359381877211853,0.9701285884156823,[[260.92057897408114,525.7332181357699,-3.0071445361945655,\"block\"],[617.0771403930281,204.4499221330135,0.1067525414510125,\"triangle\"]]],[\"holdout-2\",\"holdout\",\"technical\",false,30,0.6811103951185942,0.022163318153470755,1.0030177014740183,0.9706163216941058,[[124.67263249874993,459.4296901403029,-2.278824938047716,\"barrier\"],[342.77035900868833,177.5144769810532,-0.36180656212747775,\"block\"]]],[\"holdout-3\",\"holdout\",\"oval\",true,36,0.037519446574151516,-0.03215666875243187,0.984651039596647,1.007096720431,[[445.04833061941815,119.1494510039567,2.9817677760871057,\"circle\"],[761.4235192589061,420.8963146931078,-1.1047140793207644,\"block\"]]],[\"holdout-4\",\"holdout\",\"technical\",true,84,-2.7053162804804742,-0.017121040280908346,0.988428515670821,0.9941729319095611,[[129.3868501321409,288.52738836301717,1.8421318703701068,\"block\"],[303.8263174691723,178.08766248933898,2.8504946182975353,\"circle\"]]],[\"holdout-5\",\"holdout\",\"oval\",false,30,-2.348791228607297,0.03940548546612263,1.0201000574138015,1.0218410540185867,[[242.7336780137356,521.3214621498695,-2.481888002644711,\"block\"],[433.52841482044175,186.09335497920162,-0.03840217853673719,\"barrier\"]]],[\"holdout-6\",\"holdout\",\"technical\",false,48,2.796753727365285,0.026460771393030883,0.9425455307448283,0.9990019300766289,[[193.19600693405852,434.4668507812509,-2.194571128277679,\"circle\"],[211.60743974464782,166.8508139570853,-0.9914003638512532,\"circle\"]]]]}",
+              "completed": 5,
+              "total": 6,
+              "completionRate": 0.8333333333333334,
+              "meanProgress": 0.9243378091165496,
+              "worstProgress": 0.546026854699297,
+              "normalizedTime": 0.010278486212121053
+            }
+          },
+          "firstGeneration": {
+            "generation": 1,
+            "best": 0.3206591500927857,
+            "average": 0.03499419699925702,
+            "completed": 1,
+            "completedLaps": 1,
+            "bestTime": null,
+            "bestLapTime": null,
+            "metrics": {
+              "population": 160,
+              "launched": 42,
+              "completed": 1,
+              "collisions": 110,
+              "stalled": 49,
+              "timeouts": 0,
+              "active": 0,
+              "lapCounts": [
+                1
+              ],
+              "meanProgress": 0.03499419699925702,
+              "progressStd": 0.0888348201200374,
+              "diversity": 0.4215039114993053,
+              "medianTime": null
+            },
+            "scenarioCount": 4,
+            "consistentFinishers": 0
+          },
+          "lastGeneration": {
+            "generation": 24,
+            "best": 1,
+            "average": 0.6749303094126681,
+            "completed": 87,
+            "completedLaps": 87,
+            "bestTime": null,
+            "bestLapTime": null,
+            "metrics": {
+              "population": 160,
+              "launched": 155,
+              "completed": 87,
+              "collisions": 50,
+              "stalled": 19,
+              "timeouts": 4,
+              "active": 0,
+              "lapCounts": [
+                87
+              ],
+              "meanProgress": 0.6749303094126681,
+              "progressStd": 0.3754162635703657,
+              "diversity": 0.17145933769565885,
+              "medianTime": null
+            },
+            "scenarioCount": 4,
+            "consistentFinishers": 1
+          }
+        }
+      ]
+    }
+  ]
+}

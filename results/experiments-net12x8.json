@@ -1,0 +1,325 @@
+{
+  "recordedAt": "2026-10-20T23:18:55.957Z",
+  "generations": 40,
+  "results": [
+    {
+      "seed": "2026",
+      "track": "oval",
+      "settings": {
+        "population": 100,
+        "mutationRate": 0.14,
+        "mutationStrength": 0.3
+      },
+      "architecture": [
+        8,
+        12,
+        8,
+        2
+      ],
+      "generations": 40,
+      "firstGeneration": {
+        "generation": 1,
+        "best": 1,
+        "average": 0.06478464500633982,
+        "completed": 2,
+        "bestTime": 13.616666666666923
+      },
+      "finalGeneration": {
+        "generation": 40,
+        "best": 1,
+        "average": 0.6940849623595052,
+        "completed": 66,
+        "bestTime": 7.966666666666644
+      },
+      "champion": {
+        "progress": 1,
+        "completed": true,
+        "time": 7.966666666666644
+      },
+      "completedLaps": 2232,
+      "history": [
+        {
+          "generation": 1,
+          "best": 1,
+          "average": 0.06478464500633982,
+          "completed": 2,
+          "bestTime": 13.616666666666923
+        },
+        {
+          "generation": 2,
+          "best": 1,
+          "average": 0.33309875647508597,
+          "completed": 23,
+          "bestTime": 9.466666666666717
+        },
+        {
+          "generation": 3,
+          "best": 1,
+          "average": 0.6046563761609652,
+          "completed": 51,
+          "bestTime": 9.333333333333377
+        },
+        {
+          "generation": 4,
+          "best": 1,
+          "average": 0.688318215919536,
+          "completed": 59,
+          "bestTime": 8.566666666666672
+        },
+        {
+          "generation": 5,
+          "best": 1,
+          "average": 0.6146121363259934,
+          "completed": 54,
+          "bestTime": 8.500000000000002
+        },
+        {
+          "generation": 6,
+          "best": 1,
+          "average": 0.7465276029765617,
+          "completed": 70,
+          "bestTime": 8.38333333333333
+        },
+        {
+          "generation": 7,
+          "best": 1,
+          "average": 0.7226251964051759,
+          "completed": 67,
+          "bestTime": 8.349999999999994
+        },
+        {
+          "generation": 8,
+          "best": 1,
+          "average": 0.6930374561292919,
+          "completed": 66,
+          "bestTime": 8.216666666666654
+        },
+        {
+          "generation": 9,
+          "best": 1,
+          "average": 0.7034173989670617,
+          "completed": 65,
+          "bestTime": 8.133333333333317
+        },
+        {
+          "generation": 10,
+          "best": 1,
+          "average": 0.6720285655791143,
+          "completed": 62,
+          "bestTime": 8.11666666666665
+        },
+        {
+          "generation": 11,
+          "best": 1,
+          "average": 0.6098368899075122,
+          "completed": 56,
+          "bestTime": 8.11666666666665
+        },
+        {
+          "generation": 12,
+          "best": 1,
+          "average": 0.6516319264674617,
+          "completed": 60,
+          "bestTime": 8.083333333333314
+        },
+        {
+          "generation": 13,
+          "best": 1,
+          "average": 0.6299523315279888,
+          "completed": 59,
+          "bestTime": 8.083333333333314
+        },
+        {
+          "generation": 14,
+          "best": 1,
+          "average": 0.5356405079643234,
+          "completed": 48,
+          "bestTime": 8.066666666666647
+        },
+        {
+          "generation": 15,
+          "best": 1,
+          "average": 0.6314949336083138,
+          "completed": 59,
+          "bestTime": 8.04999999999998
+        },
+        {
+          "generation": 16,
+          "best": 1,
+          "average": 0.6189128871393755,
+          "completed": 57,
+          "bestTime": 8.016666666666644
+        },
+        {
+          "generation": 17,
+          "best": 1,
+          "average": 0.575478103684376,
+          "completed": 52,
+          "bestTime": 8.016666666666644
+        },
+        {
+          "generation": 18,
+          "best": 1,
+          "average": 0.5896299106565103,
+          "completed": 54,
+          "bestTime": 8.016666666666644
+        },
+        {
+          "generation": 19,
+          "best": 1,
+          "average": 0.6406340950800893,
+          "completed": 60,
+          "bestTime": 8.016666666666644
+        },
+        {
+          "generation": 20,
+          "best": 1,
+          "average": 0.6164087618650503,
+          "completed": 58,
+          "bestTime": 7.999999999999977
+        },
+        {
+          "generation": 21,
+          "best": 1,
+          "average": 0.6391291162425959,
+          "completed": 60,
+          "bestTime": 7.999999999999977
+        },
+        {
+          "generation": 22,
+          "best": 1,
+          "average": 0.5909401069145804,
+          "completed": 55,
+          "bestTime": 7.999999999999977
+        },
+        {
+          "generation": 23,
+          "best": 1,
+          "average": 0.5713845634760855,
+          "completed": 53,
+          "bestTime": 7.999999999999977
+        },
+        {
+          "generation": 24,
+          "best": 1,
+          "average": 0.6357186857908997,
+          "completed": 59,
+          "bestTime": 7.98333333333331
+        },
+        {
+          "generation": 25,
+          "best": 1,
+          "average": 0.5792334087994897,
+          "completed": 54,
+          "bestTime": 7.98333333333331
+        },
+        {
+          "generation": 26,
+          "best": 1,
+          "average": 0.6691859636434786,
+          "completed": 63,
+          "bestTime": 7.98333333333331
+        },
+        {
+          "generation": 27,
+          "best": 1,
+          "average": 0.6655640728236694,
+          "completed": 62,
+          "bestTime": 7.98333333333331
+        },
+        {
+          "generation": 28,
+          "best": 1,
+          "average": 0.609729226585229,
+          "completed": 56,
+          "bestTime": 7.98333333333331
+        },
+        {
+          "generation": 29,
+          "best": 1,
+          "average": 0.5224919889833443,
+          "completed": 47,
+          "bestTime": 7.98333333333331
+        },
+        {
+          "generation": 30,
+          "best": 1,
+          "average": 0.6122250866832586,
+          "completed": 56,
+          "bestTime": 7.98333333333331
+        },
+        {
+          "generation": 31,
+          "best": 1,
+          "average": 0.6260745860597793,
+          "completed": 57,
+          "bestTime": 7.966666666666644
+        },
+        {
+          "generation": 32,
+          "best": 1,
+          "average": 0.6666381209355847,
+          "completed": 63,
+          "bestTime": 7.966666666666644
+        },
+        {
+          "generation": 33,
+          "best": 1,
+          "average": 0.5076345751039032,
+          "completed": 45,
+          "bestTime": 7.966666666666644
+        },
+        {
+          "generation": 34,
+          "best": 1,
+          "average": 0.7010235863466981,
+          "completed": 67,
+          "bestTime": 7.966666666666644
+        },
+        {
+          "generation": 35,
+          "best": 1,
+          "average": 0.5342672175686572,
+          "completed": 48,
+          "bestTime": 7.966666666666644
+        },
+        {
+          "generation": 36,
+          "best": 1,
+          "average": 0.7056140057716708,
+          "completed": 67,
+          "bestTime": 7.966666666666644
+        },
+        {
+          "generation": 37,
+          "best": 1,
+          "average": 0.6377441262517476,
+          "completed": 59,
+          "bestTime": 7.966666666666644
+        },
+        {
+          "generation": 38,
+          "best": 1,
+          "average": 0.6368387137334639,
+          "completed": 59,
+          "bestTime": 7.966666666666644
+        },
+        {
+          "generation": 39,
+          "best": 1,
+          "average": 0.5919779363263232,
+          "completed": 54,
+          "bestTime": 7.966666666666644
+        },
+        {
+          "generation": 40,
+          "best": 1,
+          "average": 0.6940849623595052,
+          "completed": 66,
+          "bestTime": 7.966666666666644
+        }
+      ],
+      "seconds": 11.19
+    }
+  ]
+}

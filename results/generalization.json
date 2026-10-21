@@ -1,0 +1,62 @@
+[
+  {
+    "seed": "neurodrive",
+    "sourceGeneration": 40,
+    "sameTrack": {
+      "progress": 1,
+      "completed": true,
+      "time": 7.98333333333331,
+      "completedLaps": 1,
+      "bestLapTime": 7.98333333333331,
+      "reason": "completed"
+    },
+    "untrainedSwitchback": {
+      "progress": 0.050006065844130074,
+      "completed": false,
+      "time": 1.4166666666666665,
+      "completedLaps": 0,
+      "bestLapTime": null,
+      "reason": "collision"
+    }
+  },
+  {
+    "seed": "42",
+    "sourceGeneration": 30,
+    "sameTrack": {
+      "progress": 1,
+      "completed": true,
+      "time": 7.98333333333331,
+      "completedLaps": 1,
+      "bestLapTime": 7.98333333333331,
+      "reason": "completed"
+    },
+    "untrainedSwitchback": {
+      "progress": 0.08077688662975036,
+      "completed": false,
+      "time": 1.7999999999999985,
+      "completedLaps": 0,
+      "bestLapTime": null,
+      "reason": "collision"
+    }
+  },
+  {
+    "seed": "2026",
+    "sourceGeneration": 26,
+    "sameTrack": {
+      "progress": 1,
+      "completed": true,
+      "time": 7.999999999999977,
+      "completedLaps": 1,
+      "bestLapTime": 7.999999999999977,
+      "reason": "completed"
+    },
+    "untrainedSwitchback": {
+      "progress": 0.040523994868934654,
+      "completed": false,
+      "time": 1.2833333333333337,
+      "completedLaps": 0,
+      "bestLapTime": null,
+      "reason": "collision"
+    }
+  }
+]

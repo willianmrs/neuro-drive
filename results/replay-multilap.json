@@ -1,0 +1,128 @@
+[
+  {
+    "seed": "neurodrive",
+    "sourceGeneration": 25,
+    "targetLaps": 3,
+    "original": {
+      "score": {
+        "progress": 1,
+        "completed": true,
+        "time": 21.950000000000035,
+        "completedLaps": 3,
+        "bestLapTime": 6.966666666667013
+      },
+      "lapTimes": [
+        7.999999999999977,
+        6.966666666667013,
+        6.983333333333045
+      ],
+      "reason": "completed"
+    },
+    "extendedToTenLaps": {
+      "score": {
+        "progress": 1,
+        "completed": true,
+        "time": 70.7833333333306,
+        "completedLaps": 10,
+        "bestLapTime": 6.966666666666271
+      },
+      "lapTimes": [
+        7.999999999999977,
+        6.966666666667013,
+        6.983333333333045,
+        6.983333333332936,
+        6.966666666666274,
+        6.983333333332936,
+        6.966666666666271,
+        6.983333333332936,
+        6.983333333332936,
+        6.966666666666278
+      ],
+      "reason": "completed"
+    }
+  },
+  {
+    "seed": "42",
+    "sourceGeneration": 22,
+    "targetLaps": 3,
+    "original": {
+      "score": {
+        "progress": 1,
+        "completed": true,
+        "time": 21.900000000000038,
+        "completedLaps": 3,
+        "bestLapTime": 6.950000000000345
+      },
+      "lapTimes": [
+        7.98333333333331,
+        6.950000000000345,
+        6.966666666666383
+      ],
+      "reason": "completed"
+    },
+    "extendedToTenLaps": {
+      "score": {
+        "progress": 1,
+        "completed": true,
+        "time": 70.63333333333061,
+        "completedLaps": 10,
+        "bestLapTime": 6.949999999999605
+      },
+      "lapTimes": [
+        7.98333333333331,
+        6.950000000000345,
+        6.966666666666383,
+        6.966666666666271,
+        6.9499999999996085,
+        6.966666666666271,
+        6.966666666666271,
+        6.949999999999605,
+        6.966666666666271,
+        6.966666666666278
+      ],
+      "reason": "completed"
+    }
+  },
+  {
+    "seed": "2026",
+    "sourceGeneration": 20,
+    "targetLaps": 3,
+    "original": {
+      "score": {
+        "progress": 1,
+        "completed": true,
+        "time": 22.000000000000032,
+        "completedLaps": 3,
+        "bestLapTime": 6.983333333333681
+      },
+      "lapTimes": [
+        8.016666666666644,
+        6.983333333333681,
+        6.999999999999707
+      ],
+      "reason": "completed"
+    },
+    "extendedToTenLaps": {
+      "score": {
+        "progress": 1,
+        "completed": true,
+        "time": 70.91666666666393,
+        "completedLaps": 10,
+        "bestLapTime": 6.983333333332936
+      },
+      "lapTimes": [
+        8.016666666666644,
+        6.983333333333681,
+        6.999999999999707,
+        6.983333333332936,
+        6.98333333333294,
+        6.999999999999602,
+        6.983333333332936,
+        6.983333333332936,
+        6.999999999999602,
+        6.9833333333329435
+      ],
+      "reason": "completed"
+    }
+  }
+]

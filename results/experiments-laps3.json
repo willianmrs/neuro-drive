@@ -1,0 +1,816 @@
+{
+  "recordedAt": "2026-10-20T23:31:05.554Z",
+  "generations": 25,
+  "results": [
+    {
+      "seed": "neurodrive",
+      "track": "oval",
+      "settings": {
+        "population": 100,
+        "mutationRate": 0.14,
+        "mutationStrength": 0.3,
+        "laps": 3
+      },
+      "architecture": [
+        8,
+        12,
+        2
+      ],
+      "generations": 25,
+      "firstGeneration": {
+        "generation": 1,
+        "best": 1,
+        "average": 0.04215945864460167,
+        "completed": 2,
+        "completedLaps": 8,
+        "bestLapTime": 8.116666666666205,
+        "bestTime": 25.683333333333156
+      },
+      "finalGeneration": {
+        "generation": 25,
+        "best": 1,
+        "average": 0.6103288469121108,
+        "completed": 60,
+        "completedLaps": 180,
+        "bestLapTime": 6.966666666667013,
+        "bestTime": 21.950000000000035
+      },
+      "champion": {
+        "progress": 1,
+        "completed": true,
+        "time": 21.950000000000035,
+        "completedLaps": 3,
+        "bestLapTime": 6.966666666667013
+      },
+      "completedLaps": 4003,
+      "history": [
+        {
+          "generation": 1,
+          "best": 1,
+          "average": 0.04215945864460167,
+          "completed": 2,
+          "completedLaps": 8,
+          "bestLapTime": 8.116666666666205,
+          "bestTime": 25.683333333333156
+        },
+        {
+          "generation": 2,
+          "best": 1,
+          "average": 0.24900329860258855,
+          "completed": 20,
+          "completedLaps": 65,
+          "bestLapTime": 7.599999999999568,
+          "bestTime": 24.249999999999904
+        },
+        {
+          "generation": 3,
+          "best": 1,
+          "average": 0.6176675008811712,
+          "completed": 58,
+          "completedLaps": 177,
+          "bestLapTime": 7.533333333332905,
+          "bestTime": 24.133333333333244
+        },
+        {
+          "generation": 4,
+          "best": 1,
+          "average": 0.6245207367467713,
+          "completed": 60,
+          "completedLaps": 180,
+          "bestLapTime": 7.349999999999595,
+          "bestTime": 23.21666666666663
+        },
+        {
+          "generation": 5,
+          "best": 1,
+          "average": 0.7177447489192572,
+          "completed": 71,
+          "completedLaps": 213,
+          "bestLapTime": 7.249999999999588,
+          "bestTime": 23.066666666666638
+        },
+        {
+          "generation": 6,
+          "best": 1,
+          "average": 0.6245473910502859,
+          "completed": 61,
+          "completedLaps": 183,
+          "bestLapTime": 7.216666666666304,
+          "bestTime": 22.74999999999999
+        },
+        {
+          "generation": 7,
+          "best": 1,
+          "average": 0.4975312750741911,
+          "completed": 48,
+          "completedLaps": 144,
+          "bestLapTime": 7.116666666666333,
+          "bestTime": 22.43333333333334
+        },
+        {
+          "generation": 8,
+          "best": 1,
+          "average": 0.6600710191836948,
+          "completed": 65,
+          "completedLaps": 195,
+          "bestLapTime": 7.116666666666333,
+          "bestTime": 22.43333333333334
+        },
+        {
+          "generation": 9,
+          "best": 1,
+          "average": 0.5879505597934283,
+          "completed": 57,
+          "completedLaps": 171,
+          "bestLapTime": 7.116666666666324,
+          "bestTime": 22.43333333333334
+        },
+        {
+          "generation": 10,
+          "best": 1,
+          "average": 0.5838299485671906,
+          "completed": 57,
+          "completedLaps": 171,
+          "bestLapTime": 7.049999999999686,
+          "bestTime": 22.216666666666686
+        },
+        {
+          "generation": 11,
+          "best": 1,
+          "average": 0.518426477945884,
+          "completed": 50,
+          "completedLaps": 150,
+          "bestLapTime": 7.0333333333330295,
+          "bestTime": 22.116666666666692
+        },
+        {
+          "generation": 12,
+          "best": 1,
+          "average": 0.5719246401507171,
+          "completed": 56,
+          "completedLaps": 168,
+          "bestLapTime": 7.01666666666636,
+          "bestTime": 22.116666666666692
+        },
+        {
+          "generation": 13,
+          "best": 1,
+          "average": 0.5434336583839248,
+          "completed": 53,
+          "completedLaps": 159,
+          "bestLapTime": 7.01666666666636,
+          "bestTime": 22.116666666666692
+        },
+        {
+          "generation": 14,
+          "best": 1,
+          "average": 0.690017936492721,
+          "completed": 68,
+          "completedLaps": 204,
+          "bestLapTime": 7.016666666666358,
+          "bestTime": 22.08333333333336
+        },
+        {
+          "generation": 15,
+          "best": 1,
+          "average": 0.583548450127481,
+          "completed": 57,
+          "completedLaps": 171,
+          "bestLapTime": 6.999999999999687,
+          "bestTime": 22.08333333333336
+        },
+        {
+          "generation": 16,
+          "best": 1,
+          "average": 0.5370359040620982,
+          "completed": 52,
+          "completedLaps": 156,
+          "bestLapTime": 6.999999999999687,
+          "bestTime": 22.000000000000032
+        },
+        {
+          "generation": 17,
+          "best": 1,
+          "average": 0.5338887571825082,
+          "completed": 52,
+          "completedLaps": 156,
+          "bestLapTime": 6.999999999999648,
+          "bestTime": 22.000000000000032
+        },
+        {
+          "generation": 18,
+          "best": 1,
+          "average": 0.6405107048505334,
+          "completed": 63,
+          "completedLaps": 189,
+          "bestLapTime": 6.999999999999648,
+          "bestTime": 22.000000000000032
+        },
+        {
+          "generation": 19,
+          "best": 1,
+          "average": 0.5519512397342012,
+          "completed": 54,
+          "completedLaps": 162,
+          "bestLapTime": 6.983333333333041,
+          "bestTime": 21.983333333333366
+        },
+        {
+          "generation": 20,
+          "best": 1,
+          "average": 0.5924475842165544,
+          "completed": 58,
+          "completedLaps": 174,
+          "bestLapTime": 6.983333333333041,
+          "bestTime": 21.983333333333366
+        },
+        {
+          "generation": 21,
+          "best": 1,
+          "average": 0.5516355950214886,
+          "completed": 54,
+          "completedLaps": 162,
+          "bestLapTime": 6.983333333333041,
+          "bestTime": 21.983333333333366
+        },
+        {
+          "generation": 22,
+          "best": 1,
+          "average": 0.5141125203860311,
+          "completed": 50,
+          "completedLaps": 150,
+          "bestLapTime": 6.983333333333041,
+          "bestTime": 21.983333333333366
+        },
+        {
+          "generation": 23,
+          "best": 1,
+          "average": 0.5419971157253467,
+          "completed": 53,
+          "completedLaps": 159,
+          "bestLapTime": 6.983333333333039,
+          "bestTime": 21.983333333333366
+        },
+        {
+          "generation": 24,
+          "best": 1,
+          "average": 0.533043983789263,
+          "completed": 52,
+          "completedLaps": 156,
+          "bestLapTime": 6.983333333333039,
+          "bestTime": 21.983333333333366
+        },
+        {
+          "generation": 25,
+          "best": 1,
+          "average": 0.6103288469121108,
+          "completed": 60,
+          "completedLaps": 180,
+          "bestLapTime": 6.966666666667013,
+          "bestTime": 21.950000000000035
+        }
+      ],
+      "seconds": 15.07
+    },
+    {
+      "seed": "42",
+      "track": "oval",
+      "settings": {
+        "population": 100,
+        "mutationRate": 0.14,
+        "mutationStrength": 0.3,
+        "laps": 3
+      },
+      "architecture": [
+        8,
+        12,
+        2
+      ],
+      "generations": 25,
+      "firstGeneration": {
+        "generation": 1,
+        "best": 1,
+        "average": 0.026239497607104152,
+        "completed": 1,
+        "completedLaps": 3,
+        "bestLapTime": 11.099999999999373,
+        "bestTime": 34.74999999999931
+      },
+      "finalGeneration": {
+        "generation": 25,
+        "best": 1,
+        "average": 0.592029986538911,
+        "completed": 58,
+        "completedLaps": 174,
+        "bestLapTime": 6.950000000000345,
+        "bestTime": 21.900000000000038
+      },
+      "champion": {
+        "progress": 1,
+        "completed": true,
+        "time": 21.900000000000038,
+        "completedLaps": 3,
+        "bestLapTime": 6.950000000000345
+      },
+      "completedLaps": 3938,
+      "history": [
+        {
+          "generation": 1,
+          "best": 1,
+          "average": 0.026239497607104152,
+          "completed": 1,
+          "completedLaps": 3,
+          "bestLapTime": 11.099999999999373,
+          "bestTime": 34.74999999999931
+        },
+        {
+          "generation": 2,
+          "best": 1,
+          "average": 0.11813668792877413,
+          "completed": 7,
+          "completedLaps": 21,
+          "bestLapTime": 7.499999999999574,
+          "bestTime": 24.316666666666567
+        },
+        {
+          "generation": 3,
+          "best": 1,
+          "average": 0.4074984124869298,
+          "completed": 35,
+          "completedLaps": 108,
+          "bestLapTime": 7.299999999999605,
+          "bestTime": 23.09999999999997
+        },
+        {
+          "generation": 4,
+          "best": 1,
+          "average": 0.5168436332636428,
+          "completed": 47,
+          "completedLaps": 143,
+          "bestLapTime": 7.149999999999649,
+          "bestTime": 22.616666666666664
+        },
+        {
+          "generation": 5,
+          "best": 1,
+          "average": 0.5775505761374994,
+          "completed": 55,
+          "completedLaps": 165,
+          "bestLapTime": 7.149999999999649,
+          "bestTime": 22.616666666666664
+        },
+        {
+          "generation": 6,
+          "best": 1,
+          "average": 0.6716131677322736,
+          "completed": 65,
+          "completedLaps": 195,
+          "bestLapTime": 7.099999999999666,
+          "bestTime": 22.43333333333334
+        },
+        {
+          "generation": 7,
+          "best": 1,
+          "average": 0.6311419157759905,
+          "completed": 61,
+          "completedLaps": 183,
+          "bestLapTime": 7.099999999999666,
+          "bestTime": 22.43333333333334
+        },
+        {
+          "generation": 8,
+          "best": 1,
+          "average": 0.6077748871435468,
+          "completed": 58,
+          "completedLaps": 174,
+          "bestLapTime": 7.033333333332976,
+          "bestTime": 22.333333333333346
+        },
+        {
+          "generation": 9,
+          "best": 1,
+          "average": 0.6397248987082469,
+          "completed": 62,
+          "completedLaps": 186,
+          "bestLapTime": 7.033333333332976,
+          "bestTime": 22.266666666666683
+        },
+        {
+          "generation": 10,
+          "best": 1,
+          "average": 0.5709634967350581,
+          "completed": 55,
+          "completedLaps": 165,
+          "bestLapTime": 7.033333333332976,
+          "bestTime": 22.266666666666683
+        },
+        {
+          "generation": 11,
+          "best": 1,
+          "average": 0.555028381819339,
+          "completed": 53,
+          "completedLaps": 159,
+          "bestLapTime": 7.033333333332976,
+          "bestTime": 22.133333333333358
+        },
+        {
+          "generation": 12,
+          "best": 1,
+          "average": 0.6090774002153406,
+          "completed": 59,
+          "completedLaps": 177,
+          "bestLapTime": 7.033333333332976,
+          "bestTime": 22.133333333333358
+        },
+        {
+          "generation": 13,
+          "best": 1,
+          "average": 0.5613015547706848,
+          "completed": 54,
+          "completedLaps": 162,
+          "bestLapTime": 7.016666666667016,
+          "bestTime": 22.116666666666692
+        },
+        {
+          "generation": 14,
+          "best": 1,
+          "average": 0.6253504118573704,
+          "completed": 61,
+          "completedLaps": 183,
+          "bestLapTime": 6.999999999999702,
+          "bestTime": 22.05000000000003
+        },
+        {
+          "generation": 15,
+          "best": 1,
+          "average": 0.4746432729629146,
+          "completed": 45,
+          "completedLaps": 135,
+          "bestLapTime": 6.999999999999702,
+          "bestTime": 22.05000000000003
+        },
+        {
+          "generation": 16,
+          "best": 1,
+          "average": 0.6184497999131029,
+          "completed": 60,
+          "completedLaps": 180,
+          "bestLapTime": 6.9999999999997,
+          "bestTime": 22.033333333333363
+        },
+        {
+          "generation": 17,
+          "best": 1,
+          "average": 0.6750955489751252,
+          "completed": 66,
+          "completedLaps": 198,
+          "bestLapTime": 6.983333333333041,
+          "bestTime": 21.983333333333366
+        },
+        {
+          "generation": 18,
+          "best": 1,
+          "average": 0.6267011967316309,
+          "completed": 61,
+          "completedLaps": 183,
+          "bestLapTime": 6.966666666666379,
+          "bestTime": 21.93333333333337
+        },
+        {
+          "generation": 19,
+          "best": 1,
+          "average": 0.5397778962363863,
+          "completed": 52,
+          "completedLaps": 156,
+          "bestLapTime": 6.9666666666663755,
+          "bestTime": 21.916666666666703
+        },
+        {
+          "generation": 20,
+          "best": 1,
+          "average": 0.5833298659320881,
+          "completed": 56,
+          "completedLaps": 168,
+          "bestLapTime": 6.9666666666663755,
+          "bestTime": 21.916666666666703
+        },
+        {
+          "generation": 21,
+          "best": 1,
+          "average": 0.6911365039685091,
+          "completed": 68,
+          "completedLaps": 204,
+          "bestLapTime": 6.9666666666663755,
+          "bestTime": 21.916666666666703
+        },
+        {
+          "generation": 22,
+          "best": 1,
+          "average": 0.5377052263145583,
+          "completed": 52,
+          "completedLaps": 156,
+          "bestLapTime": 6.950000000000345,
+          "bestTime": 21.900000000000038
+        },
+        {
+          "generation": 23,
+          "best": 1,
+          "average": 0.6634472321506806,
+          "completed": 65,
+          "completedLaps": 195,
+          "bestLapTime": 6.950000000000345,
+          "bestTime": 21.900000000000038
+        },
+        {
+          "generation": 24,
+          "best": 1,
+          "average": 0.566679601992047,
+          "completed": 55,
+          "completedLaps": 165,
+          "bestLapTime": 6.950000000000345,
+          "bestTime": 21.900000000000038
+        },
+        {
+          "generation": 25,
+          "best": 1,
+          "average": 0.592029986538911,
+          "completed": 58,
+          "completedLaps": 174,
+          "bestLapTime": 6.950000000000345,
+          "bestTime": 21.900000000000038
+        }
+      ],
+      "seconds": 15.3
+    },
+    {
+      "seed": "2026",
+      "track": "oval",
+      "settings": {
+        "population": 100,
+        "mutationRate": 0.14,
+        "mutationStrength": 0.3,
+        "laps": 3
+      },
+      "architecture": [
+        8,
+        12,
+        2
+      ],
+      "generations": 25,
+      "firstGeneration": {
+        "generation": 1,
+        "best": 0.1789316568893773,
+        "average": 0.011259642210815612,
+        "completed": 0,
+        "completedLaps": 0,
+        "bestLapTime": null,
+        "bestTime": null
+      },
+      "finalGeneration": {
+        "generation": 25,
+        "best": 1,
+        "average": 0.5785420699502181,
+        "completed": 56,
+        "completedLaps": 168,
+        "bestLapTime": 6.983333333333016,
+        "bestTime": 22.000000000000032
+      },
+      "champion": {
+        "progress": 1,
+        "completed": true,
+        "time": 22.000000000000032,
+        "completedLaps": 3,
+        "bestLapTime": 6.983333333333681
+      },
+      "completedLaps": 3510,
+      "history": [
+        {
+          "generation": 1,
+          "best": 0.1789316568893773,
+          "average": 0.011259642210815612,
+          "completed": 0,
+          "completedLaps": 0,
+          "bestLapTime": null,
+          "bestTime": null
+        },
+        {
+          "generation": 2,
+          "best": 0.1789316568893773,
+          "average": 0.04050007491615003,
+          "completed": 0,
+          "completedLaps": 0,
+          "bestLapTime": null,
+          "bestTime": null
+        },
+        {
+          "generation": 3,
+          "best": 1,
+          "average": 0.07265331693367533,
+          "completed": 2,
+          "completedLaps": 6,
+          "bestLapTime": 8.133333333332871,
+          "bestTime": 25.383333333333173
+        },
+        {
+          "generation": 4,
+          "best": 1,
+          "average": 0.1845800423658724,
+          "completed": 11,
+          "completedLaps": 39,
+          "bestLapTime": 7.816666666666981,
+          "bestTime": 24.516666666666556
+        },
+        {
+          "generation": 5,
+          "best": 1,
+          "average": 0.372957878999857,
+          "completed": 31,
+          "completedLaps": 98,
+          "bestLapTime": 7.433333333332911,
+          "bestTime": 23.649999999999938
+        },
+        {
+          "generation": 6,
+          "best": 1,
+          "average": 0.5696425647891094,
+          "completed": 54,
+          "completedLaps": 162,
+          "bestLapTime": 7.3833333333329225,
+          "bestTime": 23.283333333333292
+        },
+        {
+          "generation": 7,
+          "best": 1,
+          "average": 0.4414843557469406,
+          "completed": 40,
+          "completedLaps": 121,
+          "bestLapTime": 7.266666666666293,
+          "bestTime": 22.883333333333315
+        },
+        {
+          "generation": 8,
+          "best": 1,
+          "average": 0.6129199192420356,
+          "completed": 58,
+          "completedLaps": 176,
+          "bestLapTime": 7.199999999999637,
+          "bestTime": 22.74999999999999
+        },
+        {
+          "generation": 9,
+          "best": 1,
+          "average": 0.6267939584834774,
+          "completed": 61,
+          "completedLaps": 183,
+          "bestLapTime": 7.099999999999664,
+          "bestTime": 22.450000000000006
+        },
+        {
+          "generation": 10,
+          "best": 1,
+          "average": 0.5948445181103006,
+          "completed": 57,
+          "completedLaps": 171,
+          "bestLapTime": 7.099999999999664,
+          "bestTime": 22.450000000000006
+        },
+        {
+          "generation": 11,
+          "best": 1,
+          "average": 0.5868219755077169,
+          "completed": 57,
+          "completedLaps": 171,
+          "bestLapTime": 7.050000000000351,
+          "bestTime": 22.31666666666668
+        },
+        {
+          "generation": 12,
+          "best": 1,
+          "average": 0.5557587247707294,
+          "completed": 53,
+          "completedLaps": 160,
+          "bestLapTime": 7.050000000000351,
+          "bestTime": 22.31666666666668
+        },
+        {
+          "generation": 13,
+          "best": 1,
+          "average": 0.6049562118202053,
+          "completed": 59,
+          "completedLaps": 177,
+          "bestLapTime": 7.050000000000351,
+          "bestTime": 22.266666666666683
+        },
+        {
+          "generation": 14,
+          "best": 1,
+          "average": 0.5864901267546108,
+          "completed": 57,
+          "completedLaps": 171,
+          "bestLapTime": 7.050000000000351,
+          "bestTime": 22.250000000000018
+        },
+        {
+          "generation": 15,
+          "best": 1,
+          "average": 0.6649177360474373,
+          "completed": 65,
+          "completedLaps": 195,
+          "bestLapTime": 6.999999999999698,
+          "bestTime": 22.08333333333336
+        },
+        {
+          "generation": 16,
+          "best": 1,
+          "average": 0.5471048661864308,
+          "completed": 53,
+          "completedLaps": 159,
+          "bestLapTime": 6.999999999999698,
+          "bestTime": 22.08333333333336
+        },
+        {
+          "generation": 17,
+          "best": 1,
+          "average": 0.5224840539845692,
+          "completed": 50,
+          "completedLaps": 150,
+          "bestLapTime": 6.9999999999996945,
+          "bestTime": 22.016666666666698
+        },
+        {
+          "generation": 18,
+          "best": 1,
+          "average": 0.6539107380448204,
+          "completed": 64,
+          "completedLaps": 192,
+          "bestLapTime": 6.9999999999996945,
+          "bestTime": 22.016666666666698
+        },
+        {
+          "generation": 19,
+          "best": 1,
+          "average": 0.5018039061436423,
+          "completed": 48,
+          "completedLaps": 144,
+          "bestLapTime": 6.9999999999996945,
+          "bestTime": 22.016666666666698
+        },
+        {
+          "generation": 20,
+          "best": 1,
+          "average": 0.6355885399779152,
+          "completed": 62,
+          "completedLaps": 186,
+          "bestLapTime": 6.983333333333681,
+          "bestTime": 22.000000000000032
+        },
+        {
+          "generation": 21,
+          "best": 1,
+          "average": 0.5978749074061817,
+          "completed": 58,
+          "completedLaps": 174,
+          "bestLapTime": 6.983333333333016,
+          "bestTime": 22.000000000000032
+        },
+        {
+          "generation": 22,
+          "best": 1,
+          "average": 0.652080467371541,
+          "completed": 64,
+          "completedLaps": 192,
+          "bestLapTime": 6.983333333333016,
+          "bestTime": 22.000000000000032
+        },
+        {
+          "generation": 23,
+          "best": 1,
+          "average": 0.549830133678799,
+          "completed": 53,
+          "completedLaps": 159,
+          "bestLapTime": 6.983333333333016,
+          "bestTime": 22.000000000000032
+        },
+        {
+          "generation": 24,
+          "best": 1,
+          "average": 0.5392569632554784,
+          "completed": 52,
+          "completedLaps": 156,
+          "bestLapTime": 6.983333333333016,
+          "bestTime": 22.000000000000032
+        },
+        {
+          "generation": 25,
+          "best": 1,
+          "average": 0.5785420699502181,
+          "completed": 56,
+          "completedLaps": 168,
+          "bestLapTime": 6.983333333333016,
+          "bestTime": 22.000000000000032
+        }
+      ],
+      "seconds": 14.44
+    }
+  ]
+}

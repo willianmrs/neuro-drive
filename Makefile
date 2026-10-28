@@ -17,29 +17,29 @@ POPULATION ?= 40
 
 help:
 	@printf '%s\n' \
-	  'NeuroDrive — comandos locais' \
+	  'NeuroDrive — local commands' \
 	  '' \
-	  'make dev         Instala dependencias, se necessario, e inicia o app' \
-	  'make run         Alias de make dev' \
-	  'make install     Reinstala as dependencias com npm ci' \
-	  'make test        Executa os testes automatizados' \
-	  'make build       Verifica TypeScript e gera dist/' \
-	  'make check       Executa testes e build' \
-	  'make preview     Compila e serve a versao de producao' \
-	  'make experiment  Executa o experimento em cenario fixo' \
-	  'make compare     Compara treino fixo e diverso' \
-	  'make clean       Remove apenas dist/' \
+	  'make dev         Installs dependencies if needed and starts the app' \
+	  'make run         Alias for make dev' \
+	  'make install     Reinstalls dependencies with npm ci' \
+	  'make test        Runs automated tests' \
+	  'make build       Checks TypeScript and builds dist/' \
+	  'make check       Runs tests and the build' \
+	  'make preview     Builds and serves the production version' \
+	  'make experiment  Runs the fixed-scenario experiment' \
+	  'make compare     Compares fixed and diverse training' \
+	  'make clean       Removes only dist/' \
 	  '' \
-	  'Exemplos: make dev PORT=5174 | make preview PREVIEW_PORT=4174' \
+	  'Examples: make dev PORT=5174 | make preview PREVIEW_PORT=4174' \
 	  '          make experiment GENERATIONS=10 SEEDS=42 LAPS=1' \
 	  '          make compare DIVERSITY_GENERATIONS=6 SEEDS=42 POPULATION=40' \
 	  '' \
-	  'Experimentos gravam resultados em results/; consulte o README.'
+	  'Experiments write to results/; see the README for details.'
 
 check-tools:
-	@command -v node >/dev/null 2>&1 || { printf '%s\n' 'Instale Node.js 22.12+ para continuar.'; exit 1; }
-	@command -v "$(NPM)" >/dev/null 2>&1 || { printf '%s\n' 'npm nao encontrado. Instale Node.js com npm.'; exit 1; }
-	@node -e 'const [major,minor]=process.versions.node.split(".").map(Number); if(major<22||(major===22&&minor<12)){console.error("Use Node.js 22.12+; encontrado "+process.version);process.exit(1);}'
+	@command -v node >/dev/null 2>&1 || { printf '%s\n' 'Install Node.js 22.12+ to continue.'; exit 1; }
+	@command -v "$(NPM)" >/dev/null 2>&1 || { printf '%s\n' 'npm was not found. Install Node.js with npm.'; exit 1; }
+	@node -e 'const [major,minor]=process.versions.node.split(".").map(Number); if(major<22||(major===22&&minor<12)){console.error("Use Node.js 22.12+; found "+process.version);process.exit(1);}'
 
 install: check-tools
 	$(NPM) ci

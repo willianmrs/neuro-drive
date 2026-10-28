@@ -1,35 +1,35 @@
 # NeuroDrive
 
-Um playground local de neuroevolução: carros com cérebros aleatórios aprendem a completar uma pista. TypeScript, Vite, HTML Canvas e um Web Worker. Toda a simulação, o treino e os dados ficam no navegador.
+A local-first neuroevolution playground: cars with randomly initialized brains learn to complete a track. Built with TypeScript, Vite, HTML Canvas, and a Web Worker. Simulation, training, and browser data stay on your machine.
 
-![NeuroDrive: pistas em paralelo e seleção da câmera](results/preview-parallel-runs.jpg)
+![NeuroDrive: parallel tracks and selectable camera views](results/preview-parallel-runs.jpg)
 
-Não precisa de conta, chave de API, arquivo `.env`, backend nem banco de dados. Depois de instalar as dependências, o app pode rodar sem acesso à internet. A interface está em inglês; este guia está em português.
+No account, API key, `.env` file, backend, or database is required. After installing dependencies, the app can run without internet access. The interface and project documentation are in English.
 
-## Conteúdo
+## Contents
 
-- [Começar em poucos comandos](#começar-em-poucos-comandos)
-- [Comandos do Makefile](#comandos-do-makefile)
-- [Primeiro teste e controles](#primeiro-teste-e-controles)
-- [Recursos do playground](#experimentar)
-- [O que a rede recebe, decide e aprende](#como-funciona)
-- [Métricas para acompanhar a melhora](#qual-métrica-mostra-melhora)
-- [Experimentos de generalização](#comparação-reproduzível-cenário-fixo--diversidade)
-- [Verificações e experimentos em cenário fixo](#verificações-e-experimentos-anteriores-em-cenário-fixo)
-- [Dados locais e credenciais](#dados-locais-e-credenciais)
-- [Solução de problemas](#solução-de-problemas)
-- [Estrutura e limites](#estrutura-e-limites)
+- [Quick start](#quick-start)
+- [Makefile commands](#makefile-commands)
+- [First run and controls](#first-run-and-controls)
+- [Playground features](#playground-features)
+- [How it works](#how-it-works)
+- [Which metrics show improvement?](#which-metrics-show-improvement)
+- [Reproducible comparison: fixed training vs. diversity](#reproducible-comparison-fixed-training-vs-diversity)
+- [Validation and earlier fixed-scenario experiments](#validation-and-earlier-fixed-scenario-experiments)
+- [Local data and credentials](#local-data-and-credentials)
+- [Troubleshooting](#troubleshooting)
+- [Project structure and limitations](#project-structure-and-limitations)
 
-## Começar em poucos comandos
+## Quick start
 
-### Requisitos
+### Requirements
 
-- **Node.js 22.12 ou superior**, com npm. Verificado neste projeto com Node.js **22.22.2** e npm **10.9.7**.
-- **Git**, para clonar o repositório.
-- **Make**, para os atalhos abaixo. Verificado com GNU Make **3.81**. Sem Make, use a alternativa com npm.
-- Um navegador com suporte a módulos JavaScript, Canvas e Web Workers. A direção manual exige teclado.
+- **Node.js 22.12 or newer**, with npm. This project has been verified with Node.js **22.22.2** and npm **10.9.7**.
+- **Git**, to clone the repository.
+- **Make**, for the shortcuts below. Verified with GNU Make **3.81**. An npm-only alternative is also available.
+- A browser with JavaScript modules, Canvas, and Web Worker support. Manual driving requires a keyboard.
 
-### Com Make
+### With Make
 
 ```sh
 git clone https://github.com/willianmrs/neuro-drive.git
@@ -37,197 +37,252 @@ cd neuro-drive
 make dev
 ```
 
-Na primeira execução, `make dev` instala as dependências com `npm ci`, usando o `package-lock.json`, e inicia o Vite. Nas próximas execuções, reutiliza a instalação enquanto `package.json` e `package-lock.json` não forem mais recentes que o lockfile da instalação.
+On the first run, `make dev` installs dependencies with `npm ci`, using `package-lock.json`, and starts Vite. Subsequent runs reuse the installation while `package.json` and `package-lock.json` are no newer than the installation lockfile.
 
-Abra [http://127.0.0.1:5173](http://127.0.0.1:5173). Encerre o servidor com **Ctrl+C** no terminal. Se a porta estiver ocupada, escolha outra:
+Open [http://127.0.0.1:5173](http://127.0.0.1:5173). Stop the server with **Ctrl+C** in the terminal. If the port is occupied, choose another one:
 
 ```sh
 make dev PORT=5174
 ```
 
-Nesse caso, abra [http://127.0.0.1:5174](http://127.0.0.1:5174). Os atalhos do Make usam `--strictPort`: se a porta escolhida estiver ocupada, o comando informa o erro em vez de trocar de porta automaticamente.
+Then open [http://127.0.0.1:5174](http://127.0.0.1:5174). The Make shortcuts use `--strictPort`: an occupied port produces an error instead of silently switching to another port.
 
-### Sem Make
+### Without Make
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Abra a URL local mostrada pelo Vite. Essa alternativa também funciona no Windows com Node.js e npm instalados; o Makefile usa um shell compatível com POSIX, disponível no macOS, Linux e em ambientes como WSL.
+Open the local URL printed by Vite. This alternative also works on Windows with Node.js and npm installed. The Makefile uses a POSIX-compatible shell, available on macOS, Linux, and environments such as WSL.
 
-### Testar a versão de produção
+### Preview the production build
 
 ```sh
 make preview
 ```
 
-O comando verifica TypeScript, compila o app em `dist/` e serve o resultado em [http://127.0.0.1:4173](http://127.0.0.1:4173). Para trocar a porta, use `make preview PREVIEW_PORT=4174`. Com npm:
+This checks TypeScript, builds the app into `dist/`, and serves it at [http://127.0.0.1:4173](http://127.0.0.1:4173). Use `make preview PREVIEW_PORT=4174` to change the port. With npm:
 
 ```sh
 npm run build
 npm run preview
 ```
 
-O preview serve para conferir o build local. Use um servidor HTTP; abrir `index.html` diretamente não carrega os módulos e o worker. `dist/` contém os arquivos estáticos gerados, incluindo o worker.
+Preview is intended for checking the local build. Use an HTTP server; opening `index.html` directly does not load the modules and worker. `dist/` contains the generated static files, including the worker.
 
-## Comandos do Makefile
+## Makefile commands
 
-Execute `make` ou `make help` para listar os atalhos. Os comandos que executam o projeto instalam dependências automaticamente quando necessário.
+Run `make` or `make help` to list the shortcuts. Commands that run the project install dependencies automatically when needed.
 
-| Comando | Resultado |
+| Command | Result |
 | --- | --- |
-| `make dev` ou `make run` | Inicia o servidor de desenvolvimento com recarga automática. |
-| `make install` | Reinstala exatamente as dependências do lockfile com `npm ci`. |
-| `make test` | Executa os testes do simulador, da evolução e das métricas. |
-| `make build` | Verifica TypeScript e gera o build em `dist/`. |
-| `make check` | Executa testes e build. |
-| `make preview` | Gera o build e abre um servidor local para a versão compilada. |
-| `make experiment` | Executa o treino headless no cenário fixo. |
-| `make compare` | Compara os métodos fixo e diverso com o mesmo orçamento de episódios. |
-| `make clean` | Remove somente `dist/`; mantém dependências e resultados dos experimentos. |
+| `make dev` or `make run` | Starts the development server with automatic reloading. |
+| `make install` | Reinstalls the exact dependencies from the lockfile with `npm ci`. |
+| `make test` | Runs the simulator, evolution, and metrics tests. |
+| `make build` | Checks TypeScript and builds the app into `dist/`. |
+| `make check` | Runs tests and the build. |
+| `make preview` | Builds the app and serves the compiled version locally. |
+| `make experiment` | Runs headless training in a fixed scenario. |
+| `make compare` | Compares fixed and diverse training with the same episode budget. |
+| `make clean` | Removes only `dist/`, preserving dependencies and experiment results. |
 
-### Personalizar os experimentos
+### Customize experiments
 
 ```sh
-# Uma seed, uma volta, dez gerações no Oval sem obstáculos.
+# One seed, one lap, ten generations on the Oval without obstacles.
 make experiment GENERATIONS=10 SEEDS=42 TRACK=oval LAYERS=12 LAPS=1 LAYOUT=clear
 
-# Switchback com duas camadas ocultas e barreiras.
+# Switchback with two hidden layers and barriers.
 make experiment GENERATIONS=10 SEEDS=2026 TRACK=technical LAYERS=12,8 LAPS=3 LAYOUT=barriers
 
-# Comparação curta entre treino fixo e diverso.
+# A short comparison of fixed and diverse training.
 make compare DIVERSITY_GENERATIONS=6 SEEDS=42 POPULATION=40
 ```
 
-| Variável | Padrão | Usada por |
+| Variable | Default | Used by |
 | --- | --- | --- |
 | `HOST` | `127.0.0.1` | `dev`, `run`, `preview`. |
 | `PORT` | `5173` | `dev`, `run`. |
 | `PREVIEW_PORT` | `4173` | `preview`. |
 | `GENERATIONS` | `40` | `experiment`. |
-| `SEEDS` | `neurodrive,42,2026` | `experiment`, `compare`; lista separada por vírgulas. |
-| `TRACK` | `oval` | `experiment`; aceita `oval` ou `technical`. |
-| `LAYERS` | `12` | `experiment`; neurônios das camadas ocultas, separados por vírgulas. |
-| `LAPS` | `3` | `experiment`; de 1 a 10 voltas. |
-| `LAYOUT` | `barriers` | `experiment`; aceita `clear` ou `barriers`. |
-| `DIVERSITY_GENERATIONS` | `24` | `compare`; o método fixo roda quatro vezes esse número de gerações. |
-| `POPULATION` | `40` | `compare`; de 20 a 300 carros. O experimento fixo usa população 100. |
-| `NPM` | `npm` | Permite indicar outro caminho para o executável npm. |
+| `SEEDS` | `neurodrive,42,2026` | `experiment`, `compare`; a comma-separated list. |
+| `TRACK` | `oval` | `experiment`; accepts `oval` or `technical`. |
+| `LAYERS` | `12` | `experiment`; comma-separated hidden-layer neuron counts. |
+| `LAPS` | `3` | `experiment`; from 1 to 10 laps. |
+| `LAYOUT` | `barriers` | `experiment`; accepts `clear` or `barriers`. |
+| `DIVERSITY_GENERATIONS` | `24` | `compare`; the fixed method runs four times this many generations. |
+| `POPULATION` | `40` | `compare`; from 20 to 300 cars. The fixed-scenario `experiment` command uses a population of 100. |
+| `NPM` | `npm` | An alternative path to the npm executable. |
 
-Os experimentos escrevem em `results/` e podem substituir os JSON correspondentes à mesma configuração, além dos relatórios consolidados. Copie os resultados que quiser preservar antes de repetir uma execução. `make compare` usa **uma volta por episódio**, independentemente de `LAPS`, e não altera a sessão aberta no navegador. Esses comandos rodam no terminal e podem levar algum tempo.
+Experiments write to `results/` and may overwrite JSON files for the same configuration, as well as consolidated reports. Copy any results you want to preserve before repeating an experiment. `make compare` uses **one lap per episode**, regardless of `LAPS`, and does not affect an open browser session. These commands run in the terminal and may take some time.
 
-## Primeiro teste e controles
+## First run and controls
 
-1. Abra o app com `make dev`. O treino já começa em **Evolution lab**, com 100 redes, três voltas por tentativa e quatro pistas simultâneas por geração. Cada rede tem uma cópia do carro em cada pista.
-2. Clique em uma miniatura de **Pick a run. Stay on track.** para escolher a pista principal. A câmera continua nessa pista entre voltas e gerações. Selecione **8×** ou **32×** para avançar mais ticks de simulação. Os carros baterem nas primeiras gerações é esperado: os pesos iniciais são aleatórios.
-3. Acompanhe **More drivers making it home** e **Drive beyond one layout**. No modo diverso, espere a bateria inteira terminar antes de comparar gerações.
-4. Salve o melhor cérebro no painel **Champion** e exporte o JSON para levar o modelo para outro navegador.
-5. Importe, por exemplo, [`results/transfer-diverse-2026.json`](results/transfer-diverse-2026.json) para experimentar um campeão já treinado. O app não carrega os exemplos automaticamente. Use **Replay original** para reproduzir um cenário de origem ou **Test current environment** para testar o layout aberto com os mesmos pesos.
-6. Use **Edit obstacles** para criar, arrastar ou girar barreiras e avaliar a transferência. No treino diverso, o editor modifica o ambiente aberto para teste; a bateria de treino continua fixa.
-7. Escolha **Take the wheel**, clique na pista para dar foco ao teclado e dirija com a mesma física dos carros da rede.
+1. Start the app with `make dev`. Training begins in **Evolution lab**, with 100 networks, three laps per attempt, and four simultaneous tracks per generation. Every network has a copy of its car on each track.
+2. Click a thumbnail under **Pick a run. Stay on track.** to choose the main view. The camera stays on that track across laps and generations. Select **8×** or **32×** to advance more simulation ticks. Crashes in early generations are expected: initial weights are random.
+3. Watch **More drivers making it home** and **Drive beyond one layout**. In diverse mode, wait for the entire scenario battery to finish before comparing generations.
+4. Save the best brain in the **Champion** panel and export its JSON to move the model to another browser.
+5. Import a trained example such as [`results/transfer-diverse-2026.json`](results/transfer-diverse-2026.json). Examples are not loaded automatically. Use **Replay original** to reproduce a source scenario, or **Test current environment** to test the open layout with the same weights.
+6. Use **Edit obstacles** to add, drag, or rotate barriers and evaluate transfer. In diverse mode, the editor changes the open test environment while the training battery stays fixed.
+7. Select **Take the wheel**, click the track to focus the keyboard, and drive with the same physics used by the neural-network cars.
 
-| Controle | Ação |
+| Control | Action |
 | --- | --- |
-| W / ↑ | Acelerar no modo manual. |
-| S / ↓ | Frear; depois, engatar ré. |
-| A / ← e D / → | Esterçar à esquerda e à direita. |
-| Espaço | Pausar ou retomar quando o foco não está em um campo/controle. |
-| R | Reiniciar a tentativa manual ou o teste congelado, com foco na pista. |
-| R / Shift+R no editor | Girar o obstáculo selecionado em +15° / −15°, com foco na pista. |
-| Delete / Backspace no editor | Remover o obstáculo selecionado quando não estiver digitando em um campo. |
-| Esc no editor | Cancelar a edição. |
+| W / ↑ | Accelerate in manual mode. |
+| S / ↓ | Brake, then reverse. |
+| A / ← and D / → | Steer left and right. |
+| Space | Pause or resume when focus is outside a form field or control. |
+| R | Restart the manual attempt or frozen test while the track has focus. |
+| R / Shift+R in the editor | Rotate the selected obstacle by +15° / −15° while the track has focus. |
+| Delete / Backspace in the editor | Remove the selected obstacle when not typing in a field. |
+| Esc in the editor | Cancel editing. |
 
-O **carro verde-limão** é o líder da população atual. O **carro roxo** é o fantasma do campeão salvo, reproduzindo pesos congelados quando está habilitado e disponível naquele modo. Ele não participa da seleção da população atual. Os carros não colidem uns com os outros.
+The **lime-green car** is the current population leader. The **purple car** is the saved champion's ghost, replaying frozen weights when enabled and available in that mode. It does not participate in the current population's selection. Cars do not collide with one another.
 
-## Experimentar
+## Playground features
 
-- **Evolution lab:** começa com 100 controladores aleatórios e, por padrão, quatro cenários executados simultaneamente por geração. As miniaturas mostram todas as pistas, carros ativos, conclusões e progresso médio; clique para escolher qual ampliar. A câmera escolhida permanece estável entre voltas e gerações. Uma pista encerrada fica em **WAITING** até as outras terminarem. Pause, reinicie ou acelere para 4×, 8× ou 32×. A aceleração executa mais ticks de 1/60 s.
-- **Take the wheel:** WASD ou setas; W/↑ acelera, S/↓ freia e permite ré, A/D ou ←/→ esterçam. Espaço pausa; R reinicia a corrida. Clique na pista para focar o teclado. O treino fica pausado durante a direção manual.
-- **A very small brain:** adicione/remova camadas ocultas e edite o número de neurônios. Limites: **1–4 camadas ocultas, 1–24 neurônios por camada**. Enter ou uma breve pausa aplica a edição. Alterar a arquitetura reinicia a população usando a seed atual. Entradas (8) e saídas (2) permanecem fixas; o padrão é **8 → 12 → 2**, com 134 pesos e biases.
-- **Evolution settings:** **Laps per attempt** define **1–10 voltas**, com **3 por padrão**. População e mutação também entram na próxima geração. Ao trocar a meta de voltas, os cérebros continuam evoluindo; pontuações e histórico recomeçam para a nova meta. Aplicar uma seed reinicia o treino de forma reproduzível.
-- **Champion:** salve o melhor cérebro no armazenamento do navegador, carregue-o, exporte/importe JSON ou dispute contra seu fantasma roxo. O líder atual é verde-limão. Cada campeão preserva sua arquitetura e meta de voltas originais. A corrida manual contra um campeão usa essa mesma meta; sem campeão, usa a meta ativa do treino. Importações validam versão, arquitetura, física, quantidade e limites dos pesos e metadados. Arquivos antigos de versão 1 são compatíveis; arquivos de versões 1 e 2 são migrados para corridas de uma volta. Novas exportações usam versão 6 e guardam arquitetura, meta, pesos, tempos, condições exatas de cada cenário e avaliação agregada; podem incluir o teste reservado concluído para os mesmos pesos. O limite é 250 KB. Arquivos das versões 4 e 5 mantêm seus obstáculos e comportamento originais. Arquivos de versões 1–3 continuam compatíveis com suas pistas originais sem obstáculos. **Replay original** restaura o cenário original escolhido no seletor e reproduz os pesos congelados. **Test current environment** mantém a pista/layout aberto e testa os mesmos pesos sem treino adicional. Importar um cérebro preserva o ambiente aberto; o replay original é uma ação explícita. Campeões antigos continuam utilizáveis para teste e replay, mas não ganham avaliações agregadas inventadas.
-- **Edit obstacles:** adiciona, arrasta, gira e remove obstáculos de cinco formatos: barreira listrada, círculo, triângulo, bloco quadrado e barreira longa em um layout editável com limite de **24 obstáculos**. Começa com três barreiras por pista. Escolha **New shape**, clique em **+ Add obstacle** e depois no asfalto para adicionar; arraste para mover mantendo a orientação; selecione um obstáculo e use **↶ / ↷** para girar em passos de 15°, o slider **Angle** ou o campo numérico para definir 0–359°. Na pista, R gira 15° e Shift+R gira −15°; **Remove selected** ou Delete remove a seleção. **Clear all** limpa o rascunho e **Cancel** ou Esc descarta a edição. **Apply & resume** aplica o layout ao ambiente de transferência. No treino diverso, a bateria, pontuações e população permanecem inalteradas; no modo fixo, as tentativas e pontuações recomeçam com os mesmos cérebros. Edições das pistas base são salvas no navegador. Um replay original com geometria/largada particular é um ambiente temporário da sessão. O treino pausa durante a edição; se já estava pausado, continua pausado após aplicar. A largada fica protegida e as barreiras precisam caber no asfalto. Os sensores e a colisão orientada detectam as barreiras.
-- **Every connection has a weight:** o painel abaixo mostra matrizes dos pesos e vieses de cada camada. Escolha o melhor resultado do treino, um dos três primeiros da geração ou o campeão salvo. Azul significa positivo; laranja, negativo; a intensidade representa o módulo relativo ao maior parâmetro daquela rede. O sinal não significa bom/ruim. Linhas recebem sinais das colunas. Clique no nome de um neurônio para inspecionar a soma e a saída `tanh`; nos líderes atuais, são usados os inputs da última decisão real. Resultados armazenados mostram apenas os pesos, sem inventar ativações. **Freeze view** congela o cérebro e os inputs para leitura, sem pausar a simulação; uma nova inicialização libera a inspeção congelada. No modo diverso, editar o ambiente aberto não muda a comparação da bateria de treino.
-- **More drivers making it home:** acompanha a qualidade de toda a população, com taxa de conclusão, tempo total mediano entre quem concluiu, progresso médio e colisões. Por padrão, usa a última geração encerrada. **Current generation** mostra resultados provisórios, com o número de carros ainda ativos. O funil detalha 5% da primeira volta e cada volta concluída. O gráfico e a tabela mantêm até 240 gerações no histórico e exibem as últimas 10 na tabela.
-- **Test other track:** abre a outra pista e executa o cérebro salvo congelado. No treino diverso, trocar o ambiente de teste não muda a bateria. O treino pausa durante os testes congelados ou a direção manual.
+### Training and parallel runs
 
-## Como funciona
+**Evolution lab** starts with 100 random controllers and, by default, four scenarios running simultaneously per generation. Thumbnails show every track, active cars, finishes, and mean progress. Click one to choose the main view. The selected camera stays fixed across laps and generations. A completed run remains in **WAITING** until the other runs finish.
 
-Sete raycasts em um campo frontal de 180° e a velocidade normalizada alimentam a mesma rede feedforward com `tanh` e duas saídas de direção e aceleração/frenagem. A arquitetura e as oito entradas existentes foram mantidas.
+Pause, reset, or speed up training to 4×, 8×, or 32×. Speed changes execute more fixed 1/60-second ticks.
 
-### Uma decisão por tick de simulação
+**Take the wheel** supports WASD or arrow keys. W/↑ accelerates, S/↓ brakes and allows reverse, and A/D or ←/→ steer. Space pauses and R restarts the run. Click the track to focus the keyboard. Training is paused during manual driving.
 
-Cada carro tem sua própria cópia dos pesos. A cada **1/60 de segundo simulado**, o simulador lê os sensores, executa a rede e aplica as duas ações à física. Isso acontece uma vez por tick, sem depender da taxa de quadros da tela; a aceleração do treino executa mais ticks. As subdivisões usadas para verificar colisões mantêm a ação daquele tick.
+### Network architecture and evolution settings
 
-| Sinal | Valores e significado |
+In **A very small brain**, add or remove hidden layers and edit their neuron counts. Limits are **1–4 hidden layers, with 1–24 neurons per layer**. Press Enter or briefly stop editing to apply a change. Changing the architecture resets the population using the current seed. Inputs (8) and outputs (2) stay fixed. The default is **8 → 12 → 2**, with 134 weights and biases.
+
+Under **Evolution settings**, **Laps per attempt** sets **1–10 laps**, with **3 by default**. Population and mutation changes also take effect in the next generation. When the lap target changes, brains continue evolving while scores and history restart for the new target. Applying a seed restarts training reproducibly.
+
+### Champions, import, and replay
+
+Save the best brain in browser storage, load it, export or import JSON, or race its purple ghost. Each champion preserves its original architecture and lap target. Manual racing against a champion uses that target; without a champion, it uses the active training target.
+
+Imports validate the format version, architecture, physics, parameter counts and bounds, and metadata. The file-size limit is **250 KB**.
+
+- Version 1 files remain compatible. Versions 1 and 2 are migrated to one-lap runs.
+- New exports use **version 6**, storing the architecture, target, weights, times, exact scenario conditions, and aggregate evaluation. They may include a completed reserved-set evaluation for the same weights.
+- Versions 4 and 5 retain their saved obstacles and original behavior.
+- Versions 1–3 remain compatible with their original obstacle-free tracks.
+
+**Replay original** restores the source scenario chosen in the selector and replays frozen weights. **Test current environment** preserves the open track and layout and tests the same weights without further training. Importing a brain also preserves the open environment; restoring a source scenario is an explicit replay action. Legacy champions remain available for testing and replay without inventing missing aggregate evaluations.
+
+**Test other track** opens the other track and runs the saved brain with frozen weights. In diverse mode, changing the test environment does not change the training battery. Training pauses during frozen tests and manual driving.
+
+### Obstacle editor
+
+**Edit obstacles** supports five shapes: striped barriers, circles, triangles, square blocks, and long barriers. An editable layout supports up to **24 obstacles** and starts with three barriers per base track.
+
+Choose **New shape**, click **+ Add obstacle**, then click the asphalt to place it. Drag to move an obstacle while preserving its orientation. Select an obstacle and use **↶ / ↷** to rotate in 15° steps, or use the **Angle** slider or numeric field to set 0–359°. With the track focused, R rotates +15° and Shift+R rotates −15°. **Remove selected** or Delete removes the selection. **Clear all** clears the draft; **Cancel** or Esc discards the edit.
+
+**Apply & resume** applies the layout to the transfer environment. In diverse training, the battery, scores, and population stay unchanged. In fixed mode, attempts and scores restart with the same brains. Base-track edits are saved in browser storage. An original replay with custom geometry or a particular starting position is a temporary session environment.
+
+Training pauses during editing. If it was already paused, it remains paused after applying the layout. The starting area is protected, and obstacles must fit on the asphalt. Both sensors and oriented collision checks detect obstacles.
+
+### Inspecting weights
+
+**Every connection has a weight** displays each layer's weight and bias matrices. Choose the best training result, one of the current generation's top three drivers, or the saved champion.
+
+Blue means positive and orange means negative. Color intensity shows magnitude relative to the largest parameter in that network. A sign does not indicate whether a weight is good or bad. Rows receive signals from columns.
+
+Click a neuron's name to inspect its weighted sum and `tanh` output. Current leaders use inputs from their latest real decision. Stored results display parameters without inventing activations. **Freeze view** captures the brain and inputs for inspection without pausing the simulation. A new training initialization releases the frozen inspection. In diverse mode, editing the open environment does not change the training-battery comparison.
+
+### Population metrics
+
+**More drivers making it home** tracks the entire population through completion rate, median total time among finishers, mean progress, and collisions. It uses the last completed generation by default. **Current generation** shows provisional results and the number of cars still active.
+
+The funnel includes reaching 5% of the first lap and completing each lap. The chart and history retain up to 240 generations; the table displays the latest 10.
+
+## How it works
+
+Seven raycasts across a forward-facing 180° field and normalized speed feed a `tanh` feedforward network with two outputs: steering and throttle/braking.
+
+### One decision per simulation tick
+
+Each car has its own copy of the weights. Every **1/60 of a simulated second**, the simulator reads sensors, executes the network, and applies its two actions to the physics. Decisions occur once per tick, independently of the display frame rate. Faster training executes more ticks. Collision substeps keep the action selected for that tick.
+
+| Signal | Values and meaning |
 | --- | --- |
-| Entradas 1–7 | Distância normalizada até a borda/obstáculo nos ângulos −90°, −60°, −30°, 0°, +30°, +60° e +90° em relação ao carro. `0` indica contato; `1`, nenhuma interseção no alcance de 215 unidades. |
-| Entrada 8 | Velocidade dividida pela velocidade máxima, limitada a `[-1, 1]`; negativa em ré. |
-| Saída 1 | Esterçamento contínuo: `−1` à esquerda, `0` reto, `+1` à direita. |
-| Saída 2 | Aceleração/frenagem contínua: `+1` acelera; valores negativos freiam o movimento para a frente e permitem ré. |
+| Inputs 1–7 | Normalized distance to a boundary or obstacle at −90°, −60°, −30°, 0°, +30°, +60°, and +90° relative to the car. `0` indicates contact; `1` means no intersection within the 215-unit range. |
+| Input 8 | Speed divided by maximum speed, clamped to `[-1, 1]`; negative while reversing. |
+| Output 1 | Continuous steering: `−1` left, `0` straight, `+1` right. |
+| Output 2 | Continuous throttle/braking: `+1` accelerates; negative values brake forward motion and allow reverse. |
 
-A rede não recebe posição na pista, checkpoints, número de voltas, pontuação ou uma trajetória ideal. Ela não tem memória recorrente. Posição, orientação, relógios e checkpoints pertencem ao simulador e à avaliação, não às entradas do controlador.
+The network receives no track position, checkpoints, lap count, score, or ideal trajectory. It has no recurrent memory. Position, orientation, clocks, and checkpoints belong to the simulator and evaluator, rather than the controller's inputs.
 
-### O que muda entre gerações
+### What changes between generations
 
-Os pesos ficam **fixos durante cada tentativa**. Não há ajuste por backpropagation a cada colisão nem um professor indicando a direção correta. A melhora vem da seleção dos controladores que tiveram melhores resultados e das mutações dos seus descendentes.
+Weights remain **fixed throughout each attempt**. There is no backpropagation update after a collision and no teacher providing the correct steering direction. Improvement comes from selecting better-performing controllers and mutating their descendants.
 
-Ao fim da avaliação, cerca de **4% da população, com mínimo de dois carros**, passa sem mutação. Os pais do restante vêm dos **25% mais bem classificados**: um torneio sorteia três posições desse grupo e escolhe a melhor. Cada descendente copia um pai e cada parâmetro pode receber ruído gaussiano conforme a probabilidade e a intensidade configuradas; pesos e vieses ficam limitados a `[-6, 6]`. Não há cruzamento de dois pais. No padrão, a mutação tem probabilidade de **14% por parâmetro** e intensidade **0,30**.
+After evaluation, approximately **4% of the population, with a minimum of two cars**, survives without mutation. Parents for the remaining cars come from the **top 25%**: a tournament samples three positions within that group and chooses the best. Each descendant copies one parent. Every parameter may receive Gaussian noise according to the configured mutation probability and strength. Weights and biases are clamped to `[-6, 6]`. There is no two-parent crossover. Defaults are **14% mutation probability per parameter** and **0.30 strength**.
 
-Não existe recompensa explícita por ficar no centro da pista. O objetivo considera progresso válido, conclusões e tempo. Evitar bordas pode surgir como comportamento útil, mas o centro não é uma linha obrigatória nem necessariamente o trajeto mais rápido.
+There is no explicit reward for staying in the center of the track. The objective considers valid progress, finishes, and time. Avoiding boundaries can emerge as useful behavior, but the center is neither a required line nor necessarily the fastest path.
 
-### Cenários, classificação e generalização
+### Scenarios, ranking, and generalization
 
-As runs são simultâneas no tempo da simulação e são intercaladas em um único Web Worker. Isso mantém a interface livre do cálculo do treino; não cria um worker por pista nem promete uso de vários núcleos. Com 100 redes e quatro cenários, existem 400 episódios carro × cenário por geração. O custo de um tick aumenta com a quantidade de pistas, carros e neurônios.
+Runs advance simultaneously in simulation time and are interleaved within a single Web Worker. This keeps training calculations off the interface thread. It does not create a worker per track or promise multicore execution. With 100 networks and four scenarios, a generation contains 400 car × scenario episodes. The cost of a tick grows with the number of tracks, cars, and neurons.
 
-No modo **Diverse scenarios**, cada genoma enfrenta a bateria completa de **4–6 cenários em paralelo**. Há uma cópia independente de cada carro em cada pista, com o mesmo genoma e seu próprio estado físico. Todos os cenários avançam um passo de 1/60 s por tick; carros encerrados mantêm seu resultado enquanto os demais continuam. Cada carro completa toda a meta de voltas na sua pista. As pistas ficam fixas ao longo das gerações, e a seleção só acontece quando todos os carros de todas as pistas terminam. A geração seguinte reinicia todas as pistas juntas com os novos genomas.
+In **Diverse scenarios** mode, each genome faces the complete battery of **4–6 scenarios in parallel**. Each track has an independent copy of every car, sharing genome values but maintaining its own physical state. All scenarios advance one 1/60-second step per tick. Ended cars preserve their results while the others continue. Each car attempts the entire lap target on its own track. Tracks stay fixed across generations, and selection waits until every car on every track has ended. The next generation restarts all tracks together with the new genomes.
 
-A classificação compara, nesta ordem: fração de cenários concluídos, progresso médio normalizado, progresso no pior cenário e tempo médio por distância entre as conclusões. Progresso parcial continua útil antes das primeiras conclusões. Pais por torneio, elites e campeão usam essa classificação. **Não existe bônus de uma volta isolada no modo diverso.** No modo **Fixed current environment**, o algoritmo original e o bônus da volta mais rápida continuam disponíveis para comparação.
+Ranking compares, in order: the fraction of scenarios completed, mean normalized progress, worst-scenario progress, and mean time per distance among finishes. Partial progress remains useful before the first complete runs. Tournament parents, elites, and the champion all use this ranking. **Diverse mode has no individual-lap bonus.** **Fixed current environment** retains the original algorithm and fastest-lap bonus for comparison.
 
-As baterias ficam fixas para que um recorde não seja comparado a uma bateria diferente. Uma chave canônica inclui todas as condições físicas e a meta de voltas; o comparador rejeita chaves diferentes. Mudar protocolo, quantidade ou amplitude da diversidade inicia uma nova população e comparação. Mudar a meta de voltas aguarda o fim da bateria, preserva os descendentes e limpa os recordes para a nova meta. O gerador dos cenários usa seed separada do gerador da evolução.
+Batteries stay fixed so a record is never compared with a different battery. A canonical key includes every physical condition and the lap target; the comparator rejects different keys. Changing the protocol, scenario count, or diversity level starts a fresh population and comparison. Changing the lap target waits for the battery boundary, preserves descendants, and clears records for the new target. Scenario generation uses a separate random stream from evolution.
 
-O conjunto de treino inclui as duas pistas, ambos os sentidos, obstáculos com posições/orientações variadas e perturbações pequenas da largada. Os primeiros dois cenários moderados são sem obstáculos, para manter sinal inicial. **Wider** acrescenta obstáculos, variações de geometria e perturbações maiores. Cada candidato de layout passa por verificações de posicionamento e por uma busca de corredor fechado com o carro orientado e varreduras de colisão. Isso considera bloqueios conjuntos. É um teste conservador de folga geométrica, não uma prova de controlabilidade dinâmica; layouts desenhados livremente para testar transferência podem bloquear a pista.
+The training set includes both tracks, both directions, varied obstacle positions and orientations, and small starting-position perturbations. The first two moderate scenarios have no obstacles to retain an initial learning signal. **Wider** adds obstacles, geometry variations, and larger perturbations. Every generated layout undergoes placement checks and a closed-corridor search using the oriented car and swept collision checks. This accounts for obstacles that jointly block a passage. It is a conservative geometric-clearance check, not proof of dynamic controllability. Freely edited transfer layouts may block the track.
 
-Os **seis cenários reservados** usam outro fluxo de aleatoriedade, novos layouts, largadas e pequenas alterações na geometria. O campeão é avaliado com cópia congelada dos pesos, sem tocar em pais, mutações ou RNG da evolução. O worker executa esse teste separadamente. A interface identifica a geração, a origem (campeão do treino ou salvo) e a meta de voltas do modelo avaliado. Se um campeão mais novo surgir durante o teste, o resultado anterior continua identificado e o novo aguarda sua vez. Um teste manual do salvo permanece identificado como tal até reiniciar o protocolo.
+The **six reserved scenarios** use a separate random stream, new layouts, different starts, and small geometry changes. The champion is evaluated with frozen weights without changing parents, mutations, or evolution's RNG. The worker schedules this evaluation separately. The interface identifies the evaluated model's generation, source (training or saved champion), and lap target. If a newer champion appears during testing, the previous result remains labeled and the newer candidate waits its turn. A manually requested saved-champion test remains identified as such until the protocol is restarted.
 
-O painel de miniaturas mostra todas as runs em andamento e permite selecionar a câmera sem alterar pesos, relógios, seed, ranking, métricas ou a pausa. A pista selecionada continua escolhida após a troca de geração. **Drive beyond one layout** mostra a run observada, quantas pistas terminaram, avaliação agregada e resultados reservados por cenário. O quadro de gerações usa **episódios carro × cenário** como denominador no modo diverso e não mistura tempos brutos de pistas diferentes. Ele também informa quantos carros concluíram toda a bateria. Tempos normalizados são expressos em segundos por 1.000 unidades da pista, apenas para conclusões.
+The thumbnail panel shows every training run and lets you choose a camera without changing weights, clocks, seed, ranking, metrics, or pause state. The selected track remains selected across generations. **Drive beyond one layout** shows the observed run, the number of finished tracks, aggregate evaluation, and per-scenario reserved results. In diverse mode, generation metrics use **car × scenario episodes** as their denominator and do not combine raw times from different tracks. They also report how many drivers completed the entire battery. Normalized times are expressed as seconds per 1,000 track units, for completed attempts only.
 
-A física arcade não inclui perda de aderência nem derrapagem. Usa passo fixo de 60 Hz, arrasto, frenagem, velocidade limitada e esterçamento proporcional ao movimento. A colisão usa um retângulo orientado e subdivisões de até 3 unidades/0,04 radianos por passo. Carros colidem com bordas e barreiras, e não colidem entre si. O treino e o modo manual chamam a mesma função `stepCar`.
+### Physics and valid progress
 
-Dezesseis checkpoints direcionais devem ser cruzados em ordem. Só o intervalo atual pode render progresso, com um limite superior; o maior progresso válido é preservado. Ré, oscilação e rotação não acumulam pontos repetidos. Cada volta precisa repetir os 16 checkpoints na ordem. O carro cruza a chegada mantendo posição, velocidade e direção. O progresso acumula em distância absoluta até completar todas as voltas da meta. Colisão, 4,5 s sem avanço ou um limite total de 34 s simulados por volta da meta encerram a tentativa. Completar a meta encerra com sucesso; tempos totais menores desempatam as corridas completas. A interface mostra a volta atual, melhor volta individual e melhor tempo total separadamente. O melhor cérebro permanece separado da geração atual.
+The arcade physics model does not include tire slip or traction loss. It uses a fixed 60 Hz step, drag, braking, bounded speed, and steering proportional to movement. Collision uses an oriented rectangle and substeps of at most 3 units or 0.04 radians. Cars collide with boundaries and barriers, but not with each other. Training and manual mode call the same `stepCar` function.
 
-## Qual métrica mostra melhora?
+Sixteen directional checkpoints must be crossed in order. Only the current checkpoint interval can award progress, with an upper bound; the greatest valid progress is preserved. Reversing, oscillating, and spinning cannot repeatedly earn the same progress. Each lap must repeat all 16 checkpoints in order. Cars cross the finish line while retaining position, speed, and heading. Progress accumulates as absolute distance until the lap target is complete.
 
-No modo fixo, a principal é **carros que concluíram todas as voltas ÷ população avaliada**. No modo diverso, acompanhe a fração de cenários concluídos pelo campeão, a quantidade de carros que conclui toda a bateria e o sucesso nos cenários reservados. O quadro de população mostra a taxa de conclusão dos episódios carro × cenário. Uma taxa maior mostra que o comportamento útil aparece em mais redes. Depois compare o **tempo total mediano de quem concluiu**, junto da taxa de conclusão: uma mediana menor com quase ninguém terminando pode ser enganosa. Enquanto ninguém conclui, acompanhe o progresso médio de todos os carros e a queda nas colisões. Um único campeão é uma evidência mais limitada que a população inteira.
+A collision, 4.5 simulated seconds without progress, or a total budget of 34 simulated seconds per target lap ends the attempt. Completing the target ends successfully; lower total times break ties among completed runs. The interface shows the current lap, best individual lap, and best total time separately. The best brain is preserved independently of the current generation.
 
-As taxas sempre usam a população realmente avaliada naquela geração, mesmo se o controle de população mudar na geração seguinte. Progresso é a distância válida dividida pela distância total da meta. A dispersão do progresso é o desvio padrão populacional, mostrado em pontos percentuais. Diversidade dos pesos é a raiz da média das variâncias populacionais de cada parâmetro, incluindo vieses. Diversidade menor indica pesos mais parecidos, sem garantir comportamento melhor. A tendência compara a média das taxas de conclusão das últimas cinco gerações encerradas com as cinco anteriores, após haver dez gerações.
+## Which metrics show improvement?
 
-No modo fixo, compare a mesma pista, layout e meta. No modo diverso, compare a mesma bateria e meta; mudar apenas o ambiente aberto para transferência preserva esse histórico. Alterações na arquitetura/seed ou protocolo reiniciam a população. Esses números mostram o aprendizado nesse cenário de treino e não substituem testar o campeão em outro cenário.
+In fixed mode, the main metric is **cars that completed every target lap ÷ evaluated population**. In diverse mode, watch the champion's scenario-completion fraction, the number of drivers completing the entire battery, and reserved-scenario success. The population panel reports the completion rate of car × scenario episodes. A higher rate shows useful behavior appearing in more networks.
 
-## Comparação reproduzível: cenário fixo × diversidade
+Then compare the **median total time among finishers** together with completion rate. A lower median with almost nobody finishing can be misleading. Before any car finishes, watch mean progress across all cars and falling collision rates. A single champion provides more limited evidence than the whole population.
+
+Rates always use the population actually evaluated in that generation, even if the population setting changes for the next generation. Progress is valid distance divided by the target's total distance. Progress spread is the population standard deviation, shown in percentage points. Weight diversity is the square root of the mean population variance of each parameter, including biases. Lower diversity means more similar weights without guaranteeing better behavior. Once ten generations are complete, the trend compares average completion rates from the latest five completed generations with the preceding five.
+
+In fixed mode, compare the same track, layout, and target. In diverse mode, compare the same battery and target; changing only the open transfer environment preserves that history. Architecture, seed, or protocol changes reset the population. Training metrics describe performance on the evaluated conditions and do not replace testing the champion in other scenarios.
+
+## Reproducible comparison: fixed training vs. diversity
 
 ```sh
 node --import tsx scripts/compare-diversity.ts 24 neurodrive,42,2026 40
 ```
 
-Mesmas seeds iniciais, rede 8 → 12 → 2, população 40, mutação 14% / força 0,30, **uma volta por episódio**. Cada método recebe **3.840 episódios de treino por seed**: cenário fixo por 96 gerações; quatro cenários diversos por 24 gerações. O fixo treina apenas no Oval original livre. O diverso treina a bateria moderada. Após o treino, ambos são avaliados nos mesmos quatro cenários de treino diversos e nos mesmos seis cenários reservados daquela seed. Nenhum desses testes escolhe o campeão do método fixo; o diverso também nunca usa o reservado para seleção. São três comparações pareadas, não 18 circuitos base independentes.
+The methods use the same initial seeds, an 8 → 12 → 2 network, a population of 40, 14% mutation probability, 0.30 strength, and **one lap per episode**. Each method receives **3,840 training episodes per seed**: fixed training for 96 generations or four diverse scenarios for 24 generations.
 
-| Seed | Treino próprio fixo / diverso | Bateria comum: fixo / diverso | Reservados: fixo / diverso | Progresso médio reservado: fixo / diverso | Tempo de treino local: fixo / diverso |
+Fixed training uses only the original clear Oval. Diverse training uses the moderate battery. After training, both are evaluated on the same four diverse training scenarios and the same six reserved scenarios for that seed. These evaluations do not choose the fixed method's champion; reserved evaluations never influence diverse selection either. These are three paired comparisons, not 18 independent base circuits.
+
+| Seed | Native training: fixed / diverse | Shared battery: fixed / diverse | Reserved: fixed / diverse | Mean reserved progress: fixed / diverse | Local training time: fixed / diverse |
 | --- | --- | --- | --- | --- | --- |
-| neurodrive | 1/1 · 3/4 | 0/4 · 3/4 | 0/6 · 5/6 | 7,0% · 93,2% | 8,75 s · 12,55 s |
-| 42 | 1/1 · 4/4 | 1/4 · 4/4 | 0/6 · 4/6 | 10,5% · 88,5% | 9,12 s · 13,16 s |
-| 2026 | 1/1 · 4/4 | 1/4 · 4/4 | 0/6 · 5/6 | 8,4% · 92,4% | 8,93 s · 16,14 s |
+| neurodrive | 1/1 · 3/4 | 0/4 · 3/4 | 0/6 · 5/6 | 7.0% · 93.2% | 8.75 s · 12.55 s |
+| 42 | 1/1 · 4/4 | 1/4 · 4/4 | 0/6 · 4/6 | 10.5% · 88.5% | 9.12 s · 13.16 s |
+| 2026 | 1/1 · 4/4 | 1/4 · 4/4 | 0/6 · 5/6 | 8.4% · 92.4% | 8.93 s · 16.14 s |
 
-O sucesso reservado total passou de **0/18 para 14/18 (77,8%)**; o progresso médio passou de **8,6% para 91,4%**. O pior cenário de cada campeão diverso chegou a **54,6%–58,9%**, ainda com falhas. O método diverso usou aproximadamente **56% mais tempo local** e **61% mais passos físicos de carros** com o mesmo orçamento de episódios, principalmente porque os carros sobrevivem mais tempo. Medidas de tempo dependem da máquina/carga; não são um benchmark isolado. No aplicativo, os testes reservados automáticos ainda têm seu próprio custo, não incluído nesses tempos de treino headless.
+Total reserved success increased from **0/18 to 14/18 (77.8%)**; mean progress increased from **8.6% to 91.4%**. Each diverse champion's worst scenario reached **54.6%–58.9%**, with failures still present. Diverse training used approximately **56% more local time** and **61% more physical car steps** with the same episode budget, mainly because cars survived longer.
 
-Os tempos dessa tabela foram medidos antes da execução simultânea das pistas, quando os cenários eram agendados sequencialmente. São registros históricos; não medem o desempenho da interface atual. A mudança de agendamento mantém os pesos fixos por tentativa e a seleção agregada ao final da bateria.
+Timing depends on the machine and load; these measurements are not an isolated benchmark. The application's automatic reserved evaluations have an additional cost that is not included in these headless training times.
 
-A execução foi repetida após a correção da chave canônica de serialização: os resultados por cenário foram idênticos. Os seis campeões reais exportados passaram pelo validador. Resultados completos, condições dos cenários, tempos, número de passos e histórico estão em `results/compare-diversity.json`; os campeões são `results/transfer-{fixed,diverse}-{seed}.json`.
+The table's timings were recorded before simultaneous track execution, when scenarios were scheduled sequentially. They are historical records and do not measure the current interface's performance. The scheduling change retains fixed weights during each attempt and aggregate selection at the battery boundary.
 
-A evidência cobre apenas três seeds, seis cenários reservados por seed e variações de duas famílias de pistas, com folga geométrica e diversidade moderada. No navegador, o campeão `2026` que concluiu 5/6 reservados também foi testado no layout livre de oito obstáculos existente: colidiu aos 12,7% da volta. Seus 134 pesos/vieses exportados permaneceram idênticos após esse teste. Isso evidencia uma falha fora da densidade de obstáculos usada na bateria. Não prova funcionamento em qualquer circuito, em pistas estreitas, grandes perturbações ou layouts que bloqueiem a passagem. O experimento usa uma volta; as metas de 1–10 voltas continuam disponíveis no aplicativo, mas não devem receber os números deste experimento como se tivessem sido medidas.
+The experiment was repeated after fixing the canonical serialization key, producing identical per-scenario results. All six exported champions passed validation. Complete results, scenario conditions, timings, physical-step counts, and history are in `results/compare-diversity.json`. Champions are stored as `results/transfer-{fixed,diverse}-{seed}.json`.
 
-## Verificações e experimentos anteriores em cenário fixo
+The evidence covers only three seeds, six reserved scenarios per seed, and variations of two track families with geometric clearance and moderate diversity. In the browser, the `2026` champion that completed 5/6 reserved scenarios was also tested on an existing freely edited eight-obstacle layout: it collided at 12.7% of the lap. Its 134 exported weights and biases remained identical afterward. This demonstrates a failure outside the obstacle density used by the battery.
+
+The results do not establish success on arbitrary circuits, narrow tracks, large perturbations, or layouts that block passage. This experiment uses one lap. The application still supports targets of 1–10 laps, but these measurements do not describe those other targets.
+
+## Validation and earlier fixed-scenario experiments
 
 ```sh
 npm test
@@ -242,70 +297,87 @@ npm run experiment -- 40 neurodrive,42,2026 oval 12 3 barriers
 node --import tsx scripts/replay-multilap.ts barriers
 ```
 
-Os argumentos de `experiment` são: gerações, seeds separadas por vírgula, pista, tamanhos das camadas ocultas, meta de voltas e layout (`clear` ou `barriers`). A meta padrão é 3; os novos resultados usam o sufixo `-fastlap`, registram a política de seleção e distinguem metas e layouts (`-barriers`) para preservar os experimentos anteriores de uma volta. Os arquivos JSON em `results/` registram seeds, configurações, arquiteturas, histórico por geração, resultados e campeões exportáveis. Esses comandos legados avaliam um ambiente fixo. O treino inicia com pesos aleatórios; os campeões desses experimentos só entram no app por importação explícita.
+The `experiment` arguments are: generation count, comma-separated seeds, track, hidden-layer sizes, lap target, and layout (`clear` or `barriers`). The default target is three laps. New results use the `-fastlap` suffix, record the selection policy, and distinguish lap targets and obstacle layouts (`-barriers`) to preserve earlier one-lap experiments.
 
-Configuração dos experimentos: população 100, mutação 14%, intensidade 0,30. A tabela abaixo registra os experimentos originais, **com meta de uma volta**, em tempo simulado:
+JSON files in `results/` record seeds, settings, architectures, generation history, outcomes, and exportable champions. These legacy commands evaluate a fixed environment. Training starts with random weights; experiment champions enter the browser app only through explicit import.
 
-| Pista / rede | Seed | Gerações | Voltas completas na geração 1 → final | Progresso médio na geração 1 → final | Melhor volta |
+Experiment settings: population 100, 14% mutation probability, and 0.30 strength. The table records the original experiments with a **one-lap target**, using simulated time:
+
+| Track / network | Seed | Generations | Finishers in generation 1 → final | Mean progress in generation 1 → final | Best lap |
 | --- | --- | ---: | ---: | ---: | ---: |
-| Oval / 8–12–2 | neurodrive | 40 | 2 → 55 | 7,2% → 59,3% | 7,98 s |
-| Oval / 8–12–2 | 42 | 40 | 1 → 60 | 5,9% → 64,1% | 7,98 s |
-| Oval / 8–12–2 | 2026 | 40 | 0 → 49 | 3,4% → 53,3% | 8,00 s |
-| Switchback / 8–12–2 | 2026 | 60 | 0 → 64 | 3,3% → 68,2% | 10,10 s |
-| Oval / 8–12–8–2 | 2026 | 40 | 2 → 66 | 6,5% → 69,4% | 7,97 s |
+| Oval / 8–12–2 | neurodrive | 40 | 2 → 55 | 7.2% → 59.3% | 7.98 s |
+| Oval / 8–12–2 | 42 | 40 | 1 → 60 | 5.9% → 64.1% | 7.98 s |
+| Oval / 8–12–2 | 2026 | 40 | 0 → 49 | 3.4% → 53.3% | 8.00 s |
+| Switchback / 8–12–2 | 2026 | 60 | 0 → 64 | 3.3% → 68.2% | 10.10 s |
+| Oval / 8–12–8–2 | 2026 | 40 | 2 → 66 | 6.5% → 69.4% | 7.97 s |
 
-Nos experimentos originais de uma volta, a seed `2026` completa sua primeira volta no Oval na geração 3 e em Switchback na geração 12. A pista Oval é ampla: algumas populações aleatórias já produzem voltas na primeira geração. A melhoria também aparece no tempo e na proporção de carros que concluem.
+In the original one-lap experiments, seed `2026` first completed the Oval in generation 3 and Switchback in generation 12. The Oval is wide: some random populations already produce complete laps in their first generation. Improvement also appears in lap time and the proportion of finishers.
 
-Os três campeões do Oval reproduziram exatamente os tempos exportados ao serem carregados no mesmo simulador. Transferidos sem treino para Switchback, atingiram apenas **4,1%–8,1%**, todos encerrando por colisão. Aprender uma pista não garantiu generalização.
+All three Oval champions reproduced their exported times exactly when loaded into the same simulator. Transferred to Switchback without further training, they reached only **4.1%–8.1%**, all ending in collisions. Learning one track did not guarantee generalization.
 
-Com a nova meta de **3 voltas**, após 25 gerações no Oval, as seeds `neurodrive`, `42` e `2026` concluíram corridas em **21,95 s**, **21,90 s** e **22,00 s**, respectivamente. Na geração 25, **60/100**, **58/100** e **56/100** carros completaram as três voltas. Os resultados completos estão em `results/experiments-laps3.json`; os campeões de versão 3 guardam a meta e podem ser reproduzidos com `scripts/replay-multilap.ts`. Os três reproduziram exatamente o tempo exportado e também completaram 10 voltas contínuas, entre 70,63 s e 70,92 s, sem reposicionar o carro entre voltas.
+With a **three-lap target**, after 25 generations on the Oval, seeds `neurodrive`, `42`, and `2026` completed runs in **21.95 s**, **21.90 s**, and **22.00 s**, respectively. In generation 25, **60/100**, **58/100**, and **56/100** cars completed all three laps. Complete results are in `results/experiments-laps3.json`. Version 3 champions retain their targets and can be replayed with `scripts/replay-multilap.ts`. All three reproduced their exported times exactly and also completed ten continuous laps in 70.63–70.92 seconds without repositioning between laps.
 
-Com as **três barreiras padrão** e bônus da volta rápida, após 40 gerações, as seeds `neurodrive`, `42` e `2026` completaram três voltas em **22,13 s**, **22,08 s** e **22,12 s**. Na geração final, **48/100**, **56/100** e **37/100** carros completaram toda a meta. O histórico, layout exato e campeões ficam em `results/experiments-laps3-fastlap-barriers.json` e arquivos associados.
+With the **three default barriers** and fastest-lap bonus, after 40 generations, seeds `neurodrive`, `42`, and `2026` completed three laps in **22.13 s**, **22.08 s**, and **22.12 s**. In the final generation, **48/100**, **56/100**, and **37/100** cars completed the full target. History, exact layouts, and champions are in `results/experiments-laps3-fastlap-barriers.json` and its associated files.
 
-**46 testes automatizados** cobrem raios, colisões orientadas, movimento, checkpoints e direção, proteção contra pontuação repetida, saídas da rede, mutação, elites, determinismo, arquiteturas configuráveis, limites, continuidade entre voltas, proteção contra repetir a linha de chegada, ranking de várias voltas, tempo limite proporcional, mudanças na meta por geração, serialização/migração de campeões, bônus da melhor volta, sensores/colisões com obstáculos, posições inválidas, reconstrução da geometria após edição e preservação de cérebros ao aplicar layouts, cinco formatos girados com sensores/colisões, serialização de formatos, migração da versão 4, ordem exata dos pesos/vieses, cálculo das taxas/medianas/diversidade, denominadores antes de alterações na população, igualdade de cenários entre genomas, reinício físico, espera da bateria, seleção agregada, rejeição de comparações entre baterias, isolamento dos testes reservados/RNG, pesos congelados, preservação do layout de transferência e serialização agregada. Os testes também verificam avanço simultâneo, estados independentes, espera por pistas que terminam fora de ordem, permanência da câmera entre gerações, isolamento da seleção da câmera e denominadores após mudar a população. O build passa com verificação TypeScript. No navegador foram verificados treino acelerado, pausa/retomada, mudanças pendentes, direção manual, teclado, troca de pistas, sensores, visualização do líder, armazenamento, exportação/importação, rejeição de JSON inválido, controles de camadas, meta de voltas aplicada na próxima geração e corridas contínuas com várias voltas e edição por clique/arraste, remoção, clear-all, cancelamento e retorno de posições inválidas, criação dos cinco formatos, rotação, fontes dos pesos, cálculo do neurônio e congelamento da inspeção. Também foram conferidos importação de um campeão agregado real, preservação dos oito obstáculos ao testar no ambiente aberto, replay explícito dos quatro obstáculos de um campeão antigo e avaliação reservada do campeão salvo. O layout também foi conferido a 390 px, sem rolagem horizontal da página.
+### Automated and browser checks
 
-## Dados locais e credenciais
+**46 automated tests** cover:
 
-O aplicativo não usa chaves de API nem autenticação. Treino e inferência rodam no navegador; os scripts de experimento rodam no Node.js. Não há telemetria nem envio dos modelos para um serviço remoto. A instalação inicial consulta o registro de pacotes npm; os servidores de desenvolvimento e preview atendem localmente por padrão.
+- Ray intersections, oriented collisions, movement, directional checkpoints, protection against repeated progress, continuous multi-lap motion, finish-line repetition, multi-lap ranking, proportional timeouts, and lap-target changes at generation boundaries.
+- Network outputs, mutation, unchanged elites, determinism, configurable architectures and their limits, fastest-lap bonuses, parameter ordering, and weight/bias inspection.
+- Obstacle sensors and collisions for five rotated shapes, invalid placements, geometry rebuilding after edits, preservation of brains when applying layouts, shape serialization, and version 4 migration.
+- Champion serialization and migration, completion rates, medians, diversity, and denominators based on the population actually evaluated.
+- Equal scenarios across genomes, fresh physical states, battery completion before selection, aggregate ranking, rejection of cross-battery comparisons, reserved-set and RNG isolation, frozen weights, transfer-layout preservation, and aggregate serialization.
+- Simultaneous progress, independent run states, out-of-order completion, camera persistence across generations, isolation of camera selection from evolution, and population changes across all runs.
 
-Campeões e layouts salvos usam `localStorage`. São separados por origem do navegador, incluindo host e porta: `localhost:5173`, `127.0.0.1:5173` e `127.0.0.1:5174` têm armazenamentos diferentes. O histórico da sessão e a população em andamento ficam em memória e são perdidos ao recarregar. Exporte o campeão como JSON antes de limpar os dados do navegador ou mudar de origem.
+The build also checks TypeScript. Browser verification during development covered accelerated training, pause/resume, queued settings, manual driving, keyboard controls, track switching, sensors, leader views, browser storage, JSON import/export, invalid JSON rejection, architecture controls, multi-lap targets, and continuous runs.
 
-A revisão com **Gitleaks 8.30.1**, no histórico Git e nos arquivos preparados para publicação, não encontrou credenciais. O `.gitignore` exclui `.env`, variantes locais de `.env`, `.npmrc`, arquivos de chaves/certificados privados, dependências e builds. Nenhum `.env` precisa ser criado para executar o projeto. Variáveis com prefixo `VITE_` podem ser incluídas no JavaScript entregue ao navegador; não devem conter credenciais privadas.
+Editor checks covered adding, dragging, removing, clearing, canceling, rejecting invalid positions, creating all five shapes, and rotation. Inspector checks covered brain sources, neuron calculations, and frozen inspection. Additional checks covered importing an aggregate champion, preserving eight open-layout obstacles during transfer, explicitly replaying a legacy four-obstacle scenario, evaluating a saved champion on the reserved set, parallel views with four and six runs, and keeping a selected camera across generations. Earlier layout checks included a 390 px viewport without horizontal page scrolling.
 
-## Solução de problemas
+## Local data and credentials
 
-| Problema | O que fazer |
+The app uses no API keys or authentication. Training and inference run in the browser; experiment scripts run in Node.js. There is no telemetry or model upload to a remote service. Initial dependency installation contacts the npm package registry. Development and preview servers listen locally by default.
+
+Saved champions and layouts use `localStorage`. Storage is separated by browser origin, including host and port: `localhost:5173`, `127.0.0.1:5173`, and `127.0.0.1:5174` have separate storage. Session history and the current population stay in memory and are lost on reload. Export a champion as JSON before clearing browser data or changing origins.
+
+A review with **Gitleaks 8.30.1** found no credentials in Git history or the files prepared for publication. `.gitignore` excludes `.env`, local `.env` variants, `.npmrc`, private-key/certificate files, dependencies, and builds. No `.env` file is needed to run the project. Variables prefixed with `VITE_` may be included in the JavaScript sent to the browser and must not contain private credentials.
+
+## Troubleshooting
+
+| Problem | What to do |
 | --- | --- |
-| `make: command not found` | Use `npm ci` e `npm run dev`, ou disponibilize Make em um shell POSIX. |
-| Node incompatível ou npm ausente | Confira `node --version` e `npm --version`; use Node.js 22.12+ com npm. |
-| Dependências ausentes ou instalação danificada | Rode `make install` ou `npm ci`. O lockfile faz parte do repositório. |
-| A porta já está ocupada | Use `make dev PORT=5174` ou `make preview PREVIEW_PORT=4174` e abra a nova URL. |
-| Página aberta como `file://` ou worker não inicia | Inicie o servidor HTTP com `make dev`; não abra o HTML diretamente. Confira também o erro no console do navegador. |
-| As teclas não controlam o carro | Escolha **Take the wheel** e clique na pista. Campos de formulário mantêm o foco para edição. |
-| O campeão salvo desapareceu | Confira host, porta e perfil do navegador. Reimporte o JSON se mudou de origem ou limpou os dados. |
-| O treino não chega a 32× | Reduza população, camadas, neurônios ou velocidade. O ritmo depende da máquina; o passo da física continua fixo. |
-| Muitos carros ainda batem | Compare gerações completas na mesma bateria, acompanhe progresso e conclusões e teste o campeão nos cenários reservados. Um layout livre pode bloquear a pista. |
+| `make: command not found` | Use `npm ci` and `npm run dev`, or provide Make in a POSIX-compatible shell. |
+| Incompatible Node.js version or missing npm | Check `node --version` and `npm --version`; use Node.js 22.12+ with npm. |
+| Missing dependencies or a damaged installation | Run `make install` or `npm ci`. The lockfile is included in the repository. |
+| Port already in use | Use `make dev PORT=5174` or `make preview PREVIEW_PORT=4174`, then open the new URL. |
+| Page opened through `file://` or worker fails to start | Start the HTTP server with `make dev` instead of opening the HTML directly. Check the browser console for errors. |
+| Keyboard controls do not move the car | Select **Take the wheel** and click the track. Form fields retain focus for editing. |
+| Saved champion appears to be missing | Check the browser host, port, and profile. Reimport the JSON if you changed origins or cleared browser data. |
+| Training cannot reach 32× | Reduce population, layer count, neurons, or speed. Throughput depends on the machine; the physics step stays fixed. |
+| Cars still crash frequently | Compare completed generations on the same battery, watch progress and finishes, and test the champion on reserved scenarios. A freely edited layout may block the track. |
 
-## Estrutura e limites
+## Project structure and limitations
 
-| Caminho | Responsabilidade |
+| Path | Responsibility |
 | --- | --- |
-| `index.html`, `src/style.css` | Estrutura e aparência da interface. |
-| `src/main.ts` | Eventos, persistência, modos manual e congelado, comunicação com o worker. |
-| `src/protocol.ts` | Tipos das mensagens e snapshots entre interface e worker. |
-| `src/training.worker.ts` | Agenda ticks de treino e testes reservados e envia snapshots. |
-| `src/core/network.ts` | Arquitetura, inferência, parâmetros e mutação da rede. |
-| `src/core/simulation.ts` | Sensores, ações, física, colisões, checkpoints e pontuação de uma tentativa. |
-| `src/core/evolution.ts`, `src/core/diverse-evolution.ts` | População, classificação, seleção e novas gerações. |
-| `src/core/scenarios.ts`, `src/core/evaluation.ts` | Baterias reproduzíveis e avaliação agregada/congelada. |
-| `src/core/track.ts`, `src/core/obstacles.ts` | Geometria das pistas, sensores e formatos de obstáculos. |
-| `src/core/metrics.ts`, `src/core/serialization.ts`, `src/core/transfer.ts` | Métricas, JSON validado e transferência dos campeões. |
-| `src/ui/` | Renderização, editor de obstáculos, matrizes de pesos e painéis de métricas. |
-| `tests/` | Testes automatizados do núcleo, executados pelo test runner do Node.js. |
-| `scripts/` | Experimentos headless e reprodução dos campeões. |
-| `results/` | Campeões JSON, resultados medidos e capturas da interface. |
-| `Makefile` | Atalhos de instalação, execução, verificação e experimentos. |
+| `index.html`, `src/style.css` | Interface structure and appearance. |
+| `src/main.ts` | Events, persistence, manual and frozen modes, and worker communication. |
+| `src/protocol.ts` | Message and snapshot types shared by the interface and worker. |
+| `src/training.worker.ts` | Schedules training and reserved-test ticks and sends snapshots. |
+| `src/core/network.ts` | Network architecture, inference, parameters, and mutation. |
+| `src/core/simulation.ts` | Sensors, actions, physics, collisions, checkpoints, and attempt scoring. |
+| `src/core/evolution.ts`, `src/core/diverse-evolution.ts` | Population, ranking, selection, and new generations. |
+| `src/core/scenarios.ts`, `src/core/evaluation.ts` | Reproducible batteries and aggregate/frozen evaluation. |
+| `src/core/track.ts`, `src/core/obstacles.ts` | Track geometry, sensors, and obstacle shapes. |
+| `src/core/metrics.ts`, `src/core/serialization.ts`, `src/core/transfer.ts` | Metrics, validated JSON, and champion transfer. |
+| `src/ui/` | Rendering, the obstacle editor, weight matrices, and metrics panels. |
+| `tests/` | Core tests executed by the Node.js test runner. |
+| `scripts/` | Headless experiments and champion replay. |
+| `results/` | Champion JSON, measured results, and interface screenshots. |
+| `Makefile` | Installation, development, validation, and experiment shortcuts. |
 
-O núcleo em `src/core/` não depende do DOM. Isso permite usar a mesma física e as mesmas regras no navegador, no worker, nos testes e nos experimentos do terminal.
+The core in `src/core/` does not depend on the DOM. The browser, worker, tests, and terminal experiments use the same physics and rules.
 
-A velocidade de treino é uma meta: pode ficar abaixo de 32× com populações e redes grandes, sem alterar a física. Redes maiores não garantem aprendizado melhor. O histórico visual mantém as últimas 240 gerações; a sessão de treino não é retomada após recarregar a página. Campeões são armazenados por pista e por origem do navegador (host/porta); exporte JSON para transportá-los. Pequenas diferenças numéricas entre motores JavaScript podem afetar gerações muito longas. Mais voltas selecionam controladores consistentes ao longo do circuito; isso não garante a trajetória matematicamente ótima. A física é arcade, com bordas e obstáculos de cinco formatos, fixos durante cada tentativa. O editor permite montar um bloqueio sem passagem; layouts personalizados não têm garantia automática de serem solucionáveis. A direção manual exige teclado.
+Training speed is a target and may fall below 32× with large populations or networks while retaining the same physics. Larger networks do not guarantee better learning. Visual history retains the latest 240 generations; training sessions do not resume after a page reload. Champions are stored by track and browser origin (host/port); export JSON to move them elsewhere.
+
+Small numerical differences between JavaScript engines may affect long evolutionary runs. More laps select for controllers that remain consistent over a circuit without guaranteeing a mathematically optimal trajectory. Physics is arcade-style, with boundaries and five obstacle shapes that stay fixed during each attempt. Freely edited layouts can block passage and are not automatically guaranteed to be solvable. Manual driving requires a keyboard.

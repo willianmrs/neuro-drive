@@ -3,7 +3,7 @@ dist/
 *.log
 .DS_Store
 
-# Configuracoes locais e credenciais nunca fazem parte do aplicativo.
+# Local configuration and credentials are never part of the app.
 .env
 .env.*
 !.env.example
